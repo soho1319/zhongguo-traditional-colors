@@ -1,0 +1,239 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="中华传统色演示、色卡浏览与颜色知识科普开源项目。">
+    <meta name="theme-color" content="#24262d">
+    <title>中国传统配色 - 中华传统色色卡资料馆</title>
+    <link rel="stylesheet" href="assets/css/styles.css">
+  </head>
+  <body>
+    <svg class="svg-sprite" aria-hidden="true">
+      <symbol id="icon-download" viewBox="0 0 24 24">
+        <path d="M12 3v11m0 0 4-4m-4 4-4-4M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-2" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+      </symbol>
+      <symbol id="icon-gallery" viewBox="0 0 24 24">
+        <path d="M5 5h6v6H5zM13 5h6v6h-6zM5 13h6v6H5zM13 13h6v6h-6z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/>
+      </symbol>
+      <symbol id="icon-random" viewBox="0 0 24 24">
+        <path d="M4 7h3c3 0 5 10 8 10h5m-4-4 4 4-4 4M4 17h3c1.3 0 2.4-.9 3.4-2.2M15 7h5m-4-4 4 4-4 4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+      </symbol>
+      <symbol id="icon-book" viewBox="0 0 24 24">
+        <path d="M5 4h7a3 3 0 0 1 3 3v17a3 3 0 0 0-3-3H5zM15 7a3 3 0 0 1 3-3h1v17h-1a3 3 0 0 0-3 3z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/>
+      </symbol>
+      <symbol id="icon-github" viewBox="0 0 24 24">
+        <path d="M12 2.6a9.7 9.7 0 0 0-3.1 18.9c.5.1.7-.2.7-.5v-1.8c-2.8.6-3.4-1.2-3.4-1.2-.5-1.1-1.1-1.4-1.1-1.4-.9-.6.1-.6.1-.6 1 0 1.6 1.1 1.6 1.1.9 1.5 2.3 1.1 2.9.8.1-.7.4-1.1.7-1.4-2.2-.3-4.5-1.1-4.5-4.8 0-1.1.4-1.9 1-2.6-.1-.3-.4-1.3.1-2.6 0 0 .8-.3 2.7 1a9.2 9.2 0 0 1 4.9 0c1.9-1.3 2.7-1 2.7-1 .5 1.3.2 2.3.1 2.6.6.7 1 1.5 1 2.6 0 3.7-2.3 4.5-4.5 4.8.4.3.8 1 .8 2v3c0 .3.2.6.8.5A9.7 9.7 0 0 0 12 2.6Z" fill="currentColor"/>
+      </symbol>
+      <symbol id="icon-arrow" viewBox="0 0 24 24">
+        <path d="M5 12h14m0 0-5-5m5 5-5 5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+      </symbol>
+    </svg>
+
+    <header class="site-header">
+      <a class="brand-mark" href="#top" aria-label="中国传统配色首页">
+        <span>中</span>
+        <strong>中国传统配色</strong>
+      </a>
+      <nav class="site-nav" aria-label="主导航">
+        <a href="#gallery">色卡</a>
+        <a href="#knowledge">知识</a>
+        <a href="#download">下载</a>
+        <a href="#open-source">开源</a>
+      </nav>
+    </header>
+
+    <main id="top">
+      <section class="hero-section" aria-labelledby="hero-title">
+        <div class="hero-copy">
+          <p class="eyebrow">Open color archive</p>
+          <h1 id="hero-title">中国传统配色</h1>
+          <p class="hero-lede">
+            收集、展示和持续校勘中华传统色色卡，让设计师、开发者、教师与文化爱好者都能直接取用这份开放的颜色资料。
+          </p>
+          <div class="hero-actions">
+            <a class="button button-primary" href="#gallery">
+              <svg><use href="#icon-gallery"></use></svg>
+              浏览色卡
+            </a>
+            <a class="button button-secondary" href="#download">
+              <svg><use href="#icon-download"></use></svg>
+              打包下载
+            </a>
+          </div>
+          <dl class="hero-stats">
+            <div>
+              <dt data-count>538</dt>
+              <dd>当前色卡</dd>
+            </div>
+            <div>
+              <dt data-total-size>709 MB</dt>
+              <dd>图片资产</dd>
+            </div>
+            <div>
+              <dt>700+</dt>
+              <dd>持续扩展目标</dd>
+            </div>
+          </dl>
+        </div>
+
+        <div class="hero-gallery" aria-label="传统色色卡预览">
+          <div class="ink-panel">
+            <div class="mosaic" data-hero-mosaic></div>
+          </div>
+        </div>
+      </section>
+
+      <section class="intro-band" aria-label="项目定位">
+        <div class="intro-grid">
+          <div>
+            <span class="section-kicker">Purpose</span>
+            <h2>把传统色从灵感图，变成可复用的公共资料。</h2>
+          </div>
+          <p>
+            每张色卡保留色名、HEX、RGB、CMYK、配色推荐和气质关键词。项目将图片资产、展示页面、下载工具和贡献流程放在同一个仓库，便于教学引用、设计试验和二次开发。
+          </p>
+        </div>
+      </section>
+
+      <section class="section-shell" id="gallery" aria-labelledby="gallery-title">
+        <div class="section-heading">
+          <span class="section-kicker">Color cards</span>
+          <h2 id="gallery-title">色卡资料库</h2>
+          <p>按批次加载真实图片，单张可下载，未来新增色卡只需更新 images 文件夹并重建清单。</p>
+        </div>
+
+        <div class="toolbar" aria-label="色卡工具">
+          <label class="search-box">
+            <span>检索</span>
+            <input type="search" data-search placeholder="文件名或编号" autocomplete="off">
+          </label>
+          <button class="tool-button" type="button" data-shuffle>
+            <svg><use href="#icon-random"></use></svg>
+            换一组
+          </button>
+          <button class="tool-button" type="button" data-reset>
+            <svg><use href="#icon-gallery"></use></svg>
+            全部
+          </button>
+        </div>
+
+        <div class="gallery-grid" data-gallery></div>
+        <div class="gallery-footer">
+          <p data-gallery-status></p>
+          <button class="button button-secondary" type="button" data-load-more>
+            <svg><use href="#icon-arrow"></use></svg>
+            加载更多
+          </button>
+        </div>
+      </section>
+
+      <section class="knowledge-section" id="knowledge" aria-labelledby="knowledge-title">
+        <div class="section-heading">
+          <span class="section-kicker">Color knowledge</span>
+          <h2 id="knowledge-title">色彩知识</h2>
+          <p>传统色不是孤立的色值，它来自器物、衣冠、矿物、植物、季节和审美秩序。</p>
+        </div>
+
+        <div class="knowledge-layout">
+          <article class="knowledge-note note-wide">
+            <span>01</span>
+            <h3>五色观与秩序感</h3>
+            <p>青、赤、黄、白、黑承载了方位、礼制和自然观。现代设计取用传统色时，可以把它理解为一种建立层级、节奏和情绪的系统，而不只是复古装饰。</p>
+          </article>
+          <article class="knowledge-note">
+            <span>02</span>
+            <h3>材料决定质感</h3>
+            <p>矿物颜料偏沉稳，植物染色更柔和，釉色和织物会带来不同光泽。色卡中的气质词适合帮助判断使用场景。</p>
+          </article>
+          <article class="knowledge-note">
+            <span>03</span>
+            <h3>屏幕色需要校验</h3>
+            <p>HEX、RGB 和 CMYK 是跨媒介沟通的起点。落到印刷、织物或界面主题时，仍应结合实际设备和材质打样。</p>
+          </article>
+          <article class="knowledge-note note-tall">
+            <span>04</span>
+            <h3>配色要服务信息</h3>
+            <p>传统色适合建立文化语气，也要尊重可读性和无障碍对比。项目鼓励把色彩用于教育、公共知识整理、产品界面和开放素材建设。</p>
+          </article>
+        </div>
+      </section>
+
+      <section class="download-section" id="download" aria-labelledby="download-title">
+        <div class="download-copy">
+          <span class="section-kicker">Download</span>
+          <h2 id="download-title">所有图片打包下载</h2>
+          <p>
+            页面可以直接把 images 文件夹中的全部图片打成 ZIP。仓库还提供本地脚本，适合维护者生成 GitHub Release 附件。
+          </p>
+        </div>
+        <div class="download-panel">
+          <div class="download-meta">
+            <strong data-count>538</strong>
+            <span>张色卡</span>
+            <strong data-total-size>709 MB</strong>
+            <span>原始图片</span>
+          </div>
+          <button class="button button-primary button-large" type="button" data-download-zip>
+            <svg><use href="#icon-download"></use></svg>
+            生成 ZIP
+          </button>
+          <div class="progress" aria-hidden="true">
+            <span data-progress-bar></span>
+          </div>
+          <p class="download-status" data-download-status>浏览器会按清单读取图片并生成 zhongguo-traditional-colors-images.zip。</p>
+        </div>
+      </section>
+
+      <section class="open-section" id="open-source" aria-labelledby="open-title">
+        <div class="section-heading">
+          <span class="section-kicker">Open source</span>
+          <h2 id="open-title">开放给更多人共建</h2>
+          <p>项目采用 MIT License。欢迎提交新色卡、校正色值、补充来源说明和改进展示体验。</p>
+        </div>
+        <div class="open-grid">
+          <a class="open-link" href="README.md">
+            <svg><use href="#icon-book"></use></svg>
+            <span>
+              <strong>项目介绍</strong>
+              <small>定位、使用方式、目录结构和路线图</small>
+            </span>
+          </a>
+          <a class="open-link" href="CONTRIBUTING.md">
+            <svg><use href="#icon-github"></use></svg>
+            <span>
+              <strong>贡献指南</strong>
+              <small>新增色卡、命名规范和提交检查</small>
+            </span>
+          </a>
+          <a class="open-link" href="docs/image-packaging.md">
+            <svg><use href="#icon-download"></use></svg>
+            <span>
+              <strong>下载包说明</strong>
+              <small>浏览器打包和 Release 附件生成流程</small>
+            </span>
+          </a>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <p>中国传统配色是开放色彩资料项目。使用时请结合实际媒介校验色差。</p>
+    </footer>
+
+    <dialog class="preview-dialog" data-preview-dialog>
+      <button class="dialog-close" type="button" data-close-preview aria-label="关闭预览">×</button>
+      <img alt="" data-preview-image>
+      <div class="dialog-meta">
+        <strong data-preview-title></strong>
+        <a class="button button-secondary" data-preview-download download>
+          <svg><use href="#icon-download"></use></svg>
+          下载单张
+        </a>
+      </div>
+    </dialog>
+
+    <script src="assets/data/images.js"></script>
+    <script src="assets/js/app.js"></script>
+  </body>
+</html>
