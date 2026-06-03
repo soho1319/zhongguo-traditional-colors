@@ -2,6 +2,18 @@
 
 一个用于展示、学习和复用中华传统色的开放项目。当前仓库收录 538 张传统色色卡图片，每张色卡包含色名、HEX、RGB、CMYK、配色推荐和气质关键词；后续计划扩展到 700+ 张，并持续补充来源说明和色彩知识。
 
+在线访问：
+
+```text
+https://nevertoday.github.io/zhongguo-traditional-colors/
+```
+
+完整图片包：
+
+```text
+https://github.com/nevertoday/zhongguo-traditional-colors/releases/tag/v0.1.0
+```
+
 ## 项目定位
 
 中国传统色不只是一组漂亮色值，也连接着器物、织染、矿物颜料、诗词意象、节气物候和审美秩序。本项目希望把这些资料整理成一个可以直接浏览、下载、引用和二次开发的公共色彩资料馆。
