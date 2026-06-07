@@ -8,9 +8,9 @@ const project = window.TRADITIONAL_COLOR_PROJECT || {
 const gallery = document.querySelector('[data-gallery]');
 const heroMosaic = document.querySelector('[data-hero-mosaic]');
 const searchInput = document.querySelector('[data-search]');
+const hueFilter = document.querySelector('[data-hue-filter]');
 const loadMoreButton = document.querySelector('[data-load-more]');
 const shuffleButton = document.querySelector('[data-shuffle]');
-const resetButton = document.querySelector('[data-reset]');
 const galleryStatus = document.querySelector('[data-gallery-status]');
 const zipButton = document.querySelector('[data-download-zip]');
 const zipStatus = document.querySelector('[data-download-status]');
@@ -28,6 +28,7 @@ const themeColorMeta = document.querySelector('[data-theme-color]');
 let visibleCount = 24;
 let currentItems = [...images];
 let shuffled = false;
+let currentHue = 'all';
 
 function formatBytes(bytes) {
   const units = ['B', 'KB', 'MB', 'GB'];
@@ -54,8 +55,47 @@ function colorTitle(image) {
   return image.file.replace(/\.[^.]+$/, '');
 }
 
+function colorName(image) {
+  return colorTitle(image).replace(/^\d{3}-/, '');
+}
+
 function normalize(value) {
   return value.trim().toLowerCase();
+}
+
+function hueFromHex(hex) {
+  if (!hex) return 'neutral';
+
+  const match = hex.match(/^#?([0-9a-f]{6})$/i);
+  if (!match) return 'neutral';
+
+  const value = match[1];
+  const red = Number.parseInt(value.slice(0, 2), 16) / 255;
+  const green = Number.parseInt(value.slice(2, 4), 16) / 255;
+  const blue = Number.parseInt(value.slice(4, 6), 16) / 255;
+  const max = Math.max(red, green, blue);
+  const min = Math.min(red, green, blue);
+  const delta = max - min;
+  const lightness = (max + min) / 2;
+  const saturation = delta === 0 ? 0 : delta / (1 - Math.abs(2 * lightness - 1));
+
+  if (saturation < 0.12) return 'neutral';
+
+  let hue = 0;
+  if (max === red) hue = ((green - blue) / delta) % 6;
+  if (max === green) hue = (blue - red) / delta + 2;
+  if (max === blue) hue = (red - green) / delta + 4;
+  hue = Math.round(hue * 60);
+  if (hue < 0) hue += 360;
+
+  if (hue < 15 || hue >= 345) return 'red';
+  if (hue < 45) return 'orange';
+  if (hue < 75) return 'yellow';
+  if (hue < 155) return 'green';
+  if (hue < 195) return 'cyan';
+  if (hue < 255) return 'blue';
+  if (hue < 315) return 'purple';
+  return 'red';
 }
 
 function currentTheme() {
@@ -120,6 +160,8 @@ function cardMarkup(image) {
   const url = encodedPath(image.path);
   const previewUrl = encodedPath(thumbnailPath(image));
   const title = colorTitle(image);
+  const hex = image.hex || '';
+  const displayTitle = hex ? `${title} · ${hex}` : title;
 
   return `
     <article class="color-card">
@@ -127,9 +169,10 @@ function cardMarkup(image) {
         <svg aria-hidden="true"><use href="#icon-eye"></use></svg>
       </button>
       <img src="${previewUrl}" alt="中国传统色色卡 ${title}" loading="lazy">
+      ${hex ? `<button class="copy-hex" type="button" data-copy-hex="${hex}" aria-label="复制 ${colorName(image)} 色值 ${hex}">复制 ${hex}</button>` : ''}
       <div class="card-meta">
         <span>
-          <strong>${title}</strong>
+          <strong>${displayTitle}</strong>
           <small>原图 ${formatBytes(image.size)}</small>
         </span>
         <a class="card-button" href="${url}" download aria-label="下载 ${title}">
@@ -146,7 +189,7 @@ function renderGallery() {
   const visible = currentItems.slice(0, visibleCount);
   gallery.innerHTML = visible.length
     ? visible.map(cardMarkup).join('')
-    : '<div class="empty-state"><strong>没有找到对应色卡</strong><span>换一个色名、编号或文件名试试，例如「黛」「001」「天青」。</span></div>';
+    : '<div class="empty-state"><strong>没有找到对应色卡</strong><span>换一个色名、编号、色值或色相试试，例如「黛」「001」「#F9F4DC」</span></div>';
 
   if (galleryStatus) {
     galleryStatus.textContent = `已显示 ${visible.length.toLocaleString('zh-CN')} / ${currentItems.length.toLocaleString('zh-CN')} 张`;
@@ -158,10 +201,18 @@ function renderGallery() {
 }
 
 function applySearch() {
+  applyFilters();
+}
+
+function applyFilters() {
   const query = normalize(searchInput?.value || '');
-  currentItems = query
-    ? images.filter((image) => `${image.id} ${image.file} ${image.path}`.toLowerCase().includes(query))
-    : [...images];
+  currentHue = hueFilter?.value || 'all';
+  currentItems = images.filter((image) => {
+    const searchable = `${image.id} ${image.file} ${image.path} ${image.hex || ''}`.toLowerCase();
+    const matchesQuery = query ? searchable.includes(query) : true;
+    const matchesHue = currentHue === 'all' ? true : hueFromHex(image.hex) === currentHue;
+    return matchesQuery && matchesHue;
+  });
   visibleCount = 24;
   shuffled = false;
   renderGallery();
@@ -179,14 +230,6 @@ function shuffleItems() {
   renderGallery();
 }
 
-function resetGallery() {
-  if (searchInput) searchInput.value = '';
-  currentItems = [...images];
-  visibleCount = 24;
-  shuffled = false;
-  renderGallery();
-}
-
 function openPreview(id) {
   const image = images.find((item) => item.id === id);
   if (!image || !previewDialog) return;
@@ -201,6 +244,30 @@ function openPreview(id) {
   if (typeof previewDialog.showModal === 'function') {
     previewDialog.showModal();
   }
+}
+
+async function copyHex(button) {
+  const hex = button.dataset.copyHex;
+  if (!hex) return;
+
+  try {
+    await navigator.clipboard.writeText(hex);
+  } catch (error) {
+    const input = document.createElement('input');
+    input.value = hex;
+    document.body.append(input);
+    input.select();
+    document.execCommand('copy');
+    input.remove();
+  }
+
+  const original = button.textContent;
+  button.textContent = '已复制';
+  button.dataset.copied = 'true';
+  window.setTimeout(() => {
+    button.textContent = original;
+    delete button.dataset.copied;
+  }, 1200);
 }
 
 function buildCrcTable() {
@@ -391,14 +458,20 @@ themeToggle?.addEventListener('click', () => {
   setTheme(currentTheme() === 'dark' ? 'light' : 'dark');
 });
 searchInput?.addEventListener('input', applySearch);
+hueFilter?.addEventListener('change', applyFilters);
 shuffleButton?.addEventListener('click', shuffleItems);
-resetButton?.addEventListener('click', resetGallery);
 loadMoreButton?.addEventListener('click', () => {
   visibleCount += shuffled ? 24 : 32;
   renderGallery();
 });
 
 gallery?.addEventListener('click', (event) => {
+  const copyButton = event.target.closest('[data-copy-hex]');
+  if (copyButton) {
+    copyHex(copyButton);
+    return;
+  }
+
   const button = event.target.closest('[data-preview]');
   if (button) openPreview(button.dataset.preview);
 });

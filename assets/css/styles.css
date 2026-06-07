@@ -82,7 +82,8 @@ a {
 }
 
 button,
-input {
+input,
+select {
   font: inherit;
 }
 
@@ -162,6 +163,17 @@ code {
   transform: translateY(0);
 }
 
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
 .site-header {
   position: sticky;
   top: 0;
@@ -236,51 +248,36 @@ code {
   display: flex;
   align-items: center;
   justify-content: flex-end;
-  gap: 8px;
+  gap: 4px;
 }
 
-.nav-icon-link {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 36px;
-  min-height: 36px;
-  padding: 0;
-  color: var(--ink-soft);
-  text-decoration: none;
-  border: 1px solid transparent;
-  border-radius: 999px;
-}
-
-.nav-icon-link:hover,
-.nav-icon-link:focus-visible {
-  color: var(--hover-text);
-  background: var(--hover-bg);
-  border-color: var(--hover-bg);
-  outline: none;
-}
-
+.nav-icon-link,
 .theme-toggle {
   display: inline-flex;
   align-items: center;
-  gap: 7px;
-  min-height: 36px;
-  padding: 8px 12px;
+  justify-content: center;
+  width: 32px;
+  min-height: 32px;
+  padding: 0;
   color: var(--ink-soft);
   background: transparent;
-  border: 1px solid var(--line-strong);
+  border: 1px solid transparent;
   border-radius: 999px;
   cursor: pointer;
-  font-weight: 600;
+  text-decoration: none;
+  opacity: 0.76;
   transition: background 180ms ease, border-color 180ms ease, color 180ms ease, transform 180ms ease;
 }
 
+.nav-icon-link:hover,
+.nav-icon-link:focus-visible,
 .theme-toggle:hover,
 .theme-toggle:focus-visible {
   color: var(--hover-text);
   background: var(--hover-bg);
   border-color: var(--hover-bg);
   outline: none;
+  opacity: 1;
   transform: translateY(-1px);
 }
 
@@ -379,9 +376,12 @@ code {
 .button:focus-visible,
 .tool-button:focus-visible,
 input:focus-visible,
+select:focus-visible,
 .open-link:focus-visible,
 .card-button:focus-visible,
+.copy-hex:focus-visible,
 .text-link:focus-visible,
+.nav-icon-link:focus-visible,
 .theme-toggle:focus-visible {
   outline: 2px solid var(--ink);
   outline-offset: 3px;
@@ -603,7 +603,8 @@ input:focus-visible,
   box-shadow: 0 10px 28px color-mix(in srgb, var(--ink) 4%, transparent);
 }
 
-.search-box {
+.search-box,
+.hue-filter {
   display: flex;
   align-items: center;
   gap: 12px;
@@ -616,18 +617,30 @@ input:focus-visible,
   font-weight: 600;
 }
 
-.search-box span {
+.search-box span,
+.hue-filter span {
   flex: 0 0 auto;
   white-space: nowrap;
 }
 
-.search-box input {
+.search-box input,
+.hue-filter select {
   width: 100%;
   min-width: 0;
   border: 0;
   outline: 0;
   color: var(--ink);
   background: transparent;
+}
+
+.hue-filter {
+  min-width: 192px;
+}
+
+.hue-filter select {
+  min-width: 118px;
+  padding-right: 18px;
+  cursor: pointer;
 }
 
 .gallery-grid {
@@ -645,7 +658,8 @@ input:focus-visible,
   transition: transform 180ms ease, border-color 180ms ease, box-shadow 180ms ease;
 }
 
-.color-card:hover {
+.color-card:hover,
+.color-card:focus-within {
   border-color: var(--line-strong);
   box-shadow: var(--shadow-card);
   transform: translateY(-2px);
@@ -659,17 +673,20 @@ input:focus-visible,
   transition: transform 260ms ease;
 }
 
-.color-card:hover img {
+.color-card:hover img,
+.color-card:focus-within img {
   transform: scale(1.018);
 }
 
-.color-card:hover .card-meta {
+.color-card:hover .card-meta,
+.color-card:focus-within .card-meta {
   color: var(--hover-text);
   background: var(--hover-bg);
   border-color: var(--hover-bg);
 }
 
-.color-card:hover .card-meta small {
+.color-card:hover .card-meta small,
+.color-card:focus-within .card-meta small {
   color: color-mix(in srgb, var(--hover-text) 74%, transparent);
 }
 
@@ -734,6 +751,38 @@ input:focus-visible,
   transform: translateY(-1px);
 }
 
+.copy-hex {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  z-index: 2;
+  min-height: 34px;
+  padding: 7px 11px;
+  color: var(--hover-text);
+  background: var(--hover-bg);
+  border: 1px solid var(--hover-bg);
+  border-radius: 999px;
+  cursor: pointer;
+  font-size: 0.8rem;
+  font-weight: 600;
+  opacity: 0;
+  transform: translateY(4px);
+  transition: opacity 180ms ease, transform 180ms ease, background 180ms ease, color 180ms ease, border-color 180ms ease;
+}
+
+.color-card:hover .copy-hex,
+.color-card:focus-within .copy-hex {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.copy-hex:hover,
+.copy-hex[data-copied="true"] {
+  color: var(--hover-bg);
+  background: var(--hover-text);
+  border-color: var(--hover-text);
+}
+
 .button:disabled,
 .tool-button:disabled {
   cursor: wait;
@@ -794,6 +843,7 @@ input:focus-visible,
   background: var(--paper);
   border: 1px solid var(--line);
   border-radius: 8px;
+  transition: background 180ms ease, border-color 180ms ease, color 180ms ease, transform 180ms ease;
 }
 
 .audit-grid article + article {
@@ -811,6 +861,17 @@ input:focus-visible,
   display: block;
   margin-top: 8px;
   color: var(--muted);
+}
+
+.audit-grid article:hover {
+  color: var(--hover-text);
+  background: var(--hover-bg);
+  border-color: var(--hover-bg);
+  transform: translateY(-1px);
+}
+
+.audit-grid article:hover span {
+  color: color-mix(in srgb, var(--hover-text) 72%, transparent);
 }
 
 .audit-actions {
@@ -841,6 +902,7 @@ input:focus-visible,
   padding: 30px 26px 32px;
   background: var(--panel);
   border: 0;
+  transition: background 180ms ease, color 180ms ease;
 }
 
 .knowledge-note span {
@@ -849,6 +911,21 @@ input:focus-visible,
   color: var(--muted);
   font-variant-numeric: tabular-nums;
   font-weight: 600;
+  transition: color 180ms ease;
+}
+
+.knowledge-note p {
+  transition: color 180ms ease;
+}
+
+.knowledge-note:hover {
+  color: var(--hover-text);
+  background: var(--hover-bg);
+}
+
+.knowledge-note:hover span,
+.knowledge-note:hover p {
+  color: color-mix(in srgb, var(--hover-text) 72%, transparent);
 }
 
 .note-wide {
@@ -903,9 +980,13 @@ input:focus-visible,
 }
 
 .download-panel .button-primary:hover {
-  color: var(--hover-text);
-  background: var(--hover-bg);
-  border-color: var(--hover-bg);
+  color: var(--feature-text);
+  background: transparent;
+  border-color: var(--feature-text);
+}
+
+.download-panel .button-primary:focus-visible {
+  outline-color: var(--feature-text);
 }
 
 .download-direct {
@@ -920,8 +1001,8 @@ input:focus-visible,
 
 .download-direct:hover,
 .download-direct:focus-visible {
-  color: var(--hover-text);
-  background: var(--hover-bg);
+  color: var(--feature-text);
+  background: transparent;
   outline: none;
 }
 
@@ -1248,6 +1329,10 @@ input:focus-visible,
   }
 
   .search-box {
+    width: 100%;
+  }
+
+  .hue-filter {
     width: 100%;
   }
 

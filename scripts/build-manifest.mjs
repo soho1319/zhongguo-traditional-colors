@@ -1,11 +1,28 @@
-import { readdir, stat, writeFile } from 'node:fs/promises';
+import { readFile, readdir, stat, writeFile } from 'node:fs/promises';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const IMAGE_DIR = path.join(ROOT, 'images');
 const OUT_FILE = path.join(ROOT, 'assets', 'data', 'images.js');
+const MASTER_LIST_FILE = path.join(ROOT, 'docs', 'chinese-color-master-list.md');
 const IMAGE_EXTENSIONS = new Set(['.png', '.jpg', '.jpeg', '.webp']);
+
+function colorNameFromFile(file) {
+  return file.replace(/^\d{3}-/, '').replace(/\.[^.]+$/, '');
+}
+
+async function loadColorValues() {
+  const content = await readFile(MASTER_LIST_FILE, 'utf8');
+  const values = new Map();
+
+  for (const line of content.split(/\r?\n/)) {
+    const match = line.trim().match(/^(.+?)\s+(#[0-9A-Fa-f]{6})$/);
+    if (match) values.set(match[1], match[2].toUpperCase());
+  }
+
+  return values;
+}
 
 async function collectImages(dir) {
   const entries = await readdir(dir, { withFileTypes: true });
@@ -33,11 +50,13 @@ async function collectImages(dir) {
   return files;
 }
 
+const colorValues = await loadColorValues();
 const images = (await collectImages(IMAGE_DIR)).sort((a, b) => a.path.localeCompare(b.path, 'zh-Hans-CN'));
 const totalBytes = images.reduce((total, image) => total + image.size, 0);
 const generatedAt = new Date().toISOString();
 const payload = images.map((image, index) => ({
   id: String(index + 1).padStart(3, '0'),
+  hex: colorValues.get(colorNameFromFile(image.file)) || null,
   ...image,
 }));
 
