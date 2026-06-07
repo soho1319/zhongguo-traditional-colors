@@ -20,7 +20,7 @@
     </script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@600;700;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@700;800;900&family=Noto+Serif+SC:wght@600;700;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="assets/css/styles.css">
     <script src="https://code.iconify.design/iconify-icon/3.0.0/iconify-icon.min.js" defer></script>
   </head>
@@ -180,7 +180,7 @@
         </div>
 
         <div class="audit-actions">
-          <a class="text-link" href="docs/chinese-color-master-list.md">查看原始 742 色清单</a>
+          <button class="text-link text-button" type="button" data-open-master-list>预览 742 色清单</button>
         </div>
       </section>
 
@@ -268,11 +268,11 @@
           <div class="author-actions">
             <a class="button button-primary" href="https://x.com/xiaoxiaodong01">
               <iconify-icon icon="lucide:external-link" aria-hidden="true"></iconify-icon>
-              访问小小东的 X 主页
+              X 主页
             </a>
             <a class="button button-secondary" href="https://github.com/nevertoday/zhongguo-traditional-colors">
               <iconify-icon icon="simple-icons:github" aria-hidden="true"></iconify-icon>
-              GitHub 项目
+              GitHub
             </a>
           </div>
         </div>
@@ -296,7 +296,7 @@
           <p>这个项目不只是展示色卡，而是把查色、下载、引用和校对这些重复工作提前整理好，让更多设计、教学和创作可以直接开始</p>
         </div>
         <div class="open-grid">
-          <a class="open-link" href="#gallery">
+          <a class="open-link" href="#gallery" data-open-number="01">
             <span class="open-index">01</span>
             <iconify-icon icon="lucide:copy" aria-hidden="true"></iconify-icon>
             <span>
@@ -304,7 +304,7 @@
               <small>直接按色名、编号、HEX 和色相筛选，复制色值后就能放进设计稿、网页主题或内容封面</small>
             </span>
           </a>
-          <a class="open-link" href="https://github.com/nevertoday/zhongguo-traditional-colors/releases/latest/download/zhongguo-traditional-colors-images.zip">
+          <a class="open-link" href="https://github.com/nevertoday/zhongguo-traditional-colors/releases/latest/download/zhongguo-traditional-colors-images.zip" data-open-number="02">
             <span class="open-index">02</span>
             <iconify-icon icon="lucide:archive" aria-hidden="true"></iconify-icon>
             <span>
@@ -312,7 +312,7 @@
               <small>完整图片包适合建立本地素材库、课程资料包、品牌灵感库和离线参考，不必逐张保存</small>
             </span>
           </a>
-          <a class="open-link" href="docs/chinese-color-master-list.md">
+          <a class="open-link" href="docs/chinese-color-master-list.md" data-open-number="03">
             <span class="open-index">03</span>
             <iconify-icon icon="lucide:file-text" aria-hidden="true"></iconify-icon>
             <span>
@@ -320,7 +320,7 @@
               <small>742 色清单和统一命名能直接用于课件、文章、资料整理，也方便标注来源和复查</small>
             </span>
           </a>
-          <a class="open-link" href="CONTRIBUTING.md">
+          <a class="open-link" href="CONTRIBUTING.md" data-open-number="04">
             <span class="open-index">04</span>
             <iconify-icon icon="lucide:git-pull-request" aria-hidden="true"></iconify-icon>
             <span>
@@ -349,6 +349,27 @@
           下载单张
         </a>
       </div>
+    </dialog>
+
+    <dialog class="master-list-dialog" data-master-list-dialog>
+      <div class="master-list-head">
+        <div>
+          <span class="section-kicker">原始清单</span>
+          <h2>742 色预览</h2>
+          <p>预览每个色名和 HEX。可以复制单个颜色，也可以一次复制完整清单。</p>
+        </div>
+        <button class="dialog-close master-close" type="button" data-close-master-list aria-label="关闭颜色清单">
+          <iconify-icon icon="lucide:x" aria-hidden="true"></iconify-icon>
+        </button>
+      </div>
+      <div class="master-list-actions">
+        <button class="button button-primary" type="button" data-copy-master-list>
+          <iconify-icon icon="lucide:copy" aria-hidden="true"></iconify-icon>
+          复制完整清单
+        </button>
+        <span data-master-list-status>742 个颜色</span>
+      </div>
+      <div class="master-color-list" data-master-color-list></div>
     </dialog>
 
     <script src="assets/data/images.js"></script>

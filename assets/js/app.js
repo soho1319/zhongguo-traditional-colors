@@ -20,6 +20,12 @@ const previewImage = document.querySelector('[data-preview-image]');
 const previewTitle = document.querySelector('[data-preview-title]');
 const previewDownload = document.querySelector('[data-preview-download]');
 const closePreview = document.querySelector('[data-close-preview]');
+const masterListDialog = document.querySelector('[data-master-list-dialog]');
+const masterColorList = document.querySelector('[data-master-color-list]');
+const openMasterListButton = document.querySelector('[data-open-master-list]');
+const closeMasterListButton = document.querySelector('[data-close-master-list]');
+const copyMasterListButton = document.querySelector('[data-copy-master-list]');
+const masterListStatus = document.querySelector('[data-master-list-status]');
 const themeToggle = document.querySelector('[data-theme-toggle]');
 const themeToggleIcon = document.querySelector('[data-theme-icon]');
 const themeToggleLabel = document.querySelector('[data-theme-label]');
@@ -253,28 +259,72 @@ function openPreview(id) {
   }
 }
 
-async function copyHex(button) {
-  const hex = button.dataset.copyHex;
-  if (!hex) return;
-
+async function writeClipboard(text) {
   try {
-    await navigator.clipboard.writeText(hex);
+    await navigator.clipboard.writeText(text);
   } catch (error) {
     const input = document.createElement('input');
-    input.value = hex;
+    input.value = text;
     document.body.append(input);
     input.select();
     document.execCommand('copy');
     input.remove();
   }
+}
 
-  const original = button.textContent;
-  button.textContent = '已复制';
-  button.dataset.copied = 'true';
+function setTemporaryLabel(node, label, duration = 1200) {
+  if (!node) return;
+
+  const original = node.textContent;
+  node.textContent = label;
+  node.dataset.copied = 'true';
   window.setTimeout(() => {
-    button.textContent = original;
-    delete button.dataset.copied;
-  }, 1200);
+    node.textContent = original;
+    delete node.dataset.copied;
+  }, duration);
+}
+
+async function copyHex(button) {
+  const hex = button.dataset.copyHex;
+  if (!hex) return;
+
+  await writeClipboard(hex);
+  setTemporaryLabel(button, '已复制');
+}
+
+function masterListText() {
+  return images.map((image) => `${colorName(image)} ${image.hex || ''}`.trim()).join('\n');
+}
+
+function buildMasterList() {
+  if (!masterColorList || masterColorList.children.length) return;
+
+  masterColorList.innerHTML = images.map((image) => {
+    const name = colorName(image);
+    const hex = image.hex || '';
+    const copyText = `${name} ${hex}`.trim();
+
+    return `
+      <button class="master-color-row" type="button" data-copy-color="${copyText}" aria-label="复制 ${copyText}">
+        <span class="master-swatch" style="--swatch: ${hex || '#999999'}"></span>
+        <span class="master-name">${name}</span>
+        <span class="master-hex">${hex}</span>
+      </button>
+    `;
+  }).join('');
+}
+
+function openMasterList() {
+  if (!masterListDialog) return;
+
+  buildMasterList();
+  if (masterListStatus) {
+    masterListStatus.textContent = `${images.length.toLocaleString('zh-CN')} 个颜色`;
+  }
+
+  if (typeof masterListDialog.showModal === 'function') {
+    masterListDialog.showModal();
+  }
 }
 
 function buildCrcTable() {
@@ -486,5 +536,25 @@ gallery?.addEventListener('click', (event) => {
 closePreview?.addEventListener('click', () => previewDialog?.close());
 previewDialog?.addEventListener('click', (event) => {
   if (event.target === previewDialog) previewDialog.close();
+});
+openMasterListButton?.addEventListener('click', openMasterList);
+closeMasterListButton?.addEventListener('click', () => masterListDialog?.close());
+masterListDialog?.addEventListener('click', async (event) => {
+  if (event.target === masterListDialog) {
+    masterListDialog.close();
+    return;
+  }
+
+  const colorButton = event.target.closest('[data-copy-color]');
+  if (colorButton) {
+    await writeClipboard(colorButton.dataset.copyColor);
+    setTemporaryLabel(colorButton.querySelector('.master-hex'), '已复制');
+  }
+});
+copyMasterListButton?.addEventListener('click', async () => {
+  await writeClipboard(masterListText());
+  if (masterListStatus) {
+    setTemporaryLabel(masterListStatus, '已复制完整清单', 1600);
+  }
 });
 zipButton?.addEventListener('click', downloadZip);
