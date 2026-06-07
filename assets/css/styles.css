@@ -1224,12 +1224,13 @@ select:focus-visible,
   position: relative;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
-  gap: 40px;
+  justify-content: center;
+  gap: 34px;
   min-width: 0;
   min-height: 360px;
-  padding: 34px;
+  padding: 42px 38px;
   overflow: hidden;
+  text-align: center;
   color: var(--feature-text);
   background: var(--feature-bg);
   box-shadow: var(--shadow-soft);
@@ -1237,14 +1238,9 @@ select:focus-visible,
 
 .support-panel::before {
   position: absolute;
-  right: -0.08em;
-  bottom: -0.24em;
-  color: color-mix(in srgb, var(--feature-text) 7%, transparent);
-  content: "支持";
-  font-family: var(--font-title);
-  font-size: clamp(5.8rem, 10vw, 8.8rem);
-  font-weight: 900;
-  line-height: 1;
+  inset: 22px;
+  border: 1px solid color-mix(in srgb, var(--feature-text) 12%, transparent);
+  content: "";
   pointer-events: none;
 }
 
@@ -1256,37 +1252,42 @@ select:focus-visible,
 .support-copy {
   position: relative;
   z-index: 1;
-  max-width: 320px;
+  max-width: 360px;
+  margin: 0 auto;
 }
 
 .support-panel h3 {
-  max-width: 320px;
+  max-width: 360px;
   margin-bottom: 16px;
   font-size: clamp(1.75rem, 3vw, 2.55rem);
   line-height: 1.2;
+  text-wrap: balance;
 }
 
 .support-panel p {
+  max-width: 330px;
+  margin-right: auto;
   margin-bottom: 0;
+  margin-left: auto;
 }
 
 .support-qr {
   position: relative;
   z-index: 1;
   display: grid;
-  grid-template-columns: auto 1fr;
-  gap: 16px;
-  align-items: end;
-  margin: 0;
-  padding-top: 28px;
+  gap: 12px;
+  justify-items: center;
+  margin: 0 auto;
+  padding-top: 30px;
+  width: min(100%, 310px);
   border-top: 1px solid color-mix(in srgb, var(--feature-text) 22%, transparent);
 }
 
 .support-panel img {
-  width: 148px;
-  max-width: min(42vw, 180px);
+  width: 176px;
+  max-width: min(48vw, 210px);
   height: auto;
-  padding: 8px;
+  padding: 10px;
   background: #ffffff;
 }
 
