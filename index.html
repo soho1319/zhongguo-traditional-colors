@@ -166,45 +166,46 @@
         </div>
 
         <div class="audit-workspace">
+          <div class="audit-summary">
+            <span>742 / 742 已入库</span>
+            <h3>清单、图片、色值已完成对应</h3>
+            <p>每张色卡都按 <code>NNN-颜色名.png</code> 命名，方便检索、引用、复制、下载和后续校对。</p>
+          </div>
           <div class="audit-grid" aria-label="颜色清单审计摘要">
-            <article data-metric-mark="名">
+            <article>
+              <span>色名</span>
               <strong data-count>742</strong>
-              <span>完整色名</span>
+              <small>与完整清单对应</small>
             </article>
-            <article data-metric-mark="图">
+            <article>
+              <span>图片</span>
               <strong data-total-size>998 MB</strong>
-              <span>高清图片</span>
+              <small>保留高清原图</small>
             </article>
-            <article data-metric-mark="值">
+            <article>
+              <span>复制</span>
               <strong>4</strong>
-              <span>复制格式</span>
+              <small>HEX / RGB / HSL / CMYK</small>
             </article>
-            <article data-metric-mark="包">
+            <article>
+              <span>下载</span>
               <strong>ZIP</strong>
-              <span>整包下载</span>
+              <small>整包直接下载</small>
             </article>
           </div>
           <button class="archive-trigger" type="button" data-open-master-list>
             <span class="archive-trigger-top">
-              <span>完整索引</span>
+              <span>色值索引</span>
               <iconify-icon icon="lucide:list-filter" aria-hidden="true"></iconify-icon>
             </span>
             <span class="archive-trigger-body">
-              <span class="archive-trigger-count">742</span>
               <span class="archive-trigger-copy">
-                <strong>打开色值索引</strong>
-                <small>按编号、色名或 HEX 检索，复制单色，也可复制整份清单</small>
+                <strong>打开完整色值索引</strong>
+                <small>预览 742 个传统色，按编号、色名或 HEX 检索，复制单色或整份清单。</small>
               </span>
             </span>
-            <span class="archive-trigger-rail" aria-hidden="true">
-              <i style="--chip: #f9f4dc"></i>
-              <i style="--chip: #a7535a"></i>
-              <i style="--chip: #41555d"></i>
-              <i style="--chip: #fed71a"></i>
-              <i style="--chip: #1ba784"></i>
-            </span>
             <span class="archive-trigger-action">
-              进入完整清单
+              查看清单
               <iconify-icon icon="lucide:arrow-right" aria-hidden="true"></iconify-icon>
             </span>
           </button>

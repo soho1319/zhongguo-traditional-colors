@@ -333,10 +333,16 @@ function parseRgbColor(value) {
   };
 }
 
+function cssColorToRgb(value) {
+  const hex = rgbFromHex(value?.trim());
+  if (hex) return { ...hex, a: 1 };
+  return parseRgbColor(value);
+}
+
 function nearestBackgroundRgb(node) {
   let current = node;
   while (current && current !== document.documentElement) {
-    const background = parseRgbColor(window.getComputedStyle(current).backgroundColor);
+    const background = cssColorToRgb(window.getComputedStyle(current).backgroundColor);
     if (background && background.a > 0) return background;
     current = current.parentElement;
   }
@@ -344,6 +350,14 @@ function nearestBackgroundRgb(node) {
   return currentTheme() === 'dark'
     ? { r: 17, g: 16, b: 14, a: 1 }
     : { r: 247, g: 247, b: 244, a: 1 };
+}
+
+function hoverBackgroundRgb(title) {
+  const hoverSurface = title.closest('.knowledge-note, .open-link');
+  if (!hoverSurface) return null;
+
+  const hoverColor = window.getComputedStyle(hoverSurface).getPropertyValue('--hover-bg');
+  return cssColorToRgb(hoverColor);
 }
 
 function luminanceChannel(value) {
@@ -392,7 +406,8 @@ function titlePreferredHues(title) {
 }
 
 function scoredTitleColors(title) {
-  const background = nearestBackgroundRgb(title);
+  const background = hoverBackgroundRgb(title) || nearestBackgroundRgb(title);
+  const targetIsDark = relativeLuminance(background) < 0.22;
   const preferredHues = titlePreferredHues(title);
 
   return images
@@ -407,20 +422,23 @@ function scoredTitleColors(title) {
       const hueIndex = preferredHues.indexOf(hue);
       const hueScore = hueIndex === -1 ? 0 : 80 - (hueIndex * 12);
       const contrastScore = Math.min(ratio, 12) * 10;
-      const saturationScore = hue === 'neutral' ? 3 : Math.min(hsl.s, 72) / 3;
-      const lightnessBalance = currentTheme() === 'dark'
-        ? 100 - Math.abs(hsl.l - 68)
-        : 100 - Math.abs(hsl.l - 34);
+      const saturationScore = hue === 'neutral'
+        ? (targetIsDark ? -18 : 3)
+        : Math.min(hsl.s, 76) / (targetIsDark ? 2.4 : 3);
+      const lightnessTarget = targetIsDark ? 72 : 34;
+      const lightnessBalance = 100 - Math.abs(hsl.l - lightnessTarget);
+      const blackSurfacePenalty = targetIsDark && hsl.l < 54 ? -120 : 0;
+      const washedOutPenalty = !targetIsDark && hsl.l > 58 ? -42 : 0;
 
       return {
         image,
         hue,
         ratio,
-        score: hueScore + contrastScore + saturationScore + (lightnessBalance / 5),
+        score: hueScore + contrastScore + saturationScore + (lightnessBalance / 4) + blackSurfacePenalty + washedOutPenalty,
       };
     })
     .filter(Boolean)
-    .filter((item) => item.ratio >= 4.5)
+    .filter((item) => item.ratio >= (targetIsDark ? 5.6 : 4.5))
     .sort((first, second) => second.score - first.score);
 }
 
@@ -450,8 +468,10 @@ function activateTitleColor(title) {
   const previousIndex = Number.parseInt(title.dataset.titleHoverIndex || '-1', 10);
   const nextIndex = Number.isNaN(previousIndex) ? 0 : (previousIndex + 1) % palette.length;
   const color = palette[nextIndex];
+  const baseColor = window.getComputedStyle(title).color;
 
   title.dataset.titleHoverIndex = String(nextIndex);
+  title.style.setProperty('--title-base-color', baseColor);
   title.style.setProperty('--title-hover-color', color.hex);
   title.dataset.titleHoverColor = `${colorName(color)} ${color.hex}`;
   title.classList.add('title-color-active');
