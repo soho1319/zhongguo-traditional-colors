@@ -34,6 +34,7 @@ let currentItems = [...images];
 let shuffled = false;
 let currentHue = 'all';
 let selectedColorValueType = getSavedColorValueType();
+let footerCopyTimer;
 
 const COLOR_VALUE_TYPES = [
   { value: 'hex', label: 'HEX' },
@@ -761,7 +762,12 @@ footerColorButtons.forEach((button) => {
     await writeClipboard(copyText);
     button.dataset.copied = 'true';
     if (footerCopyStatus) {
-      footerCopyStatus.textContent = `已复制 ${copyText}`;
+      window.clearTimeout(footerCopyTimer);
+      footerCopyStatus.textContent = `已复制：${copyText}`;
+      footerCopyStatus.dataset.visible = 'true';
+      footerCopyTimer = window.setTimeout(() => {
+        footerCopyStatus.dataset.visible = 'false';
+      }, 1600);
     }
     window.setTimeout(() => {
       delete button.dataset.copied;
