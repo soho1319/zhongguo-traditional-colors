@@ -399,6 +399,44 @@
       </button>
     </nav>
 
+    <dialog class="hero-preview-dialog" data-hero-preview-dialog>
+      <button class="dialog-close hero-preview-close" type="button" data-close-hero-preview aria-label="关闭色卡信息">
+        <iconify-icon icon="lucide:x" aria-hidden="true"></iconify-icon>
+      </button>
+      <div class="hero-preview-media">
+        <img alt="" data-hero-preview-image>
+      </div>
+      <div class="hero-preview-content">
+        <span class="section-kicker">胶片色卡</span>
+        <h2 data-hero-preview-title></h2>
+        <dl class="hero-preview-facts">
+          <div>
+            <dt>HEX</dt>
+            <dd data-hero-preview-hex></dd>
+          </div>
+          <div>
+            <dt>文件</dt>
+            <dd data-hero-preview-file></dd>
+          </div>
+          <div>
+            <dt>大小</dt>
+            <dd data-hero-preview-size></dd>
+          </div>
+        </dl>
+        <div class="hero-preview-actions">
+          <button class="button button-primary" type="button" data-copy-hero-preview>
+            <iconify-icon icon="lucide:copy" aria-hidden="true"></iconify-icon>
+            复制色值
+          </button>
+          <a class="button button-secondary" data-hero-preview-download download>
+            <iconify-icon icon="lucide:download" aria-hidden="true"></iconify-icon>
+            下载原图
+          </a>
+        </div>
+        <span class="hero-preview-status" data-hero-preview-status aria-live="polite"></span>
+      </div>
+    </dialog>
+
     <dialog class="master-list-dialog" data-master-list-dialog>
       <div class="master-list-head">
         <div>

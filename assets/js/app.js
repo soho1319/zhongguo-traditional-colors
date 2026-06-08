@@ -31,6 +31,16 @@ const footerCopyStatus = document.querySelector('[data-footer-copy-status]');
 const scrollUpButton = document.querySelector('[data-scroll-up]');
 const scrollDownButton = document.querySelector('[data-scroll-down]');
 const titleHoverElements = document.querySelectorAll('h1, h2, h3');
+const heroPreviewDialog = document.querySelector('[data-hero-preview-dialog]');
+const heroPreviewImage = document.querySelector('[data-hero-preview-image]');
+const heroPreviewTitle = document.querySelector('[data-hero-preview-title]');
+const heroPreviewHex = document.querySelector('[data-hero-preview-hex]');
+const heroPreviewFile = document.querySelector('[data-hero-preview-file]');
+const heroPreviewSize = document.querySelector('[data-hero-preview-size]');
+const heroPreviewDownload = document.querySelector('[data-hero-preview-download]');
+const heroPreviewStatus = document.querySelector('[data-hero-preview-status]');
+const closeHeroPreviewButton = document.querySelector('[data-close-hero-preview]');
+const copyHeroPreviewButton = document.querySelector('[data-copy-hero-preview]');
 
 let visibleCount = 24;
 let currentItems = [...images];
@@ -39,6 +49,8 @@ let currentHue = 'all';
 let selectedColorValueType = getSavedColorValueType();
 let footerCopyTimer;
 let scrollControlFrame;
+let currentHeroPreviewImage;
+const titleColorTimers = new WeakMap();
 
 const COLOR_VALUE_TYPES = [
   { value: 'hex', label: 'HEX' },
@@ -313,7 +325,7 @@ function contrastRatio(first, second) {
   return (lighter + 0.05) / (darker + 0.05);
 }
 
-function readableColorForTitle(title) {
+function readableColorsForTitle(title) {
   const background = nearestBackgroundRgb(title);
   const scored = images
     .filter((image) => image.hex)
@@ -336,19 +348,42 @@ function readableColorForTitle(title) {
       .sort((first, second) => second.ratio - first.ratio)
       .slice(0, 64);
 
-  return pool[randomInt(pool.length)]?.image;
+  return pool.map((item) => item.image);
+}
+
+function readableColorForTitle(title) {
+  const pool = readableColorsForTitle(title);
+  return pool[randomInt(pool.length)];
 }
 
 function activateTitleColor(title) {
-  const color = readableColorForTitle(title);
-  if (!color) return;
+  window.clearTimeout(titleColorTimers.get(title));
 
-  title.style.setProperty('--title-hover-color', color.hex);
-  title.dataset.titleHoverColor = `${colorName(color)} ${color.hex}`;
-  title.classList.add('title-color-active');
+  const pool = readableColorsForTitle(title);
+  if (!pool.length) return;
+
+  const steps = window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 1 : 4;
+  let index = 0;
+
+  const applyNextColor = () => {
+    const color = pool[randomInt(pool.length)];
+    if (!color) return;
+
+    title.style.setProperty('--title-hover-color', color.hex);
+    title.dataset.titleHoverColor = `${colorName(color)} ${color.hex}`;
+    title.classList.add('title-color-active');
+    index += 1;
+
+    if (index < steps && title.matches(':hover, :focus')) {
+      titleColorTimers.set(title, window.setTimeout(applyNextColor, 95));
+    }
+  };
+
+  applyNextColor();
 }
 
 function clearTitleColor(title) {
+  window.clearTimeout(titleColorTimers.get(title));
   title.classList.remove('title-color-active');
 }
 
@@ -445,7 +480,9 @@ function buildHero() {
   });
 
   const imageMarkup = (image) => (
-    `<img src="${encodedPath(thumbnailPath(image))}" alt="中国传统色色卡 ${colorTitle(image)}" loading="eager">`
+    `<button class="hero-film-card" type="button" data-hero-preview="${image.id}" aria-label="查看 ${colorTitle(image)} 色卡信息">
+      <img src="${encodedPath(thumbnailPath(image))}" alt="中国传统色色卡 ${colorTitle(image)}" loading="eager">
+    </button>`
   );
 
   heroMosaic.innerHTML = columns.map((column, columnIndex) => (
@@ -456,6 +493,31 @@ function buildHero() {
       </div>
     </div>`
   )).join('');
+}
+
+function openHeroPreview(id) {
+  const image = images.find((item) => item.id === id);
+  if (!image || !heroPreviewDialog) return;
+
+  const url = encodedPath(image.path);
+  currentHeroPreviewImage = image;
+  if (heroPreviewImage) {
+    heroPreviewImage.src = url;
+    heroPreviewImage.alt = `中国传统色色卡 ${colorTitle(image)}`;
+  }
+  if (heroPreviewTitle) heroPreviewTitle.textContent = colorTitle(image);
+  if (heroPreviewHex) heroPreviewHex.textContent = image.hex || '未记录';
+  if (heroPreviewFile) heroPreviewFile.textContent = image.file;
+  if (heroPreviewSize) heroPreviewSize.textContent = formatBytes(image.size);
+  if (heroPreviewDownload) {
+    heroPreviewDownload.href = url;
+    heroPreviewDownload.setAttribute('download', image.file);
+  }
+  if (heroPreviewStatus) heroPreviewStatus.textContent = '';
+
+  if (typeof heroPreviewDialog.showModal === 'function') {
+    heroPreviewDialog.showModal();
+  }
 }
 
 function cardMarkup(image) {
@@ -882,9 +944,26 @@ gallery?.addEventListener('change', (event) => {
   saveColorValueType(select.value);
   updateCopyControls();
 });
+heroMosaic?.addEventListener('click', (event) => {
+  const button = event.target.closest('[data-hero-preview]');
+  if (button) openHeroPreview(button.dataset.heroPreview);
+});
 
 openMasterListButton?.addEventListener('click', openMasterList);
 closeMasterListButton?.addEventListener('click', () => masterListDialog?.close());
+closeHeroPreviewButton?.addEventListener('click', () => heroPreviewDialog?.close());
+heroPreviewDialog?.addEventListener('click', (event) => {
+  if (event.target === heroPreviewDialog) heroPreviewDialog.close();
+});
+copyHeroPreviewButton?.addEventListener('click', async () => {
+  if (!currentHeroPreviewImage?.hex) return;
+
+  const copyText = `${colorName(currentHeroPreviewImage)} ${currentHeroPreviewImage.hex}`;
+  await writeClipboard(copyText);
+  if (heroPreviewStatus) {
+    heroPreviewStatus.textContent = `已复制：${copyText}`;
+  }
+});
 masterSearchInput?.addEventListener('input', renderMasterList);
 masterListDialog?.addEventListener('click', async (event) => {
   if (event.target === masterListDialog) {
