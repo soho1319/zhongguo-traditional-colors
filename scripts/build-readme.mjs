@@ -4,8 +4,12 @@ import vm from "node:vm";
 
 const root = process.cwd();
 const manifestPath = path.join(root, "assets/data/images.js");
-const readmePath = path.join(root, "README.md");
 const columns = 4;
+const siteUrl = "https://nevertoday.github.io/chinese-traditional-colors/";
+const repoUrl = "https://github.com/nevertoday/chinese-traditional-colors";
+const releaseUrl = `${repoUrl}/releases/tag/v0.1.0`;
+const masterListPath = "docs/chinese-color-master-list.md";
+const authorUrl = "https://x.com/xiaoxiaodong01";
 
 async function loadManifest() {
   const source = await fs.readFile(manifestPath, "utf8");
@@ -18,8 +22,13 @@ async function loadManifest() {
   };
 }
 
-function galleryRows(images) {
+function galleryRows(images, locale) {
   const rows = [];
+  const altPrefix = {
+    zh: "中国传统色",
+    en: "Chinese traditional color",
+    ja: "中国伝統色",
+  }[locale];
 
   for (let index = 0; index < images.length; index += columns) {
     const rowImages = images.slice(index, index + columns);
@@ -27,8 +36,7 @@ function galleryRows(images) {
       .map((image) => {
         const thumb = `thumbnails/color-card-${image.id}.jpg`;
         const title = image.file.replace(/\.[^.]+$/, "");
-        const alt = `中国传统色 ${title}`;
-        return `  <a href="${image.path}"><img src="${thumb}" width="180" alt="${alt}"></a>`;
+        return `  <a href="${image.path}"><img src="${thumb}" width="180" alt="${altPrefix} ${title}"></a>`;
       })
       .join("\n");
 
@@ -38,22 +46,35 @@ function galleryRows(images) {
   return rows.join("\n\n");
 }
 
-function renderReadme(project, images) {
+function languageSwitch(current) {
+  const links = {
+    zh: current === "zh" ? "简体中文" : "[简体中文](README.md)",
+    en: current === "en" ? "English" : "[English](README.en.md)",
+    ja: current === "ja" ? "日本語" : "[日本語](README.ja.md)",
+  };
+
+  return `${links.zh} | ${links.en} | ${links.ja}`;
+}
+
+function renderZh(project, images) {
   const totalMb = Math.round(project.totalBytes / 1024 / 1024);
+  const zipUrl = `${repoUrl}/releases/latest/download/${project.archiveName}`;
 
   return `# 中国传统配色
 
+${languageSwitch("zh")}
+
 如果你在做设计、写内容、做课件、搭建网页主题，常常需要一套稳妥、好看、能直接使用的中国色参考，这个仓库就是为这件事整理的。
 
-这里收录 ${project.count} 张中华传统色高清色卡，已按原始 742 色清单完整覆盖。每张色卡包含色名、HEX、RGB、CMYK、配色推荐和气质关键词。你可以在线浏览，也可以下载 ZIP，把它当作自己的传统色素材库。
+这里收录 ${project.count} 张中华传统色高清色卡，已按原始 742 色清单完整覆盖。每张色卡包含色名、HEX、RGB、CMYK、配色推荐和气质关键词。你可以在线浏览，也可以直接下载已经打包好的 ZIP，把它当作自己的传统色素材库。
 
 ## 快速入口
 
-- [在线浏览色卡](https://nevertoday.github.io/zhongguo-traditional-colors/)
-- [下载全部高清图片 ZIP](https://github.com/nevertoday/zhongguo-traditional-colors/releases/latest/download/${project.archiveName})
-- [完整图片包 Release 下载](https://github.com/nevertoday/zhongguo-traditional-colors/releases/tag/v0.1.0)
-- [原始 742 色清单](docs/chinese-color-master-list.md)
-- [作者 X 主页](https://x.com/xiaoxiaodong01)
+- [在线浏览色卡](${siteUrl})
+- [直接下载完整 ZIP](${zipUrl})
+- [查看 Release](${releaseUrl})
+- [原始 742 色清单](${masterListPath})
+- [作者 X 主页](${authorUrl})
 
 ## 这个项目能帮你什么
 
@@ -72,7 +93,7 @@ function renderReadme(project, images) {
 下面是完整 742 色预览，点击任意一张可以打开高清 PNG 原图。
 
 <!-- gallery:start -->
-${galleryRows(images)}
+${galleryRows(images, "zh")}
 
 <!-- gallery:end -->
 
@@ -92,7 +113,7 @@ ${galleryRows(images)}
 
 ## 数据说明
 
-图片文件统一按 \`NNN-颜色名.png\` 命名，编号与 [原始 742 色清单](docs/chinese-color-master-list.md) 保持一致。当前图片与清单一一对应，共 ${project.count} 张高清 PNG 色卡。
+图片文件统一按 \`NNN-颜色名.png\` 命名，编号与 [原始 742 色清单](${masterListPath}) 保持一致。当前图片与清单一一对应，共 ${project.count} 张高清 PNG 色卡。
 
 ## 项目结构
 
@@ -121,7 +142,7 @@ npm run start
 http://localhost:5173
 \`\`\`
 
-也可以直接部署到 GitHub Pages。为了让浏览器端 ZIP 打包正常读取图片，请通过本地服务器或线上静态站访问，不建议直接用 \`file://\` 打开。
+也可以直接部署到 GitHub Pages。完整 ZIP 通过 Release 附件分发；浏览器备用打包需要通过本地服务器或线上静态站访问，不建议直接用 \`file://\` 打开。
 
 ## 更新图片清单
 
@@ -142,7 +163,7 @@ npm run readme
 
 ## 联系作者
 
-可以通过作者 X 主页联系：[@xiaoxiaodong01](https://x.com/xiaoxiaodong01)。
+可以通过作者 X 主页联系：[@xiaoxiaodong01](${authorUrl})。
 
 ## 贡献
 
@@ -156,5 +177,170 @@ npm run readme
 `;
 }
 
+function renderEn(project, images) {
+  const totalMb = Math.round(project.totalBytes / 1024 / 1024);
+  const zipUrl = `${repoUrl}/releases/latest/download/${project.archiveName}`;
+
+  return `# Chinese Traditional Colors
+
+${languageSwitch("en")}
+
+This repository is a practical archive for designers, educators, writers, front-end developers, and anyone who needs a reliable Chinese color reference that can be used immediately.
+
+It contains ${project.count} high-resolution Chinese traditional color cards, aligned with the original 742-color list. Each card preserves the color name, HEX, RGB, CMYK, palette guidance, and mood keywords. Browse online, download individual images, or download the complete ZIP package from GitHub Releases.
+
+## Quick Links
+
+- [Browse the online gallery](${siteUrl})
+- [Download the complete ZIP](${zipUrl})
+- [View the Release](${releaseUrl})
+- [Original 742-color list](${masterListPath})
+- [Author on X](${authorUrl})
+
+## What This Project Gives You
+
+| Need | Provided here |
+| --- | --- |
+| A fast Chinese color reference | ${project.count} high-resolution PNG color cards |
+| Visual material for design and content | Direct image preview and single-card download |
+| A local color asset library | Filenames aligned with the 742-color source list |
+| Web, slide, poster, and teaching assets | Full README preview plus one-click ZIP download |
+| Color name and value checking | Centralized names, HEX, RGB, and CMYK references |
+
+The original image set is about ${totalMb} MB. The ZIP is distributed as a GitHub Release asset instead of being committed to the repository.
+
+## Full Gallery
+
+The preview below includes all 742 colors. Click any card to open the high-resolution PNG.
+
+<!-- gallery:start -->
+${galleryRows(images, "en")}
+
+<!-- gallery:end -->
+
+## Why This Exists
+
+Chinese traditional color references are scattered across the web. When making real work, people often still need to collect images, copy values, compare names, and organize files by hand. This project removes that repeated setup work so the archive can be used directly in design, teaching, writing, product UI, and open-data experiments.
+
+Traditional colors are not only color values. They connect with craft, dyeing, mineral pigments, poetry, seasonal imagery, objects, and aesthetic order. Presenting them as browsable cards makes them easier to feel, compare, remember, and reuse.
+
+## Data Notes
+
+Images use the \`NNN-color-name.png\` naming pattern and match the [original 742-color list](${masterListPath}). The current archive contains ${project.count} high-resolution PNG cards.
+
+## Local Preview
+
+\`\`\`bash
+npm run manifest
+npm run readme
+npm run start
+\`\`\`
+
+Then open:
+
+\`\`\`text
+http://localhost:5173
+\`\`\`
+
+The complete ZIP is provided through GitHub Releases. Browser-side ZIP generation is kept only as a fallback and should be used through a local server or GitHub Pages, not through \`file://\`.
+
+## Support
+
+This archive remains free and open source. If it saves you time, a Star, a share, a useful issue, or a small coffee for the author all help the project continue.
+
+<img src="docs/images/buy-me-a-coffee-qr.png" alt="Buy Me a Coffee QR code" width="220">
+
+## License
+
+This project is released under the [MIT License](LICENSE).
+
+Note: Traditional color values may vary across sources, screens, print processes, and materials. Treat this archive as an open reference and verify colors for production use.
+`;
+}
+
+function renderJa(project, images) {
+  const totalMb = Math.round(project.totalBytes / 1024 / 1024);
+  const zipUrl = `${repoUrl}/releases/latest/download/${project.archiveName}`;
+
+  return `# 中国伝統色
+
+${languageSwitch("ja")}
+
+このリポジトリは、デザイン、教材、記事、Web テーマ、文化研究でそのまま使える中国伝統色の資料アーカイブです。
+
+${project.count} 枚の高解像度カラーカードを収録し、元の 742 色リストと対応させています。各カードには色名、HEX、RGB、CMYK、配色の参考、雰囲気のキーワードをまとめています。オンラインで閲覧でき、個別画像も完全 ZIP もダウンロードできます。
+
+## クイックリンク
+
+- [オンラインギャラリーを見る](${siteUrl})
+- [完全 ZIP をダウンロード](${zipUrl})
+- [Release を見る](${releaseUrl})
+- [元の 742 色リスト](${masterListPath})
+- [作者の X](${authorUrl})
+
+## このプロジェクトでできること
+
+| 目的 | 提供内容 |
+| --- | --- |
+| 中国色の参考をすばやく探す | ${project.count} 枚の高解像度 PNG カード |
+| デザインや記事素材に使う | 画像プレビューと単体ダウンロード |
+| ローカルの色資料庫を作る | 742 色リストに対応したファイル名 |
+| Web、スライド、ポスター、教材に使う | README の全量プレビューと ZIP 一括ダウンロード |
+| 色名と色値を確認する | 色名、HEX、RGB、CMYK の整理済みリファレンス |
+
+元画像は約 ${totalMb} MB です。ZIP は GitHub Release の添付ファイルとして配布し、リポジトリ本体には含めていません。
+
+## 全カラーギャラリー
+
+以下は 742 色すべてのプレビューです。画像をクリックすると高解像度 PNG を開けます。
+
+<!-- gallery:start -->
+${galleryRows(images, "ja")}
+
+<!-- gallery:end -->
+
+## なぜ作ったのか
+
+中国伝統色の資料は多く存在しますが、実際に制作で使うときには、画像を探し、色値を写し、名前を照合し、ファイルを整理する作業が何度も発生します。このプロジェクトはその準備作業をあらかじめ済ませ、デザイナー、教師、コンテンツ制作者、開発者がすぐに使える資料としてまとめています。
+
+伝統色は単なる色値ではなく、器物、染織、鉱物顔料、詩歌、季節感、審美の秩序とも結びついています。カードとして並べることで、表だけでは見えにくい感覚や比較がしやすくなります。
+
+## データについて
+
+画像は \`NNN-色名.png\` 形式で命名され、[元の 742 色リスト](${masterListPath}) と対応しています。現在のアーカイブには ${project.count} 枚の高解像度 PNG カードがあります。
+
+## ローカルプレビュー
+
+\`\`\`bash
+npm run manifest
+npm run readme
+npm run start
+\`\`\`
+
+その後、次の URL を開きます。
+
+\`\`\`text
+http://localhost:5173
+\`\`\`
+
+完全 ZIP は GitHub Releases から配布しています。ブラウザ側の ZIP 生成は予備手段として残しており、使用する場合は \`file://\` ではなくローカルサーバーまたは GitHub Pages から開いてください。
+
+## サポート
+
+このアーカイブは無料かつオープンソースで公開し続けます。役に立った場合は Star、共有、Issue、または作者へのコーヒー支援が励みになります。
+
+<img src="docs/images/buy-me-a-coffee-qr.png" alt="Buy Me a Coffee QR code" width="220">
+
+## ライセンス
+
+このプロジェクトは [MIT License](LICENSE) のもとで公開されています。
+
+注意：伝統色の色値は資料、画面、印刷、素材によって差が出る場合があります。このアーカイブはオープンな参考資料として利用し、実制作では媒体に合わせて確認してください。
+`;
+}
+
 const { project, images } = await loadManifest();
-await fs.writeFile(readmePath, renderReadme(project, images), "utf8");
+await fs.writeFile(path.join(root, "README.md"), renderZh(project, images), "utf8");
+await fs.writeFile(path.join(root, "README.en.md"), renderEn(project, images), "utf8");
+await fs.writeFile(path.join(root, "README.ja.md"), renderJa(project, images), "utf8");
+console.log(`Wrote ${project.count} images to README.md, README.en.md, README.ja.md`);

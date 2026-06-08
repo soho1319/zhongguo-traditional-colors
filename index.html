@@ -41,7 +41,7 @@
         <a href="#open-source">开源</a>
       </nav>
       <div class="header-tools" aria-label="站点工具">
-        <a class="nav-icon-link" href="https://github.com/nevertoday/zhongguo-traditional-colors" aria-label="打开 GitHub 仓库">
+        <a class="nav-icon-link" href="https://github.com/nevertoday/chinese-traditional-colors" aria-label="打开 GitHub 仓库">
           <iconify-icon icon="simple-icons:github" aria-hidden="true"></iconify-icon>
         </a>
         <button class="theme-toggle" type="button" data-theme-toggle aria-pressed="false">
@@ -64,9 +64,9 @@
               <iconify-icon icon="lucide:images" aria-hidden="true"></iconify-icon>
               浏览色卡
             </a>
-            <a class="button button-secondary" href="https://github.com/nevertoday/zhongguo-traditional-colors/releases/latest/download/zhongguo-traditional-colors-images.zip">
+            <a class="button button-secondary" href="https://github.com/nevertoday/chinese-traditional-colors/releases/latest/download/chinese-traditional-colors-images.zip">
               <iconify-icon icon="lucide:download" aria-hidden="true"></iconify-icon>
-              下载 ZIP
+              直接下载 ZIP
             </a>
           </div>
           <div class="hero-proof" aria-label="项目维护信息">
@@ -114,7 +114,7 @@
         <div class="section-heading">
           <span class="section-kicker">742 张色卡</span>
           <h2 id="gallery-title">色卡资料库</h2>
-          <p>全部使用真实高清 PNG。可以按编号、色名、色值或色相筛选，单张预览、单张下载，也可以把完整图片包一次性打包带走</p>
+          <p>全部使用真实高清 PNG。可以按编号、色名、色值或色相筛选，单张预览、单张下载，也可以直接下载已经打包好的完整 ZIP</p>
         </div>
 
         <div class="toolbar" aria-label="色卡工具">
@@ -180,7 +180,14 @@
         </div>
 
         <div class="audit-actions">
-          <button class="text-link text-button" type="button" data-open-master-list>预览 742 色清单</button>
+          <button class="archive-trigger" type="button" data-open-master-list>
+            <span class="archive-trigger-count">742</span>
+            <span class="archive-trigger-copy">
+              <strong>预览色值清单</strong>
+              <small>编号 / 色名 / HEX，可逐项复制</small>
+            </span>
+            <iconify-icon icon="lucide:panel-top-open" aria-hidden="true"></iconify-icon>
+          </button>
         </div>
       </section>
 
@@ -218,9 +225,9 @@
       <section class="download-section" id="download" aria-labelledby="download-title">
         <div class="download-copy">
           <span class="section-kicker">下载素材</span>
-          <h2 id="download-title">所有图片打包下载</h2>
+          <h2 id="download-title">直接下载完整 ZIP</h2>
           <p>
-            页面可以直接把 images 文件夹中的全部图片打成 ZIP。适合建立本地素材库、课件资料包、项目参考库或离线浏览备份
+            完整图片包已经作为 GitHub Release 附件打包好。点击主按钮即可下载，不需要等待浏览器现场生成
           </p>
         </div>
         <div class="download-panel">
@@ -230,17 +237,21 @@
             <strong data-total-size>998 MB</strong>
             <span>原始图片</span>
           </div>
-          <button class="button button-primary button-large" type="button" data-download-zip>
+          <a class="button button-primary button-large download-primary" href="https://github.com/nevertoday/chinese-traditional-colors/releases/latest/download/chinese-traditional-colors-images.zip">
             <iconify-icon icon="lucide:download" aria-hidden="true"></iconify-icon>
-            生成 ZIP
-          </button>
-          <a class="download-direct" href="https://github.com/nevertoday/zhongguo-traditional-colors/releases/latest/download/zhongguo-traditional-colors-images.zip">
-            不想等待浏览器打包？直接下载 Release ZIP
+            直接下载 ZIP
           </a>
+          <div class="download-fallback">
+            <button class="download-build-button" type="button" data-download-zip>
+              <iconify-icon icon="lucide:package" aria-hidden="true"></iconify-icon>
+              浏览器备用打包
+            </button>
+            <span>Release 附件不可用时再使用</span>
+          </div>
           <div class="progress" aria-hidden="true">
             <span data-progress-bar></span>
           </div>
-          <p class="download-status" data-download-status>浏览器会按清单读取图片并生成 zhongguo-traditional-colors-images.zip</p>
+          <p class="download-status" data-download-status>推荐直接下载已打包好的 chinese-traditional-colors-images.zip。备用打包会在本机重新读取全部图片</p>
         </div>
       </section>
 
@@ -270,7 +281,7 @@
               <iconify-icon icon="lucide:external-link" aria-hidden="true"></iconify-icon>
               X 主页
             </a>
-            <a class="button button-secondary" href="https://github.com/nevertoday/zhongguo-traditional-colors">
+            <a class="button button-secondary" href="https://github.com/nevertoday/chinese-traditional-colors">
               <iconify-icon icon="simple-icons:github" aria-hidden="true"></iconify-icon>
               GitHub
             </a>
@@ -303,7 +314,7 @@
               <small>直接按色名、编号、HEX 和色相筛选，复制色值后就能放进设计稿、网页主题或内容封面</small>
             </span>
           </a>
-          <a class="open-link" href="https://github.com/nevertoday/zhongguo-traditional-colors/releases/latest/download/zhongguo-traditional-colors-images.zip" data-open-number="02">
+          <a class="open-link" href="https://github.com/nevertoday/chinese-traditional-colors/releases/latest/download/chinese-traditional-colors-images.zip" data-open-number="02">
             <span class="open-index">02</span>
             <iconify-icon icon="lucide:archive" aria-hidden="true"></iconify-icon>
             <span>

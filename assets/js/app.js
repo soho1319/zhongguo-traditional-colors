@@ -2,7 +2,7 @@ const images = window.TRADITIONAL_COLOR_IMAGES || [];
 const project = window.TRADITIONAL_COLOR_PROJECT || {
   count: images.length,
   totalBytes: images.reduce((total, image) => total + image.size, 0),
-  archiveName: 'zhongguo-traditional-colors-images.zip',
+  archiveName: 'chinese-traditional-colors-images.zip',
 };
 
 const gallery = document.querySelector('[data-gallery]');
@@ -596,7 +596,7 @@ async function downloadZip() {
   if (!images.length || !zipButton) return;
 
   zipButton.disabled = true;
-  zipButton.textContent = '生成中';
+  zipButton.textContent = '备用打包中';
   setDownloadProgress(0, images.length, '读取图片');
 
   try {
@@ -653,11 +653,11 @@ async function downloadZip() {
     }
   } catch (error) {
     if (zipStatus) {
-      zipStatus.textContent = `${error.message}。请通过本地服务器或 GitHub Pages 打开页面。`;
+      zipStatus.textContent = `${error.message}。备用打包需要通过本地服务器或 GitHub Pages 打开页面。`;
     }
   } finally {
     zipButton.disabled = false;
-    zipButton.innerHTML = '<iconify-icon icon="lucide:download" aria-hidden="true"></iconify-icon>生成 ZIP';
+    zipButton.innerHTML = '<iconify-icon icon="lucide:package" aria-hidden="true"></iconify-icon>浏览器备用打包';
   }
 }
 

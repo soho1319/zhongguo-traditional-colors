@@ -19,13 +19,13 @@ git commit -m "Create open traditional colors archive"
 在 GitHub 创建一个空仓库，例如：
 
 ```text
-zhongguo-traditional-colors
+chinese-traditional-colors
 ```
 
 然后关联远程仓库：
 
 ```bash
-git remote add origin git@github.com:<your-name>/zhongguo-traditional-colors.git
+git remote add origin git@github.com:<your-name>/chinese-traditional-colors.git
 git branch -M main
 git push -u origin main
 ```
@@ -67,7 +67,7 @@ Releases -> Draft a new release
 上传：
 
 ```text
-downloads/zhongguo-traditional-colors-images.zip
+downloads/chinese-traditional-colors-images.zip
 ```
 
 建议 Release 标题：
@@ -79,7 +79,7 @@ Image pack v0.1.0
 建议说明：
 
 ```text
-包含当前 538 张中华传统色色卡图片。后续新增色卡后会继续发布新版图片包。
+包含当前 742 张中华传统色色卡图片。后续新增色卡后会继续发布新版图片包。
 ```
 
 ## 5. 后续更新流程

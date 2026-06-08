@@ -2,15 +2,19 @@
 
 项目提供两种全量下载方式。
 
-## 方式一：浏览器端生成 ZIP
+## 方式一：直接下载 Release ZIP
 
-在页面的“所有图片打包下载”区域点击“生成 ZIP”。浏览器会按 `assets/data/images.js` 的清单读取 `images/` 下的全部图片，并生成：
+完整图片包已经由维护者打包为 GitHub Release 附件。访问页面的“下载素材”区域，点击“直接下载 ZIP”即可获得：
 
 ```text
-zhongguo-traditional-colors-images.zip
+chinese-traditional-colors-images.zip
 ```
 
-这种方式适合 GitHub Pages，因为仓库不需要额外保存一个 700MB 级别的压缩包。
+这种方式是公开页面的推荐下载路径，不需要等待浏览器读取和重新打包全部图片。
+
+## 方式二：浏览器端备用打包
+
+如果 Release 附件暂时不可用，可以在页面的“下载素材”区域点击“浏览器备用打包”。浏览器会按 `assets/data/images.js` 的清单读取 `images/` 下的全部图片，并在本机生成同名 ZIP。
 
 注意事项：
 
@@ -18,7 +22,7 @@ zhongguo-traditional-colors-images.zip
 - 浏览器会读取全部图片，过程取决于网络速度和设备内存。
 - ZIP 使用无压缩打包，避免引入第三方依赖。
 
-## 方式二：本地生成 Release 附件
+## 方式三：本地生成 Release 附件
 
 维护者可以运行：
 
@@ -29,7 +33,7 @@ npm run package:images
 输出位置：
 
 ```text
-downloads/zhongguo-traditional-colors-images.zip
+downloads/chinese-traditional-colors-images.zip
 ```
 
 然后把 ZIP 上传为 GitHub Release 附件。这样访问者可以直接从 Release 下载完整图片包。

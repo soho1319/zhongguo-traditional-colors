@@ -385,6 +385,7 @@ code {
 input:focus-visible,
 select:focus-visible,
 .open-link:focus-visible,
+.archive-trigger:focus-visible,
 .card-button:focus-visible,
 .copy-color-button:focus-visible,
 .copy-format select:focus-visible,
@@ -398,6 +399,7 @@ select:focus-visible,
 .button iconify-icon,
 .tool-button iconify-icon,
 .open-link iconify-icon,
+.archive-trigger iconify-icon,
 .card-button iconify-icon,
 .theme-toggle iconify-icon {
   width: 18px;
@@ -408,6 +410,7 @@ select:focus-visible,
 
 .button:hover iconify-icon,
 .tool-button:hover iconify-icon,
+.archive-trigger:hover iconify-icon,
 .card-button:hover iconify-icon,
 .theme-toggle:hover iconify-icon {
   transform: translateY(-1px);
@@ -1013,6 +1016,65 @@ select:focus-visible,
   margin-top: 26px;
 }
 
+.archive-trigger {
+  display: inline-grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  gap: 16px;
+  align-items: center;
+  min-width: min(100%, 420px);
+  padding: 14px 16px;
+  color: var(--ink);
+  text-align: left;
+  background: transparent;
+  border: 0;
+  border-top: 1px solid var(--line-strong);
+  border-bottom: 1px solid var(--line-strong);
+  cursor: pointer;
+  transition: background 180ms ease, border-color 180ms ease, color 180ms ease, transform 180ms var(--ease-out-quart);
+}
+
+.archive-trigger:hover {
+  color: var(--hover-text);
+  background: var(--hover-bg);
+  border-color: var(--hover-bg);
+  transform: translateY(-1px);
+}
+
+.archive-trigger-count {
+  font-family: var(--font-rounded);
+  font-size: 1.55rem;
+  font-weight: 900;
+  font-variant-numeric: tabular-nums;
+  line-height: 1;
+}
+
+.archive-trigger-copy {
+  display: grid;
+  gap: 3px;
+  min-width: 0;
+}
+
+.archive-trigger-copy strong,
+.archive-trigger-copy small {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.archive-trigger-copy strong {
+  font-weight: 700;
+}
+
+.archive-trigger-copy small {
+  color: var(--muted);
+  font-size: 0.78rem;
+  line-height: 1.5;
+}
+
+.archive-trigger:hover .archive-trigger-copy small {
+  color: color-mix(in srgb, var(--hover-text) 70%, transparent);
+}
+
 .text-link {
   color: var(--ink);
   text-underline-offset: 5px;
@@ -1138,23 +1200,6 @@ select:focus-visible,
   outline-color: var(--feature-text);
 }
 
-.download-direct {
-  display: block;
-  margin-top: 14px;
-  color: var(--dark-panel-text);
-  font-size: 0.9rem;
-  line-height: 1.65;
-  text-align: center;
-  text-underline-offset: 5px;
-}
-
-.download-direct:hover,
-.download-direct:focus-visible {
-  color: var(--feature-text);
-  background: transparent;
-  outline: none;
-}
-
 .progress {
   height: 8px;
   margin-top: 18px;
@@ -1176,6 +1221,58 @@ select:focus-visible,
   color: var(--dark-panel-text);
   font-size: 0.9rem;
   line-height: 1.75;
+}
+
+.download-fallback {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: 12px;
+  align-items: center;
+  margin-top: 16px;
+  padding-top: 16px;
+  border-top: 1px solid color-mix(in srgb, var(--feature-text) 18%, transparent);
+}
+
+.download-build-button {
+  display: inline-flex;
+  gap: 8px;
+  align-items: center;
+  justify-content: center;
+  min-height: 38px;
+  padding: 8px 11px;
+  color: var(--feature-text);
+  background: transparent;
+  border: 1px solid color-mix(in srgb, var(--feature-text) 44%, transparent);
+  cursor: pointer;
+  font-weight: 700;
+  transition: background 180ms ease, color 180ms ease, border-color 180ms ease, transform 180ms var(--ease-out-quart);
+}
+
+.download-build-button:hover,
+.download-build-button:focus-visible {
+  color: var(--feature-text);
+  background: transparent;
+  border-color: var(--feature-text);
+  outline: none;
+  transform: translateY(-1px);
+}
+
+.download-build-button:disabled {
+  cursor: wait;
+  opacity: 0.62;
+  transform: none;
+}
+
+.download-build-button iconify-icon {
+  width: 16px;
+  height: 16px;
+}
+
+.download-fallback span {
+  min-width: 0;
+  color: var(--dark-panel-text);
+  font-size: 0.82rem;
+  line-height: 1.55;
 }
 
 .open-grid {
@@ -1854,6 +1951,7 @@ select:focus-visible,
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
   max-height: 58vh;
+  padding: 12px clamp(26px, 4vw, 38px) 18px;
   overflow: auto;
   background: var(--panel);
 }
@@ -2079,6 +2177,10 @@ select:focus-visible,
     width: 100%;
   }
 
+  .archive-trigger {
+    width: 100%;
+  }
+
   .search-box {
     width: 100%;
   }
@@ -2117,6 +2219,12 @@ select:focus-visible,
   .master-color-list {
     grid-template-columns: 1fr;
     max-height: 52vh;
+    padding: 10px 12px 14px;
+  }
+
+  .download-fallback {
+    grid-template-columns: 1fr;
+    align-items: stretch;
   }
 
   .author-meta {

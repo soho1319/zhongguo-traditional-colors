@@ -1,14 +1,16 @@
 # 中国传统配色
 
+简体中文 | [English](README.en.md) | [日本語](README.ja.md)
+
 如果你在做设计、写内容、做课件、搭建网页主题，常常需要一套稳妥、好看、能直接使用的中国色参考，这个仓库就是为这件事整理的。
 
-这里收录 742 张中华传统色高清色卡，已按原始 742 色清单完整覆盖。每张色卡包含色名、HEX、RGB、CMYK、配色推荐和气质关键词。你可以在线浏览，也可以下载 ZIP，把它当作自己的传统色素材库。
+这里收录 742 张中华传统色高清色卡，已按原始 742 色清单完整覆盖。每张色卡包含色名、HEX、RGB、CMYK、配色推荐和气质关键词。你可以在线浏览，也可以直接下载已经打包好的 ZIP，把它当作自己的传统色素材库。
 
 ## 快速入口
 
-- [在线浏览色卡](https://nevertoday.github.io/zhongguo-traditional-colors/)
-- [下载全部高清图片 ZIP](https://github.com/nevertoday/zhongguo-traditional-colors/releases/latest/download/zhongguo-traditional-colors-images.zip)
-- [完整图片包 Release 下载](https://github.com/nevertoday/zhongguo-traditional-colors/releases/tag/v0.1.0)
+- [在线浏览色卡](https://nevertoday.github.io/chinese-traditional-colors/)
+- [直接下载完整 ZIP](https://github.com/nevertoday/chinese-traditional-colors/releases/latest/download/chinese-traditional-colors-images.zip)
+- [查看 Release](https://github.com/nevertoday/chinese-traditional-colors/releases/tag/v0.1.0)
 - [原始 742 色清单](docs/chinese-color-master-list.md)
 - [作者 X 主页](https://x.com/xiaoxiaodong01)
 
@@ -1376,7 +1378,7 @@ npm run start
 http://localhost:5173
 ```
 
-也可以直接部署到 GitHub Pages。为了让浏览器端 ZIP 打包正常读取图片，请通过本地服务器或线上静态站访问，不建议直接用 `file://` 打开。
+也可以直接部署到 GitHub Pages。完整 ZIP 通过 Release 附件分发；浏览器备用打包需要通过本地服务器或线上静态站访问，不建议直接用 `file://` 打开。
 
 ## 更新图片清单
 
