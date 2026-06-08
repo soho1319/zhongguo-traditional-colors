@@ -28,10 +28,6 @@ It contains 742 high-resolution Chinese traditional color cards, aligned with th
 
 The original image set is about 998 MB. The ZIP is distributed as a GitHub Release asset instead of being committed to the repository.
 
-## Star History
-
-[![Star History Chart](https://api.star-history.com/svg?repos=nevertoday/zhongguo-traditional-colors&type=Date)](https://www.star-history.com/#nevertoday/zhongguo-traditional-colors&Date)
-
 ## Full Gallery
 
 The preview below includes all 742 colors. Click any card to open the high-resolution PNG.
@@ -1344,6 +1340,10 @@ The preview below includes all 742 colors. Click any card to open the high-resol
 Chinese traditional color references are scattered across the web. When making real work, people often still need to collect images, copy values, compare names, and organize files by hand. This project removes that repeated setup work so the archive can be used directly in design, teaching, writing, product UI, and open-data experiments.
 
 Traditional colors are not only color values. They connect with craft, dyeing, mineral pigments, poetry, seasonal imagery, objects, and aesthetic order. Presenting them as browsable cards makes them easier to feel, compare, remember, and reuse.
+
+## Star History
+
+[![Star History Chart](https://api.star-history.com/svg?repos=nevertoday/zhongguo-traditional-colors&type=Date)](https://www.star-history.com/#nevertoday/zhongguo-traditional-colors&Date)
 
 ## Data Notes
 

@@ -28,10 +28,6 @@
 
 元画像は約 998 MB です。ZIP は GitHub Release の添付ファイルとして配布し、リポジトリ本体には含めていません。
 
-## Star History
-
-[![Star History Chart](https://api.star-history.com/svg?repos=nevertoday/zhongguo-traditional-colors&type=Date)](https://www.star-history.com/#nevertoday/zhongguo-traditional-colors&Date)
-
 ## 全カラーギャラリー
 
 以下は 742 色すべてのプレビューです。画像をクリックすると高解像度 PNG を開けます。
@@ -1344,6 +1340,10 @@
 中国伝統色の資料は多く存在しますが、実際に制作で使うときには、画像を探し、色値を写し、名前を照合し、ファイルを整理する作業が何度も発生します。このプロジェクトはその準備作業をあらかじめ済ませ、デザイナー、教師、コンテンツ制作者、開発者がすぐに使える資料としてまとめています。
 
 伝統色は単なる色値ではなく、器物、染織、鉱物顔料、詩歌、季節感、審美の秩序とも結びついています。カードとして並べることで、表だけでは見えにくい感覚や比較がしやすくなります。
+
+## Star History
+
+[![Star History Chart](https://api.star-history.com/svg?repos=nevertoday/zhongguo-traditional-colors&type=Date)](https://www.star-history.com/#nevertoday/zhongguo-traditional-colors&Date)
 
 ## データについて
 
