@@ -26,6 +26,9 @@ const themeToggle = document.querySelector('[data-theme-toggle]');
 const themeToggleIcon = document.querySelector('[data-theme-icon]');
 const themeToggleLabel = document.querySelector('[data-theme-label]');
 const themeColorMeta = document.querySelector('[data-theme-color]');
+const siteHeader = document.querySelector('.site-header');
+const siteNav = document.querySelector('#site-nav');
+const navToggle = document.querySelector('[data-nav-toggle]');
 const footerColorButtons = document.querySelectorAll('[data-footer-color]');
 const footerCopyStatus = document.querySelector('[data-footer-copy-status]');
 const scrollUpButton = document.querySelector('[data-scroll-up]');
@@ -51,6 +54,7 @@ let selectedColorValueType = getSavedColorValueType();
 let footerCopyTimer;
 let scrollControlFrame;
 let currentHeroPreviewImage;
+let navResizeFrame;
 
 const TITLE_TONE_MAP = [
   { match: ['hero', 'top'], hues: ['red', 'orange', 'yellow'] },
@@ -259,6 +263,28 @@ function setTheme(theme) {
   if (themeColorMeta) {
     themeColorMeta.setAttribute('content', nextTheme === 'dark' ? '#11100e' : '#f7f7f4');
   }
+}
+
+function setMobileNavOpen(open) {
+  if (!siteHeader || !navToggle) return;
+
+  siteHeader.dataset.navOpen = open ? 'true' : 'false';
+  navToggle.setAttribute('aria-expanded', String(open));
+  navToggle.setAttribute('aria-label', open ? '收起导航' : '展开导航');
+  const icon = navToggle.querySelector('iconify-icon');
+  if (icon) icon.setAttribute('icon', open ? 'lucide:x' : 'lucide:menu');
+}
+
+function closeMobileNav() {
+  setMobileNavOpen(false);
+}
+
+function queueMobileNavState() {
+  if (navResizeFrame) return;
+  navResizeFrame = window.requestAnimationFrame(() => {
+    navResizeFrame = 0;
+    if (window.matchMedia('(min-width: 721px)').matches) closeMobileNav();
+  });
 }
 
 function updateStats() {
@@ -973,6 +999,13 @@ bindTitleColorHover();
 themeToggle?.addEventListener('click', () => {
   setTheme(currentTheme() === 'dark' ? 'light' : 'dark');
 });
+navToggle?.addEventListener('click', () => {
+  const open = siteHeader?.dataset.navOpen === 'true';
+  setMobileNavOpen(!open);
+});
+siteNav?.addEventListener('click', (event) => {
+  if (event.target.closest('a')) closeMobileNav();
+});
 searchInput?.addEventListener('input', applySearch);
 hueFilter?.addEventListener('change', applyFilters);
 shuffleButton?.addEventListener('click', shuffleItems);
@@ -1062,5 +1095,11 @@ footerColorButtons.forEach((button) => {
 scrollUpButton?.addEventListener('click', () => scrollBySection('up'));
 scrollDownButton?.addEventListener('click', () => scrollBySection('down'));
 window.addEventListener('scroll', queueScrollControlsUpdate, { passive: true });
-window.addEventListener('resize', queueScrollControlsUpdate);
+window.addEventListener('resize', () => {
+  queueScrollControlsUpdate();
+  queueMobileNavState();
+});
+window.addEventListener('keydown', (event) => {
+  if (event.key === 'Escape') closeMobileNav();
+});
 zipButton?.addEventListener('click', downloadZip);
