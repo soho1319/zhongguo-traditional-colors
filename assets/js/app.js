@@ -630,18 +630,20 @@ function cardMarkup(image) {
 
   return `
     <article class="color-card">
-      <a class="card-image-link" href="${url}" target="_blank" rel="noopener" aria-label="打开 ${title} 原图">
-        <img src="${thumbnailUrl}" alt="中国传统色色卡 ${title}" loading="lazy">
-      </a>
-      ${hex ? `<div class="copy-color-control">
-        <button class="copy-color-button" type="button" data-copy-color="${image.id}" aria-label="复制 ${colorName(image)} ${colorValueLabel()} 色值 ${copyValue}">复制 <span data-copy-value>${copyValue}</span></button>
-        <label class="copy-format">
-          <span class="sr-only">选择复制色值类型</span>
-          <select data-copy-format aria-label="复制色值类型">
-            ${formatOptions}
-          </select>
-        </label>
-      </div>` : ''}
+      <div class="card-media">
+        <a class="card-image-link" href="${url}" target="_blank" rel="noopener" aria-label="打开 ${title} 原图">
+          <img src="${thumbnailUrl}" alt="中国传统色色卡 ${title}" loading="lazy">
+        </a>
+        ${hex ? `<div class="copy-color-control">
+          <button class="copy-color-button" type="button" data-copy-color="${image.id}" aria-label="复制 ${colorName(image)} ${colorValueLabel()} 色值 ${copyValue}">复制 <span data-copy-value>${copyValue}</span></button>
+          <label class="copy-format">
+            <span class="sr-only">选择复制色值类型</span>
+            <select data-copy-format aria-label="复制色值类型">
+              ${formatOptions}
+            </select>
+          </label>
+        </div>` : ''}
+      </div>
       <div class="card-meta">
         <span>
           <strong>${displayTitle}</strong>
