@@ -19,7 +19,7 @@ const zipStatus = document.querySelector('[data-download-status]');
 const progressBar = document.querySelector('[data-progress-bar]');
 const masterListDialog = document.querySelector('[data-master-list-dialog]');
 const masterColorList = document.querySelector('[data-master-color-list]');
-const openMasterListButton = document.querySelector('[data-open-master-list]');
+const openMasterListButtons = document.querySelectorAll('[data-open-master-list]');
 const closeMasterListButton = document.querySelector('[data-close-master-list]');
 const copyMasterListButton = document.querySelector('[data-copy-master-list]');
 const masterListStatus = document.querySelector('[data-master-list-status]');
@@ -1327,7 +1327,7 @@ navToggle?.addEventListener('click', () => {
   setMobileNavOpen(!open);
 });
 siteNav?.addEventListener('click', (event) => {
-  if (event.target.closest('a')) closeMobileNav();
+  if (event.target.closest('a, button')) closeMobileNav();
 });
 searchInput?.addEventListener('input', applySearch);
 hueFilter?.addEventListener('change', applyFilters);
@@ -1360,7 +1360,9 @@ heroMosaic?.addEventListener('click', (event) => {
   if (button) openHeroPreview(button.dataset.heroPreview);
 });
 
-openMasterListButton?.addEventListener('click', openMasterList);
+openMasterListButtons.forEach((button) => {
+  button.addEventListener('click', openMasterList);
+});
 closeMasterListButton?.addEventListener('click', () => masterListDialog?.close());
 closeHeroPreviewButton?.addEventListener('click', () => heroPreviewDialog?.close());
 heroPreviewDialog?.addEventListener('click', (event) => {
