@@ -14,6 +14,7 @@
 - [原始 742 色清单](docs/chinese-color-master-list.md)
 - [742 色配色方案 Markdown](docs/chinese-color-harmony.md)
 - [742 色配色关系 CSV](docs/chinese-color-harmony.csv)
+- [中国传统色实战 Skills](#中国传统色实战-skills)
 - [作者 X 主页](https://x.com/xiaoxiaodong01)
 
 ## 这个项目能帮你什么
@@ -25,8 +26,26 @@
 | 搭建色彩资料库 | 文件名与 742 色清单一一对应 |
 | 做网页、PPT、海报、课程素材 | README 全量预览，ZIP 一次下载 |
 | 校对色名和色值 | 色名、HEX、RGB、CMYK 集中整理 |
+| 把传统色真正用进项目 | 10 个面向设计实战的 Agent Skills |
 
 原图约 998 MB。ZIP 文件作为 GitHub Release 附件提供，不直接提交进仓库。
+
+## 中国传统色实战 Skills
+
+这些 skill 不是继续解释色彩理论，而是把 742 色清单和配色关系 CSV 转成设计师能直接使用的工作流：选色、落位、Token、无障碍、品牌规范、内容系列、图表和包装。
+
+| Skill | 适合解决的问题 |
+| --- | --- |
+| [`zhongguo-color-brief`](skills/zhongguo-color-brief/SKILL.md) | 把“高级、东方、年轻、克制”这类模糊方向翻译成配色简报 |
+| [`zhongguo-palette-builder`](skills/zhongguo-palette-builder/SKILL.md) | 从色名、HEX、情绪或项目场景生成完整可用的主辅点缀色板 |
+| [`zhongguo-palette-applier`](skills/zhongguo-palette-applier/SKILL.md) | 告诉设计师每个颜色应该放在背景、标题、按钮、装饰还是信息层 |
+| [`zhongguo-ui-token`](skills/zhongguo-ui-token/SKILL.md) | 输出 CSS variables、Tailwind/Figma token、浅色和深色模式映射 |
+| [`zhongguo-accessible-color`](skills/zhongguo-accessible-color/SKILL.md) | 检查文字、按钮、图表和 UI 状态的对比度，并给出替换色 |
+| [`zhongguo-brand-system`](skills/zhongguo-brand-system/SKILL.md) | 建立可长期复用的品牌色彩规范、比例和禁用组合 |
+| [`zhongguo-data-viz`](skills/zhongguo-data-viz/SKILL.md) | 为分类图、连续色带、发散图和仪表盘生成传统色图表方案 |
+| [`zhongguo-existing-design-audit`](skills/zhongguo-existing-design-audit/SKILL.md) | 诊断已有设计稿或 HEX 清单，并映射到最接近的中国传统色 |
+| [`zhongguo-content-series`](skills/zhongguo-content-series/SKILL.md) | 为小红书、公众号、课程、视频封面等系列内容建立统一色彩系统 |
+| [`zhongguo-print-packaging`](skills/zhongguo-print-packaging/SKILL.md) | 面向包装、文创、印刷和实体材料规划传统色使用方式 |
 
 ## 全部色卡
 
@@ -1364,6 +1383,7 @@ images/       高清 PNG 原图，共 742 张
 thumbnails/   README 预览缩略图，共 742 张
 docs/         README 使用的项目说明图片
 assets/       静态站点样式、脚本和图片清单
+skills/       面向设计实战的中国传统色 Agent Skills
 scripts/      图片清单、README 和打包脚本
 downloads/    本地生成的下载压缩包，不建议提交到 Git
 ```

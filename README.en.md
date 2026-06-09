@@ -14,6 +14,7 @@ It contains 742 high-resolution Chinese traditional color cards, aligned with th
 - [Original 742-color list](docs/chinese-color-master-list.md)
 - [742-color harmony Markdown](docs/chinese-color-harmony.md)
 - [742-color harmony CSV](docs/chinese-color-harmony.csv)
+- [Practical Chinese color skills](#practical-chinese-color-skills)
 - [Author on X](https://x.com/xiaoxiaodong01)
 
 ## What This Project Gives You
@@ -25,8 +26,26 @@ It contains 742 high-resolution Chinese traditional color cards, aligned with th
 | A local color asset library | Filenames aligned with the 742-color source list |
 | Web, slide, poster, and teaching assets | Full README preview plus one-click ZIP download |
 | Color name and value checking | Centralized names, HEX, RGB, and CMYK references |
+| Turning colors into real project decisions | 10 agent skills for practical design workflows |
 
 The original image set is about 998 MB. The ZIP is distributed as a GitHub Release asset instead of being committed to the repository.
+
+## Practical Chinese Color Skills
+
+These skills turn the 742-color list and harmony CSV into design workflows: briefs, palettes, placement rules, UI tokens, accessibility checks, brand systems, content series, data visualization, and print packaging.
+
+| Skill | Use it for |
+| --- | --- |
+| [`zhongguo-color-brief`](skills/zhongguo-color-brief/SKILL.md) | Translate fuzzy visual direction into usable color constraints |
+| [`zhongguo-palette-builder`](skills/zhongguo-palette-builder/SKILL.md) | Build complete main/support/accent palettes from color names, HEX, mood, or project context |
+| [`zhongguo-palette-applier`](skills/zhongguo-palette-applier/SKILL.md) | Decide where each color belongs in a real layout |
+| [`zhongguo-ui-token`](skills/zhongguo-ui-token/SKILL.md) | Produce CSS variables, Tailwind/Figma tokens, and light/dark mappings |
+| [`zhongguo-accessible-color`](skills/zhongguo-accessible-color/SKILL.md) | Check contrast and repair weak text, button, chart, and UI state pairs |
+| [`zhongguo-brand-system`](skills/zhongguo-brand-system/SKILL.md) | Build reusable brand color rules, proportions, and forbidden combinations |
+| [`zhongguo-data-viz`](skills/zhongguo-data-viz/SKILL.md) | Create categorical, sequential, diverging, and dashboard chart palettes |
+| [`zhongguo-existing-design-audit`](skills/zhongguo-existing-design-audit/SKILL.md) | Audit existing HEX values or design screenshots and map them to Chinese traditional colors |
+| [`zhongguo-content-series`](skills/zhongguo-content-series/SKILL.md) | Create repeatable color systems for social, editorial, course, and video series |
+| [`zhongguo-print-packaging`](skills/zhongguo-print-packaging/SKILL.md) | Plan traditional color use for packaging, cultural products, and print materials |
 
 ## Full Gallery
 
