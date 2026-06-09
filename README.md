@@ -1425,6 +1425,7 @@ npm run readme
 
 <p>
   <img src="docs/images/wechat-reward-qr.png" alt="微信打赏小小东的二维码" width="180">
+  <img src="docs/images/alipay-reward-qr.png" alt="支付宝打赏小小东的二维码" width="180">
   <img src="docs/images/buy-me-a-coffee-qr.png" alt="赞赏小小东算力的二维码" width="180">
 </p>
 

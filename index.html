@@ -275,7 +275,7 @@
         <div class="section-heading">
           <span class="section-kicker">10 个实战 Skills</span>
           <h2 id="skills-title">把 742 个传统色变成可执行的设计工作流</h2>
-          <p>不要求你懂配色理论。先看自己卡在哪一步，再选择对应的 skill：它会读取完整 742 色清单和每个颜色的配色关系，把传统色变成能交付、能复用、能解释的方案。</p>
+          <p>不要求你懂配色理论。每个条目都对应一个工作现场：你遇到的问题、该补充的信息、能拿到的产出，以及一条可以直接改写的触发示例。</p>
         </div>
 
         <div class="skills-stage">
@@ -306,11 +306,13 @@
                 <div class="skill-head">
                   <iconify-icon icon="lucide:compass" aria-hidden="true"></iconify-icon>
                   <div>
+                    <span class="skill-phase">定方向</span>
                     <h3>xxd-color-brief</h3>
                     <p>把模糊审美词变成可执行约束。</p>
                     <div class="skill-snapshot">
                       <span>痛点：客户只说感觉</span>
                       <span>产出：配色简报</span>
+                      <span>亮点：先对齐判断标准</span>
                     </div>
                   </div>
                 </div>
@@ -336,6 +338,10 @@
                       <strong>得到什么</strong>
                       <p>冷暖、明度、饱和度、对比、风险边界、3 到 5 个起始色，以及下一步该用哪个 skill。</p>
                     </section>
+                    <div class="skill-command">
+                      <span>示例触发</span>
+                      <code>/xxd-color-brief 为新中式茶饮品牌做年轻但不俗的配色方向</code>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -347,11 +353,13 @@
                 <div class="skill-head">
                   <iconify-icon icon="lucide:palette" aria-hidden="true"></iconify-icon>
                   <div>
+                    <span class="skill-phase">组色板</span>
                     <h3>xxd-palette-builder</h3>
                     <p>从太多选择里筛出能用的色板。</p>
                     <div class="skill-snapshot">
                       <span>痛点：色板好看但难选</span>
                       <span>产出：主辅点缀方案</span>
+                      <span>亮点：每个色都有角色</span>
                     </div>
                   </div>
                 </div>
@@ -377,6 +385,10 @@
                       <strong>得到什么</strong>
                       <p>可靠、识别、对比等策略下的主色、辅色、背景色、强调色、使用比例和风险提示。</p>
                     </section>
+                    <div class="skill-command">
+                      <span>示例触发</span>
+                      <code>/xxd-palette-builder 以月白为锚点，生成网站首页的主辅点缀色板</code>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -388,11 +400,13 @@
                 <div class="skill-head">
                   <iconify-icon icon="lucide:layout-template" aria-hidden="true"></iconify-icon>
                   <div>
+                    <span class="skill-phase">放版面</span>
                     <h3>xxd-palette-applier</h3>
                     <p>把漂亮色板真正落到版面里。</p>
                     <div class="skill-snapshot">
                       <span>痛点：不知道放哪里</span>
                       <span>产出：版面用色地图</span>
+                      <span>亮点：主次和面积更清楚</span>
                     </div>
                   </div>
                 </div>
@@ -418,6 +432,10 @@
                       <strong>得到什么</strong>
                       <p>阅读路径、背景/内容/行动/结构/细节五类角色、面积比例，以及哪些用法会破坏层级。</p>
                     </section>
+                    <div class="skill-command">
+                      <span>示例触发</span>
+                      <code>/xxd-palette-applier 把这组传统色用到课程封面和详情页首屏</code>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -429,11 +447,13 @@
                 <div class="skill-head">
                   <iconify-icon icon="lucide:code-2" aria-hidden="true"></iconify-icon>
                   <div>
+                    <span class="skill-phase">交 token</span>
                     <h3>xxd-ui-token</h3>
                     <p>把传统色变成开发能接的 UI token。</p>
                     <div class="skill-snapshot">
                       <span>痛点：HEX 难交付</span>
                       <span>产出：UI token</span>
+                      <span>亮点：浅深色模式可接入</span>
                     </div>
                   </div>
                 </div>
@@ -459,6 +479,10 @@
                       <strong>得到什么</strong>
                       <p>primitive、semantic、component、mode 四层 token，默认给 CSS variables，也能改成 Tailwind 或 Figma 结构。</p>
                     </section>
+                    <div class="skill-command">
+                      <span>示例触发</span>
+                      <code>/xxd-ui-token 把这组传统色转成官网浅色和暗色模式 CSS variables</code>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -470,11 +494,13 @@
                 <div class="skill-head">
                   <iconify-icon icon="lucide:shield-check" aria-hidden="true"></iconify-icon>
                   <div>
+                    <span class="skill-phase">查可读</span>
                     <h3>xxd-accessible-color</h3>
                     <p>让好看的传统色也能读得清。</p>
                     <div class="skill-snapshot">
                       <span>痛点：漂亮但不清楚</span>
                       <span>产出：可读性修复</span>
+                      <span>亮点：给出通过和替代色</span>
                     </div>
                   </div>
                 </div>
@@ -500,6 +526,10 @@
                       <strong>得到什么</strong>
                       <p>WCAG contrast ratio、通过/条件可用/失败判断、同库替代色，以及文字、图标、线条或标签等非颜色线索。</p>
                     </section>
+                    <div class="skill-command">
+                      <span>示例触发</span>
+                      <code>/xxd-accessible-color 检查这些按钮文字和背景色是否适合正文与 CTA</code>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -511,11 +541,13 @@
                 <div class="skill-head">
                   <iconify-icon icon="lucide:badge-check" aria-hidden="true"></iconify-icon>
                   <div>
+                    <span class="skill-phase">定品牌</span>
                     <h3>xxd-brand-system</h3>
                     <p>把一次配色沉淀成长期品牌规则。</p>
                     <div class="skill-snapshot">
                       <span>痛点：品牌色会漂移</span>
                       <span>产出：品牌用色规范</span>
+                      <span>亮点：明确禁用组合</span>
                     </div>
                   </div>
                 </div>
@@ -541,6 +573,10 @@
                       <strong>得到什么</strong>
                       <p>品牌锚点色、支撑色、强调色、默认比例、渠道规则、禁用组合和后续交付到 token 的建议。</p>
                     </section>
+                    <div class="skill-command">
+                      <span>示例触发</span>
+                      <code>/xxd-brand-system 为文创香氛品牌建立可用于官网、包装和社媒的传统色规范</code>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -552,11 +588,13 @@
                 <div class="skill-head">
                   <iconify-icon icon="lucide:chart-column" aria-hidden="true"></iconify-icon>
                   <div>
+                    <span class="skill-phase">做图表</span>
                     <h3>xxd-data-viz</h3>
                     <p>按数据含义生成传统色图表方案。</p>
                     <div class="skill-snapshot">
                       <span>痛点：图表颜色难分</span>
                       <span>产出：图表色数组</span>
+                      <span>亮点：分类顺序发散分开处理</span>
                     </div>
                   </div>
                 </div>
@@ -582,6 +620,10 @@
                       <strong>得到什么</strong>
                       <p>分类色、顺序色带、发散色带、高亮色或语义状态色，可按需输出 ECharts、D3、Chart.js 数组。</p>
                     </section>
+                    <div class="skill-command">
+                      <span>示例触发</span>
+                      <code>/xxd-data-viz 为 7 个分类和一个高亮系列生成 ECharts 中国传统色数组</code>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -593,11 +635,13 @@
                 <div class="skill-head">
                   <iconify-icon icon="lucide:scan-search" aria-hidden="true"></iconify-icon>
                   <div>
+                    <span class="skill-phase">修旧稿</span>
                     <h3>xxd-existing-design-audit</h3>
                     <p>把旧稿和散乱 HEX 修成传统色系统。</p>
                     <div class="skill-snapshot">
                       <span>痛点：旧稿颜色混乱</span>
                       <span>产出：保留替换清单</span>
+                      <span>亮点：不盲目推翻旧设计</span>
                     </div>
                   </div>
                 </div>
@@ -623,6 +667,10 @@
                       <strong>得到什么</strong>
                       <p>颜色盘点、相近传统色映射、根因诊断，以及保留、合并、替换、移除或仅作点缀的建议。</p>
                     </section>
+                    <div class="skill-command">
+                      <span>示例触发</span>
+                      <code>/xxd-existing-design-audit 审计这组 CSS 颜色，映射到最接近的中国传统色</code>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -634,11 +682,13 @@
                 <div class="skill-head">
                   <iconify-icon icon="lucide:newspaper" aria-hidden="true"></iconify-icon>
                   <div>
+                    <span class="skill-phase">做系列</span>
                     <h3>xxd-content-series</h3>
                     <p>让系列内容既统一又不疲劳。</p>
                     <div class="skill-snapshot">
                       <span>痛点：系列不成体系</span>
                       <span>产出：轮换规则</span>
+                      <span>亮点：固定层和变化层分开</span>
                     </div>
                   </div>
                 </div>
@@ -664,6 +714,10 @@
                       <strong>得到什么</strong>
                       <p>固定层、变量层、模板层、栏目色、特殊期色和轮换规则，让系列既统一又有变化。</p>
                     </section>
+                    <div class="skill-command">
+                      <span>示例触发</span>
+                      <code>/xxd-content-series 为小红书 5 个栏目做统一但不重复的封面色彩系统</code>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -675,11 +729,13 @@
                 <div class="skill-head">
                   <iconify-icon icon="lucide:package-check" aria-hidden="true"></iconify-icon>
                   <div>
+                    <span class="skill-phase">进生产</span>
                     <h3>xxd-print-packaging</h3>
                     <p>把屏幕色推进到包装和印刷生产。</p>
                     <div class="skill-snapshot">
                       <span>痛点：屏幕色不等于印刷</span>
                       <span>产出：打样检查清单</span>
+                      <span>亮点：把材质和工艺纳入判断</span>
                     </div>
                   </div>
                 </div>
@@ -705,6 +761,10 @@
                       <strong>得到什么</strong>
                       <p>正背侧面板用色、系列变体规则、小字和条码风险、材质提示，以及交付前的打样检查清单。</p>
                     </section>
+                    <div class="skill-command">
+                      <span>示例触发</span>
+                      <code>/xxd-print-packaging 为茶叶礼盒规划传统色、系列变体和印刷打样清单</code>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -782,12 +842,16 @@
           <div class="support-copy">
             <span class="section-kicker">支持作者</span>
             <h3>打赏小小东一点算力</h3>
-            <p>微信或赞赏码，任选一种</p>
+            <p>微信、支付宝或算力赞赏，任选一种</p>
           </div>
           <div class="support-qr-list">
             <figure class="support-qr">
               <img src="docs/images/wechat-reward-qr.png" alt="微信打赏小小东的二维码" width="220" height="220">
               <figcaption>微信</figcaption>
+            </figure>
+            <figure class="support-qr">
+              <img src="docs/images/alipay-reward-qr.png" alt="支付宝打赏小小东的二维码" width="220" height="220">
+              <figcaption>支付宝</figcaption>
             </figure>
             <figure class="support-qr">
               <img src="docs/images/buy-me-a-coffee-qr.png" alt="赞赏小小东算力的二维码" width="220" height="220">
