@@ -1864,17 +1864,17 @@ select:focus-visible,
 .open-link {
   position: relative;
   display: grid;
-  grid-template-columns: minmax(0, 1fr) auto;
-  grid-template-rows: auto 1fr;
-  gap: clamp(30px, 4vw, 48px) clamp(22px, 4vw, 42px);
-  min-height: 252px;
+  grid-template-columns: minmax(0, 1fr) 64px;
+  grid-template-rows: auto minmax(0, 1fr) auto;
+  gap: clamp(24px, 3vw, 34px) clamp(24px, 4vw, 42px);
+  min-height: 256px;
   padding: clamp(28px, 4vw, 40px);
   overflow: hidden;
   text-decoration: none;
   background: var(--solid);
   border: 0;
   isolation: isolate;
-  transition: transform 220ms var(--ease-out-quart), background 220ms ease, color 180ms ease, box-shadow 220ms ease;
+  transition: transform 220ms var(--ease-out-quart), background 220ms ease, color 180ms ease, opacity 180ms ease;
 }
 
 .open-link:nth-child(2),
@@ -1906,91 +1906,98 @@ select:focus-visible,
   right: clamp(16px, 3vw, 32px);
   bottom: -0.22em;
   z-index: -1;
-  color: color-mix(in srgb, var(--ink) 4%, transparent);
+  color: color-mix(in srgb, var(--ink) 4.5%, transparent);
   font-family: var(--font-rounded);
   font-size: clamp(6.2rem, 14vw, 11.8rem);
   font-weight: 500;
   line-height: 1;
   content: attr(data-open-number);
   pointer-events: none;
-  transition: color 220ms ease, transform 260ms var(--ease-out-quart);
+  transition: color 220ms ease, opacity 180ms ease, transform 320ms var(--ease-out-expo);
 }
 
 .open-link::after {
   position: absolute;
-  right: clamp(28px, 4vw, 42px);
+  top: clamp(28px, 4vw, 40px);
   bottom: clamp(28px, 4vw, 40px);
-  left: clamp(28px, 4vw, 40px);
-  height: 1px;
-  background: color-mix(in srgb, var(--ink) 18%, transparent);
+  left: 0;
+  width: 3px;
+  background: currentColor;
   content: "";
-  transform: scaleX(0);
-  transform-origin: left center;
-  transition: transform 260ms var(--ease-out-quart), background 180ms ease;
+  opacity: 0;
+  transform: scaleY(0.18);
+  transform-origin: top center;
+  transition: opacity 180ms ease, transform 300ms var(--ease-out-expo);
+}
+
+.open-grid:has(.open-link:hover) .open-link:not(:hover),
+.open-grid:has(.open-link:focus-visible) .open-link:not(:focus-visible) {
+  opacity: 0.62;
 }
 
 .open-link:hover,
 .open-link:focus-visible {
   color: var(--ink);
-  background: color-mix(in srgb, var(--panel-soft) 72%, var(--solid));
-  box-shadow: var(--shadow-card);
+  background: color-mix(in srgb, var(--panel-soft) 46%, var(--solid));
   outline: none;
-  transform: translateY(-3px);
+  transform: translateY(-2px);
 }
 
 .open-link:hover::before,
 .open-link:focus-visible::before {
-  color: color-mix(in srgb, var(--ink) 8%, transparent);
-  transform: translateY(-7px) scale(1.03);
+  color: color-mix(in srgb, var(--ink) 7%, transparent);
+  transform: translate(-8px, -5px) scale(1.02);
 }
 
 .open-link:hover::after,
 .open-link:focus-visible::after {
-  transform: scaleX(1);
+  opacity: 1;
+  transform: scaleY(1);
 }
 
 :root[data-theme="dark"] .open-link:hover,
 :root[data-theme="dark"] .open-link:focus-visible {
-  color: var(--inverse);
-  background: color-mix(in srgb, var(--ink) 92%, var(--paper));
+  color: var(--ink);
+  background: color-mix(in srgb, var(--panel-soft) 52%, var(--solid));
 }
 
 :root[data-theme="dark"] .open-link:hover::before,
 :root[data-theme="dark"] .open-link:focus-visible::before {
-  color: color-mix(in srgb, var(--inverse) 8%, transparent);
+  color: color-mix(in srgb, var(--ink) 8%, transparent);
 }
 
 :root[data-theme="dark"] .open-link:hover::after,
 :root[data-theme="dark"] .open-link:focus-visible::after {
-  background: color-mix(in srgb, var(--inverse) 22%, transparent);
+  background: currentColor;
 }
 
 .open-link iconify-icon {
   grid-column: 2;
   grid-row: 1;
+  place-self: start end;
   box-sizing: content-box;
-  width: 30px;
-  height: 30px;
-  padding: 13px;
+  width: 28px;
+  height: 28px;
+  padding: 15px;
   color: var(--muted);
-  background: color-mix(in srgb, var(--ink) 4%, transparent);
+  background: transparent;
   border: 1px solid var(--line);
-  transition: color 180ms ease, background 180ms ease, border-color 180ms ease, transform 220ms var(--ease-out-quart);
+  transition: color 180ms ease, background 180ms ease, border-color 180ms ease, transform 260ms var(--ease-out-expo);
 }
 
 .open-link:hover iconify-icon,
 .open-link:focus-visible iconify-icon {
-  color: var(--hover-text);
-  background: var(--hover-bg);
-  border-color: var(--hover-bg);
-  transform: translateY(-5px) scale(1.04);
+  color: var(--ink);
+  background: color-mix(in srgb, var(--ink) 7%, transparent);
+  border-color: currentColor;
+  transform: translate(-3px, -3px);
 }
 
 :root[data-theme="dark"] .open-link:hover iconify-icon,
 :root[data-theme="dark"] .open-link:focus-visible iconify-icon {
   color: var(--ink);
-  background: var(--inverse);
-  border-color: var(--inverse);
+  background: color-mix(in srgb, var(--ink) 8%, transparent);
+  border-color: currentColor;
 }
 
 .open-link > span:last-child {
@@ -2000,6 +2007,7 @@ select:focus-visible,
   grid-row: 2;
   min-width: 0;
   align-self: end;
+  transition: transform 280ms var(--ease-out-expo);
 }
 
 .open-index {
@@ -2046,6 +2054,53 @@ select:focus-visible,
 .open-link:hover small,
 .open-link:focus-visible small {
   color: color-mix(in srgb, currentColor 70%, transparent);
+}
+
+.open-link:hover > span:last-child,
+.open-link:focus-visible > span:last-child {
+  transform: translateY(-12px);
+}
+
+.open-action {
+  position: relative;
+  z-index: 1;
+  grid-column: 1 / -1;
+  grid-row: 3;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  min-height: 18px;
+  color: var(--muted);
+  font-size: 0.78rem;
+  font-style: normal;
+  font-weight: 700;
+  letter-spacing: 0;
+  line-height: 1;
+  opacity: 0;
+  transform: translateY(10px);
+  transition: color 180ms ease, opacity 220ms ease, transform 280ms var(--ease-out-expo);
+}
+
+.open-action::before {
+  width: clamp(38px, 6vw, 92px);
+  height: 1px;
+  background: currentColor;
+  content: "";
+  transform: scaleX(0.45);
+  transform-origin: left center;
+  transition: transform 300ms var(--ease-out-expo);
+}
+
+.open-link:hover .open-action,
+.open-link:focus-visible .open-action {
+  color: currentColor;
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.open-link:hover .open-action::before,
+.open-link:focus-visible .open-action::before {
+  transform: scaleX(1);
 }
 
 .site-footer {
@@ -3346,6 +3401,21 @@ select:focus-visible,
   .open-link {
     min-height: 184px;
     padding: 24px 22px;
+  }
+
+  .open-link > span:last-child,
+  .open-link:hover > span:last-child,
+  .open-link:focus-visible > span:last-child {
+    transform: none;
+  }
+
+  .open-action {
+    opacity: 1;
+    transform: none;
+  }
+
+  .open-action::before {
+    transform: scaleX(1);
   }
 
   .master-list-dialog {
