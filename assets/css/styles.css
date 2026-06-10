@@ -1135,16 +1135,17 @@ select:focus-visible,
   transition: background 160ms ease, color 160ms ease, transform 180ms var(--ease-out-quart);
 }
 
-.style-mode-button:hover,
-.style-mode-button:focus-visible,
 .style-mode-button[aria-pressed="true"] {
   color: var(--hover-text);
   background: var(--hover-bg);
   outline: none;
 }
 
-.style-mode-button:hover,
-.style-mode-button:focus-visible {
+.style-mode-button:hover:not([aria-pressed="true"]),
+.style-mode-button:focus-visible:not([aria-pressed="true"]) {
+  color: var(--ink);
+  background: var(--panel-soft);
+  outline: none;
   transform: translateY(-1px);
 }
 
@@ -1168,10 +1169,13 @@ select:focus-visible,
   font-weight: 700;
 }
 
-.style-mode-button:hover span,
-.style-mode-button:focus-visible span,
 .style-mode-button[aria-pressed="true"] span {
   color: color-mix(in srgb, var(--hover-text) 72%, transparent);
+}
+
+.style-mode-button:hover:not([aria-pressed="true"]) span,
+.style-mode-button:focus-visible:not([aria-pressed="true"]) span {
+  color: var(--muted);
 }
 
 .style-mode-summary {

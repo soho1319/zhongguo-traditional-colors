@@ -793,26 +793,40 @@ function styleLabRoleLine(role, color) {
   return `${role.label}：${color.name} ${color.hex}（建议 ${role.ratio}，${role.use}）`;
 }
 
-function styleLabSchemeText(scheme) {
+function styleLabSchemeText(scheme, roles = scheme.roles) {
   return STYLE_LAB_ROLES
-    .map((role) => styleLabRoleLine(role, scheme.roles[role.key]))
+    .map((role) => styleLabRoleLine(role, roles[role.key]))
     .join('\n');
 }
 
-function styleTemplateCopyText(template, scheme) {
+function styleLabTemplateAccentColor(scheme, index = 0) {
+  return scheme.modeColors[index % scheme.modeColors.length] || scheme.roles.accent;
+}
+
+function styleLabTemplateRoles(scheme, index = 0) {
+  return {
+    ...scheme.roles,
+    accent: styleLabTemplateAccentColor(scheme, index),
+  };
+}
+
+function styleTemplateCopyText(template, scheme, index = 0) {
+  const roles = styleLabTemplateRoles(scheme, index);
+
   return [
     `应用样式：${template.label}`,
     `配色逻辑：${scheme.mode.label}（${scheme.mode.intent}）`,
     `主色：${scheme.anchor.name} ${scheme.anchor.hex}`,
     `关系色：${styleLabModeColorText(scheme)}`,
+    `当前样式应用关系色：${roles.accent.name} ${roles.accent.hex}`,
     `适用场景：${template.scene}`,
     `建议尺寸：${template.size}`,
     `版式骨架：${template.layout}`,
     '配色角色：',
-    styleLabSchemeText(scheme),
+    styleLabSchemeText(scheme, roles),
     `排版结构：${template.structure}`,
     'CSS 变量：',
-    styleLabCssVariables(scheme),
+    styleLabCssVariables(scheme, roles),
   ].join('\n');
 }
 
@@ -830,7 +844,10 @@ function styleLabCopyText() {
     styleLabSchemeText(currentStyleLabScheme),
     '',
     '样式卡：',
-    STYLE_LAB_TEMPLATES.map((template) => `- ${template.label}：${template.scene}；${template.size}；${template.layout}`).join('\n'),
+    STYLE_LAB_TEMPLATES.map((template, index) => {
+      const accent = styleLabTemplateAccentColor(currentStyleLabScheme, index);
+      return `- ${template.label}：${template.scene}；${template.size}；${template.layout}；关系色 ${accent.name} ${accent.hex}`;
+    }).join('\n'),
     '',
     'CSS 变量：',
     styleLabCssVariables(currentStyleLabScheme),
@@ -851,8 +868,8 @@ function styleLabContrastLabel(scheme) {
   return `${styleLabContrastValue(scheme).toFixed(1)}:1`;
 }
 
-function styleLabCssVariables(scheme) {
-  const roleColor = (key) => scheme.roles[key];
+function styleLabCssVariables(scheme, roles = scheme.roles) {
+  const roleColor = (key) => roles[key];
 
   return [
     `--ctc-mode: ${scheme.mode.key}; /* ${scheme.mode.label} */`,
@@ -915,7 +932,7 @@ function renderStyleLabModes(scheme = currentStyleLabScheme) {
 
   const mode = styleLabMode();
   if (styleModeSummary) {
-    styleModeSummary.textContent = `${mode.label}：${mode.summary}`;
+    styleModeSummary.textContent = `${mode.label}：${mode.summary} 右侧样式卡会依次套用下方关系色。`;
   }
 
   if (styleModeColors) {
@@ -1004,7 +1021,7 @@ function styleTemplateRoleMarkup(role, color) {
 }
 
 function styleTemplateMarkup(template, index, scheme) {
-  const roles = scheme.roles;
+  const roles = styleLabTemplateRoles(scheme, index);
   const customProperties = [
     `--sample-bg: ${roles.background.hex}`,
     `--sample-title: ${roles.title.hex}`,
@@ -1078,9 +1095,10 @@ function renderStyleLab(statusMessage = '', options = {}) {
 
 async function copyStyleTemplate(templateId) {
   const template = STYLE_LAB_TEMPLATES.find((item) => item.id === templateId);
+  const templateIndex = STYLE_LAB_TEMPLATES.findIndex((item) => item.id === templateId);
   if (!template || !currentStyleLabScheme) return;
 
-  await writeClipboard(styleTemplateCopyText(template, currentStyleLabScheme));
+  await writeClipboard(styleTemplateCopyText(template, currentStyleLabScheme, templateIndex));
   setStyleLabStatus(`已复制：${template.label}`);
 }
 
