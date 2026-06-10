@@ -1390,10 +1390,18 @@ The complete ZIP is provided through GitHub Releases. Browser-side ZIP generatio
 
 This archive remains free and open source. If it saves you time, a Star, a share, a useful issue, or a small contribution toward compute for 小小东 all help the project keep improving.
 
-<p>
-  <img src="docs/images/alipay-reward-qr.png" alt="Support 小小东 with Alipay QR code" width="180">
-  <img src="docs/images/buy-me-a-coffee-qr.png" alt="Support 小小东 QR code" width="180">
-</p>
+<table>
+  <tr>
+    <td align="center" width="220">
+      <img src="docs/images/alipay-reward-qr.png" alt="Support 小小东 with Alipay QR code" width="180"><br>
+      <strong>Alipay</strong>
+    </td>
+    <td align="center" width="220">
+      <img src="docs/images/buy-me-a-coffee-qr.png" alt="Support 小小东 QR code" width="180"><br>
+      <strong>Compute support</strong>
+    </td>
+  </tr>
+</table>
 
 ## License
 

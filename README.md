@@ -1659,11 +1659,22 @@ npm run readme
 
 这个传统色图片合集会继续保持免费开源。如果它帮你省了整理素材的时间，欢迎 Star、分享给需要的人，或者扫描下面的二维码打赏小小东一点算力，让他继续优化这份开放色库。反馈和 issue 同样有帮助。
 
-<p>
-  <img src="docs/images/wechat-reward-qr.png" alt="微信打赏小小东的二维码" width="180">
-  <img src="docs/images/alipay-reward-qr.png" alt="支付宝打赏小小东的二维码" width="180">
-  <img src="docs/images/buy-me-a-coffee-qr.png" alt="赞赏小小东算力的二维码" width="180">
-</p>
+<table>
+  <tr>
+    <td align="center" width="220">
+      <img src="docs/images/wechat-reward-qr.png" alt="微信打赏小小东的二维码" width="180"><br>
+      <strong>微信</strong>
+    </td>
+    <td align="center" width="220">
+      <img src="docs/images/alipay-reward-qr.png" alt="支付宝打赏小小东的二维码" width="180"><br>
+      <strong>支付宝</strong>
+    </td>
+    <td align="center" width="220">
+      <img src="docs/images/buy-me-a-coffee-qr.png" alt="赞赏小小东算力的二维码" width="180"><br>
+      <strong>算力赞赏</strong>
+    </td>
+  </tr>
+</table>
 
 ## 联系作者
 

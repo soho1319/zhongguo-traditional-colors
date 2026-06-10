@@ -1390,10 +1390,18 @@ http://localhost:5173
 
 このアーカイブは無料かつオープンソースで公開し続けます。役に立った場合は Star、共有、Issue、または小小東の継続的な改善に向けた算力支援が励みになります。
 
-<p>
-  <img src="docs/images/alipay-reward-qr.png" alt="支付宝で小小東を支援する QR コード" width="180">
-  <img src="docs/images/buy-me-a-coffee-qr.png" alt="小小東を支援する QR コード" width="180">
-</p>
+<table>
+  <tr>
+    <td align="center" width="220">
+      <img src="docs/images/alipay-reward-qr.png" alt="支付宝で小小東を支援する QR コード" width="180"><br>
+      <strong>支付宝</strong>
+    </td>
+    <td align="center" width="220">
+      <img src="docs/images/buy-me-a-coffee-qr.png" alt="小小東を支援する QR コード" width="180"><br>
+      <strong>算力支援</strong>
+    </td>
+  </tr>
+</table>
 
 ## ライセンス
 
