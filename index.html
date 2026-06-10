@@ -283,6 +283,21 @@
             <span>先判断你卡在哪里</span>
             <strong>/xxd-*</strong>
             <p>输入对应命令，再补充项目场景、目标人群、已有色值、截图或生产限制。每个 skill 目录都自带完整 Markdown 清单和配色关系 CSV，推荐色可追溯到当前 742 色库。</p>
+            <nav class="skills-jump" aria-label="按工作现场跳转到具体 skill">
+              <p>按工作现场直达</p>
+              <div>
+                <a href="#skill-xxd-color-brief" data-skill-anchor><span>01</span>定方向</a>
+                <a href="#skill-xxd-palette-builder" data-skill-anchor><span>02</span>组色板</a>
+                <a href="#skill-xxd-palette-applier" data-skill-anchor><span>03</span>放版面</a>
+                <a href="#skill-xxd-ui-token" data-skill-anchor><span>04</span>交 token</a>
+                <a href="#skill-xxd-accessible-color" data-skill-anchor><span>05</span>查可读</a>
+                <a href="#skill-xxd-brand-system" data-skill-anchor><span>06</span>定品牌</a>
+                <a href="#skill-xxd-data-viz" data-skill-anchor><span>07</span>做图表</a>
+                <a href="#skill-xxd-existing-design-audit" data-skill-anchor><span>08</span>修旧稿</a>
+                <a href="#skill-xxd-content-series" data-skill-anchor><span>09</span>做系列</a>
+                <a href="#skill-xxd-print-packaging" data-skill-anchor><span>10</span>进生产</a>
+              </div>
+            </nav>
             <div class="skills-decision" aria-label="选择 skill 的判断路径">
               <div>
                 <b>01</b>
@@ -300,7 +315,7 @@
           </div>
 
           <div class="skills-list" aria-label="中国传统色实战 skills">
-            <article class="skill-item" data-open="false">
+            <article class="skill-item" id="skill-xxd-color-brief" tabindex="-1" data-open="false">
               <div class="skill-index">01</div>
               <div class="skill-body">
                 <div class="skill-head">
@@ -314,14 +329,25 @@
                       <span>产出：配色简报</span>
                       <span>亮点：先对齐判断标准</span>
                     </div>
+                    <p class="skill-value">利他价值：先帮团队把“感觉”变成共识，减少凭审美偏好反复改色。</p>
                   </div>
                 </div>
-                <button class="skill-toggle" type="button" data-skill-toggle aria-expanded="false" aria-controls="skill-detail-brief">
-                  <span data-skill-toggle-label>展开说明</span>
-                  <iconify-icon icon="lucide:plus" aria-hidden="true"></iconify-icon>
-                </button>
+                <div class="skill-actions">
+                  <button class="skill-toggle" type="button" data-skill-toggle aria-expanded="false" aria-controls="skill-detail-brief">
+                    <span data-skill-toggle-label>展开说明</span>
+                    <iconify-icon icon="lucide:plus" aria-hidden="true"></iconify-icon>
+                  </button>
+                  <a class="skill-doc-link" href="skills/xxd-color-brief/SKILL.md">
+                    查看 Skill
+                    <iconify-icon icon="lucide:arrow-up-right" aria-hidden="true"></iconify-icon>
+                  </a>
+                </div>
                 <div class="skill-detail" id="skill-detail-brief">
                   <div class="skill-detail-grid">
+                    <section class="skill-benefit">
+                      <strong>利他价值</strong>
+                      <p>让客户、设计师和执行者先拥有同一套判断语言，再进入选色。它服务的是协作效率，而不是展示术语。</p>
+                    </section>
                     <section>
                       <strong>解决的痛点</strong>
                       <p>需求只有“高级、东方、年轻、克制、不要俗”，每个人理解都不一样，讨论容易停在感觉上。</p>
@@ -347,7 +373,7 @@
               </div>
             </article>
 
-            <article class="skill-item" data-open="false">
+            <article class="skill-item" id="skill-xxd-palette-builder" tabindex="-1" data-open="false">
               <div class="skill-index">02</div>
               <div class="skill-body">
                 <div class="skill-head">
@@ -361,14 +387,25 @@
                       <span>产出：主辅点缀方案</span>
                       <span>亮点：每个色都有角色</span>
                     </div>
+                    <p class="skill-value">利他价值：把选择困难变成少量可比较方案，让下一步设计不用从零试错。</p>
                   </div>
                 </div>
-                <button class="skill-toggle" type="button" data-skill-toggle aria-expanded="false" aria-controls="skill-detail-builder">
-                  <span data-skill-toggle-label>展开说明</span>
-                  <iconify-icon icon="lucide:plus" aria-hidden="true"></iconify-icon>
-                </button>
+                <div class="skill-actions">
+                  <button class="skill-toggle" type="button" data-skill-toggle aria-expanded="false" aria-controls="skill-detail-builder">
+                    <span data-skill-toggle-label>展开说明</span>
+                    <iconify-icon icon="lucide:plus" aria-hidden="true"></iconify-icon>
+                  </button>
+                  <a class="skill-doc-link" href="skills/xxd-palette-builder/SKILL.md">
+                    查看 Skill
+                    <iconify-icon icon="lucide:arrow-up-right" aria-hidden="true"></iconify-icon>
+                  </a>
+                </div>
                 <div class="skill-detail" id="skill-detail-builder">
                   <div class="skill-detail-grid">
+                    <section class="skill-benefit">
+                      <strong>利他价值</strong>
+                      <p>帮使用者从 742 色和复杂配色关系里快速收敛到可执行色板，让主色、辅色和点缀色各有责任。</p>
+                    </section>
                     <section>
                       <strong>解决的痛点</strong>
                       <p>颜色很多、关系也很多，但最后不知道该选哪一组，选完也不知道谁做主色、辅色和点缀。</p>
@@ -394,7 +431,7 @@
               </div>
             </article>
 
-            <article class="skill-item" data-open="false">
+            <article class="skill-item" id="skill-xxd-palette-applier" tabindex="-1" data-open="false">
               <div class="skill-index">03</div>
               <div class="skill-body">
                 <div class="skill-head">
@@ -408,14 +445,25 @@
                       <span>产出：版面用色地图</span>
                       <span>亮点：主次和面积更清楚</span>
                     </div>
+                    <p class="skill-value">利他价值：让读者先看到该看的内容，而不是被所有颜色同时争夺注意力。</p>
                   </div>
                 </div>
-                <button class="skill-toggle" type="button" data-skill-toggle aria-expanded="false" aria-controls="skill-detail-applier">
-                  <span data-skill-toggle-label>展开说明</span>
-                  <iconify-icon icon="lucide:plus" aria-hidden="true"></iconify-icon>
-                </button>
+                <div class="skill-actions">
+                  <button class="skill-toggle" type="button" data-skill-toggle aria-expanded="false" aria-controls="skill-detail-applier">
+                    <span data-skill-toggle-label>展开说明</span>
+                    <iconify-icon icon="lucide:plus" aria-hidden="true"></iconify-icon>
+                  </button>
+                  <a class="skill-doc-link" href="skills/xxd-palette-applier/SKILL.md">
+                    查看 Skill
+                    <iconify-icon icon="lucide:arrow-up-right" aria-hidden="true"></iconify-icon>
+                  </a>
+                </div>
                 <div class="skill-detail" id="skill-detail-applier">
                   <div class="skill-detail-grid">
+                    <section class="skill-benefit">
+                      <strong>利他价值</strong>
+                      <p>它把色彩从“好看”推进到“好用”：服务信息层级、阅读路径和行动重点，帮助最终用户更快理解版面。</p>
+                    </section>
                     <section>
                       <strong>解决的痛点</strong>
                       <p>色板单独看很好，一放到页面里就抢主次：标题、按钮、背景、装饰都想出风头。</p>
@@ -441,7 +489,7 @@
               </div>
             </article>
 
-            <article class="skill-item" data-open="false">
+            <article class="skill-item" id="skill-xxd-ui-token" tabindex="-1" data-open="false">
               <div class="skill-index">04</div>
               <div class="skill-body">
                 <div class="skill-head">
@@ -455,14 +503,25 @@
                       <span>产出：UI token</span>
                       <span>亮点：浅深色模式可接入</span>
                     </div>
+                    <p class="skill-value">利他价值：让设计、开发和后续维护共享同一套命名规则，少靠猜和硬编码。</p>
                   </div>
                 </div>
-                <button class="skill-toggle" type="button" data-skill-toggle aria-expanded="false" aria-controls="skill-detail-token">
-                  <span data-skill-toggle-label>展开说明</span>
-                  <iconify-icon icon="lucide:plus" aria-hidden="true"></iconify-icon>
-                </button>
+                <div class="skill-actions">
+                  <button class="skill-toggle" type="button" data-skill-toggle aria-expanded="false" aria-controls="skill-detail-token">
+                    <span data-skill-toggle-label>展开说明</span>
+                    <iconify-icon icon="lucide:plus" aria-hidden="true"></iconify-icon>
+                  </button>
+                  <a class="skill-doc-link" href="skills/xxd-ui-token/SKILL.md">
+                    查看 Skill
+                    <iconify-icon icon="lucide:arrow-up-right" aria-hidden="true"></iconify-icon>
+                  </a>
+                </div>
                 <div class="skill-detail" id="skill-detail-token">
                   <div class="skill-detail-grid">
+                    <section class="skill-benefit">
+                      <strong>利他价值</strong>
+                      <p>把个人审美选择转成团队可维护资产，让浅色、暗色、状态、组件和代码实现能长期一致。</p>
+                    </section>
                     <section>
                       <strong>解决的痛点</strong>
                       <p>只交 HEX 会让开发硬编码，深色模式、按钮状态、边框和焦点样式后面都难维护。</p>
@@ -488,7 +547,7 @@
               </div>
             </article>
 
-            <article class="skill-item" data-open="false">
+            <article class="skill-item" id="skill-xxd-accessible-color" tabindex="-1" data-open="false">
               <div class="skill-index">05</div>
               <div class="skill-body">
                 <div class="skill-head">
@@ -502,14 +561,25 @@
                       <span>产出：可读性修复</span>
                       <span>亮点：给出通过和替代色</span>
                     </div>
+                    <p class="skill-value">利他价值：优先照顾真实阅读者，让传统色的美感不牺牲清晰度和可访问性。</p>
                   </div>
                 </div>
-                <button class="skill-toggle" type="button" data-skill-toggle aria-expanded="false" aria-controls="skill-detail-accessible">
-                  <span data-skill-toggle-label>展开说明</span>
-                  <iconify-icon icon="lucide:plus" aria-hidden="true"></iconify-icon>
-                </button>
+                <div class="skill-actions">
+                  <button class="skill-toggle" type="button" data-skill-toggle aria-expanded="false" aria-controls="skill-detail-accessible">
+                    <span data-skill-toggle-label>展开说明</span>
+                    <iconify-icon icon="lucide:plus" aria-hidden="true"></iconify-icon>
+                  </button>
+                  <a class="skill-doc-link" href="skills/xxd-accessible-color/SKILL.md">
+                    查看 Skill
+                    <iconify-icon icon="lucide:arrow-up-right" aria-hidden="true"></iconify-icon>
+                  </a>
+                </div>
                 <div class="skill-detail" id="skill-detail-accessible">
                   <div class="skill-detail-grid">
+                    <section class="skill-benefit">
+                      <strong>利他价值</strong>
+                      <p>帮页面对更多人可读、可辨、可操作。它不是削弱审美，而是避免把理解成本转嫁给用户。</p>
+                    </section>
                     <section>
                       <strong>解决的痛点</strong>
                       <p>传统色看起来雅致，但做正文、按钮、状态提示或图表时可能读不清，也可能只靠颜色传递信息。</p>
@@ -535,7 +605,7 @@
               </div>
             </article>
 
-            <article class="skill-item" data-open="false">
+            <article class="skill-item" id="skill-xxd-brand-system" tabindex="-1" data-open="false">
               <div class="skill-index">06</div>
               <div class="skill-body">
                 <div class="skill-head">
@@ -549,14 +619,25 @@
                       <span>产出：品牌用色规范</span>
                       <span>亮点：明确禁用组合</span>
                     </div>
+                    <p class="skill-value">利他价值：给团队长期决策依据，减少每次做物料都重新争论颜色。</p>
                   </div>
                 </div>
-                <button class="skill-toggle" type="button" data-skill-toggle aria-expanded="false" aria-controls="skill-detail-brand">
-                  <span data-skill-toggle-label>展开说明</span>
-                  <iconify-icon icon="lucide:plus" aria-hidden="true"></iconify-icon>
-                </button>
+                <div class="skill-actions">
+                  <button class="skill-toggle" type="button" data-skill-toggle aria-expanded="false" aria-controls="skill-detail-brand">
+                    <span data-skill-toggle-label>展开说明</span>
+                    <iconify-icon icon="lucide:plus" aria-hidden="true"></iconify-icon>
+                  </button>
+                  <a class="skill-doc-link" href="skills/xxd-brand-system/SKILL.md">
+                    查看 Skill
+                    <iconify-icon icon="lucide:arrow-up-right" aria-hidden="true"></iconify-icon>
+                  </a>
+                </div>
                 <div class="skill-detail" id="skill-detail-brand">
                   <div class="skill-detail-grid">
+                    <section class="skill-benefit">
+                      <strong>利他价值</strong>
+                      <p>把一次配色变成可传承的品牌资产，让不同设计师、不同渠道和不同周期仍能保持同一种识别感。</p>
+                    </section>
                     <section>
                       <strong>解决的痛点</strong>
                       <p>每次活动、海报、PPT 都重新配色，品牌识别会变弱，团队也不知道哪些组合不能用。</p>
@@ -582,7 +663,7 @@
               </div>
             </article>
 
-            <article class="skill-item" data-open="false">
+            <article class="skill-item" id="skill-xxd-data-viz" tabindex="-1" data-open="false">
               <div class="skill-index">07</div>
               <div class="skill-body">
                 <div class="skill-head">
@@ -596,14 +677,25 @@
                       <span>产出：图表色数组</span>
                       <span>亮点：分类顺序发散分开处理</span>
                     </div>
+                    <p class="skill-value">利他价值：让读者先看懂数据含义，再感受到中国传统色气质。</p>
                   </div>
                 </div>
-                <button class="skill-toggle" type="button" data-skill-toggle aria-expanded="false" aria-controls="skill-detail-data">
-                  <span data-skill-toggle-label>展开说明</span>
-                  <iconify-icon icon="lucide:plus" aria-hidden="true"></iconify-icon>
-                </button>
+                <div class="skill-actions">
+                  <button class="skill-toggle" type="button" data-skill-toggle aria-expanded="false" aria-controls="skill-detail-data">
+                    <span data-skill-toggle-label>展开说明</span>
+                    <iconify-icon icon="lucide:plus" aria-hidden="true"></iconify-icon>
+                  </button>
+                  <a class="skill-doc-link" href="skills/xxd-data-viz/SKILL.md">
+                    查看 Skill
+                    <iconify-icon icon="lucide:arrow-up-right" aria-hidden="true"></iconify-icon>
+                  </a>
+                </div>
                 <div class="skill-detail" id="skill-detail-data">
                   <div class="skill-detail-grid">
+                    <section class="skill-benefit">
+                      <strong>利他价值</strong>
+                      <p>把色彩服务于数据理解：分类要分得开，顺序要看得出轻重，发散要能识别两端和中点。</p>
+                    </section>
                     <section>
                       <strong>解决的痛点</strong>
                       <p>海报配色直接放进图表，经常分类分不清、连续数值没顺序、正负发散没有清晰中点。</p>
@@ -629,7 +721,7 @@
               </div>
             </article>
 
-            <article class="skill-item" data-open="false">
+            <article class="skill-item" id="skill-xxd-existing-design-audit" tabindex="-1" data-open="false">
               <div class="skill-index">08</div>
               <div class="skill-body">
                 <div class="skill-head">
@@ -643,14 +735,25 @@
                       <span>产出：保留替换清单</span>
                       <span>亮点：不盲目推翻旧设计</span>
                     </div>
+                    <p class="skill-value">利他价值：尊重旧项目里已经有效的识别资产，只清理真正造成混乱的颜色。</p>
                   </div>
                 </div>
-                <button class="skill-toggle" type="button" data-skill-toggle aria-expanded="false" aria-controls="skill-detail-audit">
-                  <span data-skill-toggle-label>展开说明</span>
-                  <iconify-icon icon="lucide:plus" aria-hidden="true"></iconify-icon>
-                </button>
+                <div class="skill-actions">
+                  <button class="skill-toggle" type="button" data-skill-toggle aria-expanded="false" aria-controls="skill-detail-audit">
+                    <span data-skill-toggle-label>展开说明</span>
+                    <iconify-icon icon="lucide:plus" aria-hidden="true"></iconify-icon>
+                  </button>
+                  <a class="skill-doc-link" href="skills/xxd-existing-design-audit/SKILL.md">
+                    查看 Skill
+                    <iconify-icon icon="lucide:arrow-up-right" aria-hidden="true"></iconify-icon>
+                  </a>
+                </div>
                 <div class="skill-detail" id="skill-detail-audit">
                   <div class="skill-detail-grid">
+                    <section class="skill-benefit">
+                      <strong>利他价值</strong>
+                      <p>帮助团队用更低成本迁移到传统色体系：保留有价值的历史积累，同时给出可执行的替换边界。</p>
+                    </section>
                     <section>
                       <strong>解决的痛点</strong>
                       <p>旧稿里有很多相近色、重复色、临时色，没人知道哪些是品牌色、哪些只是历史遗留。</p>
@@ -676,7 +779,7 @@
               </div>
             </article>
 
-            <article class="skill-item" data-open="false">
+            <article class="skill-item" id="skill-xxd-content-series" tabindex="-1" data-open="false">
               <div class="skill-index">09</div>
               <div class="skill-body">
                 <div class="skill-head">
@@ -690,14 +793,25 @@
                       <span>产出：轮换规则</span>
                       <span>亮点：固定层和变化层分开</span>
                     </div>
+                    <p class="skill-value">利他价值：帮内容团队长期稳定生产，既保持识别度，也降低每期重新设计的压力。</p>
                   </div>
                 </div>
-                <button class="skill-toggle" type="button" data-skill-toggle aria-expanded="false" aria-controls="skill-detail-content">
-                  <span data-skill-toggle-label>展开说明</span>
-                  <iconify-icon icon="lucide:plus" aria-hidden="true"></iconify-icon>
-                </button>
+                <div class="skill-actions">
+                  <button class="skill-toggle" type="button" data-skill-toggle aria-expanded="false" aria-controls="skill-detail-content">
+                    <span data-skill-toggle-label>展开说明</span>
+                    <iconify-icon icon="lucide:plus" aria-hidden="true"></iconify-icon>
+                  </button>
+                  <a class="skill-doc-link" href="skills/xxd-content-series/SKILL.md">
+                    查看 Skill
+                    <iconify-icon icon="lucide:arrow-up-right" aria-hidden="true"></iconify-icon>
+                  </a>
+                </div>
                 <div class="skill-detail" id="skill-detail-content">
                   <div class="skill-detail-grid">
+                    <section class="skill-benefit">
+                      <strong>利他价值</strong>
+                      <p>把系列内容从“每次灵感发挥”变成可持续系统，让团队成员换人后也能继续产出一致的视觉语言。</p>
+                    </section>
                     <section>
                       <strong>解决的痛点</strong>
                       <p>每期都重新配色会失去识别度，完全固定又容易看腻，内容团队很难长期稳定执行。</p>
@@ -723,7 +837,7 @@
               </div>
             </article>
 
-            <article class="skill-item" data-open="false">
+            <article class="skill-item" id="skill-xxd-print-packaging" tabindex="-1" data-open="false">
               <div class="skill-index">10</div>
               <div class="skill-body">
                 <div class="skill-head">
@@ -737,14 +851,25 @@
                       <span>产出：打样检查清单</span>
                       <span>亮点：把材质和工艺纳入判断</span>
                     </div>
+                    <p class="skill-value">利他价值：提前照顾印刷、供应商和最终实物效果，减少交付后才发现色差的成本。</p>
                   </div>
                 </div>
-                <button class="skill-toggle" type="button" data-skill-toggle aria-expanded="false" aria-controls="skill-detail-print">
-                  <span data-skill-toggle-label>展开说明</span>
-                  <iconify-icon icon="lucide:plus" aria-hidden="true"></iconify-icon>
-                </button>
+                <div class="skill-actions">
+                  <button class="skill-toggle" type="button" data-skill-toggle aria-expanded="false" aria-controls="skill-detail-print">
+                    <span data-skill-toggle-label>展开说明</span>
+                    <iconify-icon icon="lucide:plus" aria-hidden="true"></iconify-icon>
+                  </button>
+                  <a class="skill-doc-link" href="skills/xxd-print-packaging/SKILL.md">
+                    查看 Skill
+                    <iconify-icon icon="lucide:arrow-up-right" aria-hidden="true"></iconify-icon>
+                  </a>
+                </div>
                 <div class="skill-detail" id="skill-detail-print">
                   <div class="skill-detail-grid">
+                    <section class="skill-benefit">
+                      <strong>利他价值</strong>
+                      <p>把屏幕方案提前翻译给真实生产环境，帮助设计师、客户和印刷方在打样前就看见风险。</p>
+                    </section>
                     <section>
                       <strong>解决的痛点</strong>
                       <p>屏幕 HEX 不能保证印刷效果，材质、油墨、CMYK、专色、覆膜和光线都会改变颜色感受。</p>

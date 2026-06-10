@@ -36,6 +36,7 @@ const footerCopyStatus = document.querySelector('[data-footer-copy-status]');
 const scrollUpButton = document.querySelector('[data-scroll-up]');
 const scrollDownButton = document.querySelector('[data-scroll-down]');
 const skillToggleButtons = document.querySelectorAll('[data-skill-toggle]');
+const skillAnchorLinks = document.querySelectorAll('[data-skill-anchor]');
 const titleHoverElements = document.querySelectorAll('h1, h2, h3');
 const heroPreviewDialog = document.querySelector('[data-hero-preview-dialog]');
 const heroPreviewImage = document.querySelector('[data-hero-preview-image]');
@@ -869,6 +870,31 @@ function closeSkillItems(except) {
   });
 }
 
+function scrollToSkillItem(item) {
+  window.requestAnimationFrame(() => {
+    const top = Math.max(0, item.getBoundingClientRect().top + window.scrollY - headerOffset());
+    window.scrollTo({
+      top,
+      behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth',
+    });
+    item.focus({ preventScroll: true });
+  });
+}
+
+function openSkillFromHash() {
+  if (!window.location.hash.startsWith('#skill-')) {
+    if (window.location.hash === '#skills') closeSkillItems();
+    return;
+  }
+
+  const item = document.querySelector(window.location.hash);
+  if (!item?.classList.contains('skill-item')) return;
+
+  closeSkillItems(item);
+  setSkillOpen(item, true);
+  scrollToSkillItem(item);
+}
+
 function queueScrollControlsUpdate() {
   if (scrollControlFrame) return;
 
@@ -1476,6 +1502,11 @@ skillToggleButtons.forEach((button) => {
     setSkillOpen(item, shouldOpen);
   });
 });
+skillAnchorLinks.forEach((link) => {
+  link.addEventListener('click', () => {
+    window.setTimeout(openSkillFromHash, 0);
+  });
+});
 scrollUpButton?.addEventListener('click', () => scrollBySection('up'));
 scrollDownButton?.addEventListener('click', () => scrollBySection('down'));
 window.addEventListener('scroll', queueScrollControlsUpdate, { passive: true });
@@ -1486,4 +1517,6 @@ window.addEventListener('resize', () => {
 window.addEventListener('keydown', (event) => {
   if (event.key === 'Escape') closeMobileNav();
 });
+window.addEventListener('hashchange', openSkillFromHash);
+openSkillFromHash();
 zipButton?.addEventListener('click', downloadZip);

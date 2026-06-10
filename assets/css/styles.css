@@ -1508,7 +1508,7 @@ select:focus-visible,
   border-bottom: 1px solid var(--line);
 }
 
-.skills-brief span {
+.skills-brief > span {
   display: block;
   margin-bottom: 18px;
   color: var(--muted);
@@ -1526,11 +1526,71 @@ select:focus-visible,
   line-height: 0.95;
 }
 
-.skills-brief p {
+.skills-brief > p {
   max-width: 27em;
   margin: 0;
   color: var(--ink-soft);
   line-height: 1.8;
+}
+
+.skills-jump {
+  margin-top: 30px;
+  padding-top: 18px;
+  border-top: 1px solid var(--line);
+}
+
+.skills-jump p {
+  margin: 0 0 10px;
+  color: var(--muted);
+  font-size: 0.78rem;
+  font-weight: 800;
+  line-height: 1.6;
+}
+
+.skills-jump div {
+  display: grid;
+  gap: 0;
+}
+
+.skills-jump a {
+  display: grid;
+  grid-template-columns: 34px minmax(0, 1fr);
+  gap: 10px;
+  align-items: center;
+  min-height: 34px;
+  color: var(--ink-soft);
+  border-top: 1px solid color-mix(in srgb, var(--line) 74%, transparent);
+  font-size: 0.84rem;
+  font-weight: 700;
+  line-height: 1.35;
+  text-decoration: none;
+  transition: color 160ms ease, background 160ms ease, padding 200ms var(--ease-out-expo);
+}
+
+.skills-jump a:last-child {
+  border-bottom: 1px solid color-mix(in srgb, var(--line) 74%, transparent);
+}
+
+.skills-jump a span {
+  color: var(--muted);
+  font-family: var(--font-rounded);
+  font-size: 0.72rem;
+  font-variant-numeric: tabular-nums;
+  font-weight: 800;
+  transition: color 160ms ease;
+}
+
+.skills-jump a:hover,
+.skills-jump a:focus-visible {
+  padding-left: 10px;
+  color: var(--hover-text);
+  background: var(--hover-bg);
+  outline: none;
+}
+
+.skills-jump a:hover span,
+.skills-jump a:focus-visible span {
+  color: var(--hover-text);
 }
 
 .skills-decision {
@@ -1642,6 +1702,7 @@ select:focus-visible,
 
 .skill-item:hover,
 .skill-item:focus-within,
+.skill-item:target,
 .skill-item[data-open="true"] {
   background: color-mix(in srgb, var(--panel-soft) 50%, transparent);
   border-color: var(--line-strong);
@@ -1655,6 +1716,7 @@ select:focus-visible,
 
 .skill-item:hover::before,
 .skill-item:focus-within::before,
+.skill-item:target::before,
 .skill-item[data-open="true"]::before {
   background: var(--ink);
   border-color: var(--ink);
@@ -1673,6 +1735,7 @@ select:focus-visible,
 
 .skill-item:hover .skill-index,
 .skill-item:focus-within .skill-index,
+.skill-item:target .skill-index,
 .skill-item[data-open="true"] .skill-index {
   color: var(--ink);
   transform: translateX(4px);
@@ -1704,6 +1767,7 @@ select:focus-visible,
 
 .skill-item:hover .skill-head iconify-icon,
 .skill-item:focus-within .skill-head iconify-icon,
+.skill-item:target .skill-head iconify-icon,
 .skill-item[data-open="true"] .skill-head iconify-icon {
   color: var(--ink);
   transform: translateY(-2px);
@@ -1766,6 +1830,24 @@ select:focus-visible,
   transform: translateY(-1px);
 }
 
+.skill-value {
+  max-width: 40em;
+  margin-top: 16px;
+  padding-left: 14px;
+  color: var(--ink);
+  border-left: 1px solid var(--line-strong);
+  font-size: 0.9rem;
+  font-weight: 600;
+  line-height: 1.75;
+}
+
+.skill-actions {
+  display: grid;
+  gap: 10px;
+  justify-items: end;
+  align-content: start;
+}
+
 .skill-toggle {
   display: inline-flex;
   gap: 10px;
@@ -1790,6 +1872,33 @@ select:focus-visible,
   border-color: var(--hover-bg);
   outline: none;
   transform: translateY(-1px);
+}
+
+.skill-doc-link {
+  display: inline-flex;
+  gap: 8px;
+  align-items: center;
+  justify-content: flex-end;
+  min-height: 34px;
+  color: var(--muted);
+  font-size: 0.78rem;
+  font-weight: 800;
+  line-height: 1.4;
+  text-decoration: none;
+  white-space: nowrap;
+  transition: color 160ms ease, transform 200ms var(--ease-out-expo);
+}
+
+.skill-doc-link:hover,
+.skill-doc-link:focus-visible {
+  color: var(--ink);
+  outline: none;
+  transform: translateX(4px);
+}
+
+.skill-doc-link iconify-icon {
+  width: 14px;
+  height: 14px;
 }
 
 .skill-toggle iconify-icon {
@@ -1820,6 +1929,23 @@ select:focus-visible,
 .skill-detail section {
   padding: 18px 0 20px;
   border-bottom: 1px solid var(--line);
+}
+
+.skill-benefit {
+  grid-column: 1 / -1;
+  display: grid;
+  grid-template-columns: 112px minmax(0, 1fr);
+  gap: 20px;
+  align-items: start;
+  padding-top: 20px;
+  border-top: 1px solid var(--ink);
+}
+
+.skill-benefit p {
+  max-width: 58em;
+  color: var(--ink);
+  font-size: 1rem;
+  font-weight: 650;
 }
 
 .skill-detail section:nth-last-child(-n + 2) {
@@ -1877,7 +2003,7 @@ select:focus-visible,
 }
 
 .skill-item[data-open="true"] .skill-detail {
-  max-height: 760px;
+  max-height: 980px;
   opacity: 1;
 }
 
@@ -3444,14 +3570,24 @@ select:focus-visible,
     align-items: end;
   }
 
-  .skills-brief span,
+  .skills-brief > span,
   .skills-brief strong,
-  .skills-brief p {
+  .skills-brief > p {
     margin-bottom: 0;
   }
 
-  .skills-brief p {
+  .skills-brief > p {
     max-width: 42em;
+  }
+
+  .skills-jump {
+    grid-column: 1 / -1;
+    margin-top: 12px;
+  }
+
+  .skills-jump div {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0 18px;
   }
 
   .skills-decision {
@@ -3863,13 +3999,26 @@ select:focus-visible,
     width: max-content;
   }
 
+  .skill-actions {
+    justify-items: start;
+  }
+
+  .skill-doc-link {
+    justify-content: flex-start;
+  }
+
   .skill-detail > div {
     grid-template-columns: 1fr;
     gap: 6px;
   }
 
   .skill-item[data-open="true"] .skill-detail {
-    max-height: 1280px;
+    max-height: 1680px;
+  }
+
+  .skill-benefit {
+    grid-template-columns: 1fr;
+    gap: 6px;
   }
 
   .skill-detail section,
@@ -3877,7 +4026,7 @@ select:focus-visible,
     border-bottom: 1px solid var(--line);
   }
 
-  .skill-detail section:last-child {
+  .skill-detail section:last-of-type {
     border-bottom: 0;
   }
 
