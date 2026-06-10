@@ -8,6 +8,12 @@ const project = window.TRADITIONAL_COLOR_PROJECT || {
 const imagesById = new Map(images.map((image) => [image.id, image]));
 
 const gallery = document.querySelector('[data-gallery]');
+const styleLab = document.querySelector('[data-style-lab]');
+const styleRefreshButton = document.querySelector('[data-style-refresh]');
+const styleCopyAllButton = document.querySelector('[data-style-copy-all]');
+const styleStatus = document.querySelector('[data-style-status]');
+const styleAnchor = document.querySelector('[data-style-anchor]');
+const stylePalette = document.querySelector('[data-style-palette]');
 const heroMosaic = document.querySelector('[data-hero-mosaic]');
 const searchInput = document.querySelector('[data-search]');
 const hueFilter = document.querySelector('[data-hue-filter]');
@@ -71,6 +77,7 @@ let navResizeFrame;
 const TITLE_TONE_MAP = [
   { match: ['hero', 'top'], hues: ['red', 'orange', 'yellow'] },
   { match: ['gallery', '色卡', '图库', '筛选'], hues: ['blue', 'cyan', 'green'] },
+  { match: ['style', '样式', '封面', '排版'], hues: ['red', 'orange', 'blue', 'green'] },
   { match: ['audit', '清单', '索引', '覆盖'], hues: ['blue', 'green', 'neutral'] },
   { match: ['knowledge', '知识', '提示', '秩序'], hues: ['yellow', 'green', 'blue'] },
   { match: ['skills', 'skill', 'xxd', '工作流'], hues: ['purple', 'blue', 'cyan'] },
@@ -173,6 +180,68 @@ const HARMONY_RELATION_TYPES = [
     method: '从低饱和传统色中挑选，再按当前色的明暗寻找更合适的承接色。',
   },
 ];
+
+const STYLE_LAB_ROLES = [
+  { key: 'background', label: '背景色', use: '铺底和留白' },
+  { key: 'title', label: '标题色', use: '主标题和正文重点' },
+  { key: 'support', label: '辅助色', use: '说明、分隔和层次' },
+  { key: 'accent', label: '点缀色', use: '按钮、标签和视觉焦点' },
+];
+
+const STYLE_LAB_TEMPLATES = [
+  {
+    id: 'title-cover',
+    label: '标题封面',
+    scene: '公众号首图、作品集封面、系列开篇',
+    structure: '大标题靠左，短副标题承接，底部信息行收口，点缀色只做细线和角标。',
+    overline: 'TRADITIONAL COLOR',
+    title: '春山如黛',
+    subtitle: '给一组内容先定气质',
+    meta: '视觉练习 / 传统色',
+  },
+  {
+    id: 'quote-card',
+    label: '诗句短卡',
+    scene: '摘录卡、诗词短句、社交媒体配图',
+    structure: '短句居中偏上，译注或出处放在低权重位置，用大留白让颜色和文字一起呼吸。',
+    overline: 'NOTE',
+    title: '风过庭前，花影不语',
+    subtitle: '留白适合短句、诗词和摘录',
+    meta: '中式短卡',
+  },
+  {
+    id: 'course-cover',
+    label: '课程封面',
+    scene: '线上课程、知识付费封面、课件首页',
+    structure: '课程名做主视觉，编号和模块列表形成秩序，点缀色用于学习进度和重点提示。',
+    overline: 'COURSE 03',
+    title: '东方色彩课',
+    subtitle: '从色名到版面秩序',
+    meta: '配色 / 字体 / 留白',
+  },
+  {
+    id: 'event-poster',
+    label: '活动海报',
+    scene: '公开课、沙龙、直播预告、展览活动',
+    structure: '活动名和时间形成强主次，辅助信息沿边缘排布，点缀色负责行动入口。',
+    overline: 'ONLINE TALK',
+    title: '色彩公开课',
+    subtitle: '传统色在现代内容里的用法',
+    meta: '06.18 / 20:00',
+  },
+  {
+    id: 'column-header',
+    label: '栏目头图',
+    scene: '专栏封面、网站头图、视频栏目包装',
+    structure: '栏目名稳定出现，期数和短说明建立连续性，适合做一整套内容资产。',
+    overline: 'ISSUE 24',
+    title: '中国色札记',
+    subtitle: '一周一个色彩主题',
+    meta: '小小东整理',
+  },
+];
+
+let currentStyleLabScheme;
 
 function formatBytes(bytes) {
   const units = ['B', 'KB', 'MB', 'GB'];
@@ -484,6 +553,323 @@ function contrastRatio(first, second) {
   const lighter = Math.max(relativeLuminance(first), relativeLuminance(second));
   const darker = Math.min(relativeLuminance(first), relativeLuminance(second));
   return (lighter + 0.05) / (darker + 0.05);
+}
+
+function displayColorFromImage(image) {
+  if (!image?.hex) return null;
+
+  return {
+    id: image.id,
+    name: colorName(image),
+    hex: image.hex,
+  };
+}
+
+function styleColorKey(color) {
+  return color?.id || color?.hex || '';
+}
+
+function styleColorLuminance(color) {
+  const rgb = rgbFromHex(color?.hex);
+  return rgb ? relativeLuminance(rgb) : 0;
+}
+
+function styleColorContrast(first, second) {
+  const firstRgb = rgbFromHex(first?.hex);
+  const secondRgb = rgbFromHex(second?.hex);
+  if (!firstRgb || !secondRgb) return 0;
+  return contrastRatio(firstRgb, secondRgb);
+}
+
+function uniqueDisplayColors(colors) {
+  const used = new Set();
+
+  return colors
+    .map((color) => lookupDisplayColor(color))
+    .filter((color) => color.hex)
+    .filter((color) => {
+      const key = styleColorKey(color);
+      if (used.has(key)) return false;
+      used.add(key);
+      return true;
+    });
+}
+
+function allDisplayColors() {
+  return images.map(displayColorFromImage).filter(Boolean);
+}
+
+function relationDisplayColors(harmony, keys) {
+  if (!harmony) return [];
+
+  return uniqueDisplayColors(keys.flatMap((key) => harmony[key] || []));
+}
+
+function sortedStyleColors(colors, direction = 'light') {
+  const multiplier = direction === 'dark' ? 1 : -1;
+  return [...colors].sort((first, second) => (
+    (styleColorLuminance(first) - styleColorLuminance(second)) * multiplier
+  ));
+}
+
+function firstUnusedColor(colors, used, predicate = () => true) {
+  return uniqueDisplayColors(colors).find((color) => {
+    const key = styleColorKey(color);
+    return !used.has(key) && predicate(color);
+  }) || null;
+}
+
+function bestContrastColor(colors, background, used, minimum = 3) {
+  const ranked = uniqueDisplayColors(colors)
+    .filter((color) => !used.has(styleColorKey(color)))
+    .map((color) => ({
+      color,
+      contrast: styleColorContrast(color, background),
+    }))
+    .sort((first, second) => second.contrast - first.contrast);
+
+  return ranked.find((item) => item.contrast >= minimum)?.color || ranked[0]?.color || null;
+}
+
+function createStyleLabScheme() {
+  const anchorImage = randomColorItems(1)[0] || images.find((image) => image.hex);
+  if (!anchorImage) return null;
+
+  const allColors = allDisplayColors();
+  const anchor = displayColorFromImage(anchorImage);
+  const harmony = harmonyForImage(anchorImage);
+  const used = new Set();
+
+  const backgroundCandidates = [
+    ...relationDisplayColors(harmony, ['lighter', 'neutral', 'grayTone', 'same']),
+    ...sortedStyleColors(allColors, 'light'),
+  ];
+  const background = firstUnusedColor(
+    sortedStyleColors(backgroundCandidates, 'light'),
+    used,
+    (color) => styleColorLuminance(color) >= 0.58,
+  ) || sortedStyleColors(backgroundCandidates, 'light')[0] || anchor;
+  used.add(styleColorKey(background));
+
+  const title = bestContrastColor([
+    ...relationDisplayColors(harmony, ['darker', 'neutral', 'grayTone', 'complementary']),
+    ...sortedStyleColors(allColors, 'dark'),
+  ], background, used, 4.5) || anchor;
+  used.add(styleColorKey(title));
+
+  const support = bestContrastColor([
+    ...relationDisplayColors(harmony, ['analogous', 'same', 'splitComplementary', 'grayTone']),
+    ...allColors,
+  ], background, used, 2.35) || title;
+  used.add(styleColorKey(support));
+
+  const accent = (!used.has(styleColorKey(anchor)) && styleColorContrast(anchor, background) >= 2.1)
+    ? anchor
+    : bestContrastColor([
+      ...relationDisplayColors(harmony, ['complementary', 'splitComplementary', 'triadic', 'temperatureContrast']),
+      anchor,
+      ...allColors,
+    ], background, used, 2.6) || support;
+
+  return {
+    anchor,
+    roles: {
+      background,
+      title,
+      support,
+      accent,
+    },
+  };
+}
+
+function styleLabRoleLine(role, color) {
+  return `${role.label}：${color.name} ${color.hex}（${role.use}）`;
+}
+
+function styleLabSchemeText(scheme) {
+  return STYLE_LAB_ROLES
+    .map((role) => styleLabRoleLine(role, scheme.roles[role.key]))
+    .join('\n');
+}
+
+function styleTemplateCopyText(template, scheme) {
+  return [
+    `样式名称：${template.label}`,
+    `适用场景：${template.scene}`,
+    '配色角色：',
+    styleLabSchemeText(scheme),
+    `排版结构：${template.structure}`,
+  ].join('\n');
+}
+
+function styleLabCopyText() {
+  if (!currentStyleLabScheme) return '';
+
+  return [
+    '中国传统色样式间',
+    `主色来源：${currentStyleLabScheme.anchor.name} ${currentStyleLabScheme.anchor.hex}`,
+    '',
+    '当前配色角色：',
+    styleLabSchemeText(currentStyleLabScheme),
+    '',
+    '样式卡：',
+    STYLE_LAB_TEMPLATES.map((template) => `- ${template.label}：${template.scene}；${template.structure}`).join('\n'),
+  ].join('\n');
+}
+
+function styleLabCanvasMarkup(template) {
+  if (template.id === 'quote-card') {
+    return `
+      <div class="style-sample-quote-mark">“</div>
+      <p class="style-sample-quote">${escapeHtml(template.title)}</p>
+      <span class="style-sample-line"></span>
+      <small>${escapeHtml(template.subtitle)}</small>
+      <em>${escapeHtml(template.meta)}</em>
+    `;
+  }
+
+  if (template.id === 'course-cover') {
+    return `
+      <span class="style-sample-overline">${escapeHtml(template.overline)}</span>
+      <h3>${escapeHtml(template.title)}</h3>
+      <p>${escapeHtml(template.subtitle)}</p>
+      <div class="style-sample-module">
+        <span>色名</span>
+        <span>比例</span>
+        <span>交付</span>
+      </div>
+      <em>${escapeHtml(template.meta)}</em>
+    `;
+  }
+
+  if (template.id === 'event-poster') {
+    return `
+      <span class="style-sample-overline">${escapeHtml(template.overline)}</span>
+      <strong class="style-sample-date">06.18</strong>
+      <h3>${escapeHtml(template.title)}</h3>
+      <p>${escapeHtml(template.subtitle)}</p>
+      <em>${escapeHtml(template.meta)}</em>
+    `;
+  }
+
+  if (template.id === 'column-header') {
+    return `
+      <span class="style-sample-rule"></span>
+      <span class="style-sample-overline">${escapeHtml(template.overline)}</span>
+      <h3>${escapeHtml(template.title)}</h3>
+      <p>${escapeHtml(template.subtitle)}</p>
+      <em>${escapeHtml(template.meta)}</em>
+    `;
+  }
+
+  return `
+    <span class="style-sample-overline">${escapeHtml(template.overline)}</span>
+    <h3>${escapeHtml(template.title)}</h3>
+    <p>${escapeHtml(template.subtitle)}</p>
+    <em>${escapeHtml(template.meta)}</em>
+  `;
+}
+
+function styleRoleSwatchMarkup(role, color) {
+  const label = `${role.label} ${color.name} ${color.hex}`;
+
+  return `
+    <button class="style-palette-role" type="button" data-style-role="${role.key}" aria-label="复制 ${escapeHtml(label)}" title="复制 ${escapeHtml(label)}">
+      <span class="style-role-swatch" style="--style-role-color: ${escapeHtml(color.hex)}" aria-hidden="true"></span>
+      <span>
+        <strong>${escapeHtml(role.label)}</strong>
+        <small>${escapeHtml(role.use)}</small>
+      </span>
+      <em>${escapeHtml(color.name)} ${escapeHtml(color.hex)}</em>
+    </button>
+  `;
+}
+
+function styleTemplateRoleMarkup(role, color) {
+  return `
+    <span>
+      <i style="--style-role-color: ${escapeHtml(color.hex)}" aria-hidden="true"></i>
+      <b>${escapeHtml(role.label)}</b>
+      <em>${escapeHtml(color.name)} ${escapeHtml(color.hex)}</em>
+    </span>
+  `;
+}
+
+function styleTemplateMarkup(template, index, scheme) {
+  const roles = scheme.roles;
+  const customProperties = [
+    `--sample-bg: ${roles.background.hex}`,
+    `--sample-title: ${roles.title.hex}`,
+    `--sample-support: ${roles.support.hex}`,
+    `--sample-accent: ${roles.accent.hex}`,
+  ].join('; ');
+
+  return `
+    <article class="style-template-card style-template-card--${escapeHtml(template.id)}" data-style-template-id="${escapeHtml(template.id)}" style="${escapeHtml(customProperties)}">
+      <header class="style-template-meta">
+        <span>${String(index + 1).padStart(2, '0')}</span>
+        <strong>${escapeHtml(template.label)}</strong>
+        <button type="button" data-style-copy="${escapeHtml(template.id)}" aria-label="复制 ${escapeHtml(template.label)} 配色方案">
+          <iconify-icon icon="lucide:copy" aria-hidden="true"></iconify-icon>
+        </button>
+      </header>
+      <div class="style-template-canvas">
+        ${styleLabCanvasMarkup(template)}
+      </div>
+      <footer class="style-template-roles">
+        ${STYLE_LAB_ROLES.map((role) => styleTemplateRoleMarkup(role, roles[role.key])).join('')}
+      </footer>
+    </article>
+  `;
+}
+
+function setStyleLabStatus(message) {
+  if (!styleStatus) return;
+
+  styleStatus.textContent = message;
+  styleStatus.dataset.visible = message ? 'true' : 'false';
+}
+
+function renderStyleLab(statusMessage = '') {
+  if (!styleLab) return;
+
+  const scheme = createStyleLabScheme();
+  if (!scheme) {
+    styleLab.innerHTML = '<div class="empty-state"><strong>样式间暂时无法生成</strong><span>没有读取到可用色值。</span></div>';
+    return;
+  }
+
+  currentStyleLabScheme = scheme;
+  if (styleAnchor) {
+    styleAnchor.textContent = `${scheme.anchor.name} ${scheme.anchor.hex}`;
+  }
+  if (stylePalette) {
+    stylePalette.innerHTML = STYLE_LAB_ROLES
+      .map((role) => styleRoleSwatchMarkup(role, scheme.roles[role.key]))
+      .join('');
+  }
+  styleLab.innerHTML = STYLE_LAB_TEMPLATES
+    .map((template, index) => styleTemplateMarkup(template, index, scheme))
+    .join('');
+  setStyleLabStatus(statusMessage || '可复制整组方案，也可以只复制某一张样式卡。');
+}
+
+async function copyStyleTemplate(templateId) {
+  const template = STYLE_LAB_TEMPLATES.find((item) => item.id === templateId);
+  if (!template || !currentStyleLabScheme) return;
+
+  await writeClipboard(styleTemplateCopyText(template, currentStyleLabScheme));
+  setStyleLabStatus(`已复制：${template.label}`);
+}
+
+async function copyStyleRole(roleKey) {
+  const role = STYLE_LAB_ROLES.find((item) => item.key === roleKey);
+  const color = currentStyleLabScheme?.roles[roleKey];
+  if (!role || !color) return;
+
+  const copyText = `${role.label}：${color.name} ${color.hex}`;
+  await writeClipboard(copyText);
+  setStyleLabStatus(`已复制：${copyText}`);
 }
 
 function lookupDisplayColor(color) {
@@ -1368,6 +1754,7 @@ updateStats();
 setTheme(currentTheme());
 buildHero();
 buildFooterSpectrum();
+renderStyleLab();
 renderGallery();
 updateScrollControls();
 skillToggleButtons.forEach((button) => {
@@ -1390,6 +1777,24 @@ hueFilter?.addEventListener('change', applyFilters);
 shuffleButton?.addEventListener('click', shuffleItems);
 loadMoreButton?.addEventListener('click', () => {
   appendGalleryItems(shuffled ? 24 : 32);
+});
+styleRefreshButton?.addEventListener('click', () => {
+  renderStyleLab('已换成一组新的传统色方案');
+});
+styleCopyAllButton?.addEventListener('click', async () => {
+  const copyText = styleLabCopyText();
+  if (!copyText) return;
+
+  await writeClipboard(copyText);
+  setStyleLabStatus('已复制当前整组方案');
+});
+stylePalette?.addEventListener('click', (event) => {
+  const roleButton = event.target.closest('[data-style-role]');
+  if (roleButton) copyStyleRole(roleButton.dataset.styleRole);
+});
+styleLab?.addEventListener('click', (event) => {
+  const copyButton = event.target.closest('[data-style-copy]');
+  if (copyButton) copyStyleTemplate(copyButton.dataset.styleCopy);
 });
 
 gallery?.addEventListener('click', (event) => {
