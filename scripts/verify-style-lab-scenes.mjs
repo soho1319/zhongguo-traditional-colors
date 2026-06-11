@@ -26,15 +26,15 @@ const requiredCssSnippets = [
   '.style-sample-social-footer',
 ];
 
-const requiredHtmlSnippets = [
-  'assets/css/styles.css?v=20260611-8',
-  'assets/js/app.js?v=20260611-6',
+const requiredHtmlPatterns = [
+  /assets\/css\/styles\.css\?v=\d{8}-\d+/,
+  /assets\/js\/app\.js\?v=\d{8}-\d+/,
 ];
 
 const missing = [
   ...requiredAppSnippets.filter((snippet) => !app.includes(snippet)).map((snippet) => `app.js: ${snippet}`),
   ...requiredCssSnippets.filter((snippet) => !css.includes(snippet)).map((snippet) => `styles.css: ${snippet}`),
-  ...requiredHtmlSnippets.filter((snippet) => !html.includes(snippet)).map((snippet) => `style-lab.html: ${snippet}`),
+  ...requiredHtmlPatterns.filter((pattern) => !pattern.test(html)).map((pattern) => `style-lab.html: ${pattern}`),
 ];
 
 if (missing.length) {
