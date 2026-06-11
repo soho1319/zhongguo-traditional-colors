@@ -8,9 +8,9 @@ const checks = [
   {
     file: 'assets/js/app.js',
     expectations: [
-      ['setupAutoLoad', /function setupAutoLoad\(/],
-      ['IntersectionObserver', /new IntersectionObserver/],
-      ['appendGalleryItems from observer', /appendGalleryItems\(GALLERY_PAGE_SIZE\)/],
+      ['manual gallery load button remains visible', /loadMoreButton\.hidden = visibleLength >= currentItems\.length;/],
+      ['load more button appends gallery items', /loadMoreButton\?\.addEventListener\('click'[\s\S]*appendGalleryItems\(GALLERY_PAGE_SIZE\);/],
+      ['gallery observer disabled', /function setupAutoLoad\(\)\s*\{[\s\S]*galleryAutoObserver\?\.disconnect\(\);[\s\S]*galleryAutoObserver = undefined;/],
     ],
   },
   {
@@ -41,6 +41,11 @@ const failures = checks.flatMap(({ file, expectations }) => {
     .filter(([, pattern]) => !pattern.test(source))
     .map(([label]) => `${file}: missing ${label}`);
 });
+
+const appSource = readFileSync(join(root, 'assets/js/app.js'), 'utf8');
+if (/loadMoreButton\.hidden = autoLoadSupported/.test(appSource) || /new IntersectionObserver\([\s\S]*appendGalleryItems\(GALLERY_PAGE_SIZE\)/.test(appSource)) {
+  failures.push('assets/js/app.js: gallery should load more only after button click');
+}
 
 if (failures.length) {
   throw new Error(`Auto-load verification failed:\n${failures.join('\n')}`);

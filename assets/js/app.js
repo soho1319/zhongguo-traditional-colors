@@ -2119,8 +2119,7 @@ function syncGalleryFooter(visibleLength) {
   }
 
   if (loadMoreButton) {
-    const autoLoadSupported = 'IntersectionObserver' in window;
-    loadMoreButton.hidden = autoLoadSupported || visibleLength >= currentItems.length;
+    loadMoreButton.hidden = visibleLength >= currentItems.length;
   }
 
   setupAutoLoad();
@@ -2128,15 +2127,8 @@ function syncGalleryFooter(visibleLength) {
 }
 
 function setupAutoLoad() {
-  if (!gallery || !loadMoreButton || !('IntersectionObserver' in window)) return;
-
-  const trigger = loadMoreButton.closest('.gallery-footer') || loadMoreButton;
   galleryAutoObserver?.disconnect();
-  galleryAutoObserver = new IntersectionObserver((entries) => {
-    const shouldLoad = entries.some((entry) => entry.isIntersecting) && visibleCount < currentItems.length;
-    if (shouldLoad) appendGalleryItems(GALLERY_PAGE_SIZE);
-  }, { rootMargin: '520px 0px' });
-  galleryAutoObserver.observe(trigger);
+  galleryAutoObserver = undefined;
 }
 
 function renderGallery() {

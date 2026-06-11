@@ -473,14 +473,19 @@ function showToast(message) {
   }, 1600);
 }
 
-function swatchMarkup(color, index) {
+function swatchMarkup(color) {
   return `
-    <button class="palette-swatch" type="button" data-copy-color="${escapeHtml(color.id)}" style="--swatch: ${escapeHtml(color.hex)}; --swatch-text: ${readableTextColor(color.hex)}; --swatch-index: ${index};" aria-label="复制 ${escapeHtml(color.name)} ${escapeHtml(color.hex)}">
-      <span class="palette-swatch-label">
-        <strong>${escapeHtml(color.name)}</strong>
-        <small>${escapeHtml(color.hex)}</small>
-      </span>
+    <button class="palette-swatch" type="button" data-copy-color="${escapeHtml(color.id)}" style="--swatch: ${escapeHtml(color.hex)};" aria-label="复制 ${escapeHtml(color.name)} ${escapeHtml(color.hex)}">
     </button>
+  `;
+}
+
+function paletteColorLabelMarkup(color, index) {
+  return `
+    <span class="palette-color-label" style="--label-index: ${index}; --label-text: ${readableTextColor(color.hex)};">
+      <strong>${escapeHtml(color.name)}</strong>
+      <small>${escapeHtml(color.hex)}</small>
+    </span>
   `;
 }
 
@@ -493,6 +498,9 @@ function paletteCardMarkup(palette) {
     <article class="palette-card" tabindex="0" data-palette-id="${escapeHtml(palette.id)}" aria-selected="${selected ? 'true' : 'false'}">
       <div class="palette-stack" style="${paletteStackStyle(palette)}" aria-label="${escapeHtml(palette.relationLabel)}配色">
         ${palette.colors.map(swatchMarkup).join('')}
+        <div class="palette-color-list" aria-hidden="true">
+          ${palette.colors.map(paletteColorLabelMarkup).join('')}
+        </div>
       </div>
       <footer class="palette-card-footer">
         <button class="favorite-button" type="button" data-favorite="${escapeHtml(palette.id)}" aria-pressed="${favorite ? 'true' : 'false'}" aria-label="${favorite ? '取消收藏' : '收藏'} ${escapeHtml(palette.anchor.name)} 配色">

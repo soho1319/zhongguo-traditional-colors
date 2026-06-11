@@ -7,13 +7,13 @@ const js = readFileSync(join(root, 'assets/js/palettes.js'), 'utf8');
 const css = readFileSync(join(root, 'assets/css/palettes.css'), 'utf8');
 
 const checks = [
-  ['swatch index custom property', /--swatch-index:\s*\$\{index\}/, js],
+  ['label index custom property', /--label-index:\s*\$\{index\}/, js],
   ['variable palette rows', /grid-template-rows:\s*var\(--stack-0,\s*41fr\)\s+var\(--stack-1,\s*26fr\)\s+var\(--stack-2,\s*18fr\)\s+var\(--stack-3,\s*15fr\)/, css],
   ['square palette stack', /aspect-ratio:\s*1\s*\/\s*1;/, css],
   ['per-card stack style', /style="\$\{paletteStackStyle\(palette\)\}"/, js],
-  ['top-down label delay', /transition-delay:\s*calc\(var\(--swatch-index\)\s*\*\s*55ms\)/, css],
+  ['top-down label delay', /transition-delay:\s*calc\(var\(--label-index\)\s*\*\s*55ms\)/, css],
   ['hover reveals from above', /translateY\(-8px\)/, css],
-  ['focus-within reveals labels', /\.palette-card:focus-within\s+\.palette-swatch-label/, css],
+  ['focus-within reveals labels', /\.palette-card:focus-within\s+\.palette-color-list/, css],
 ];
 
 const patternBlock = js.match(/const STACK_PATTERNS = \[([\s\S]*?)\];/);
