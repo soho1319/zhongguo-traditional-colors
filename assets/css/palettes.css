@@ -195,10 +195,10 @@ iconify-icon {
 
 .palette-shell {
   display: grid;
-  grid-template-columns: minmax(150px, 184px) minmax(0, 1fr) minmax(250px, 300px);
+  grid-template-columns: minmax(150px, 184px) minmax(0, 1fr);
   gap: clamp(20px, 2.4vw, 34px);
   align-items: start;
-  width: min(1500px, calc(100vw - 48px));
+  width: min(1540px, calc(100vw - 48px));
   margin: 0 auto;
   padding: 34px 0 72px;
 }
@@ -412,8 +412,8 @@ iconify-icon {
 
 .palette-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-  gap: 30px 26px;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 30px 24px;
 }
 
 .palette-card {
