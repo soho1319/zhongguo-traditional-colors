@@ -80,7 +80,7 @@ ${languageSwitch("zh")}
 ## 快速入口
 
 - [在线浏览色卡](${siteUrl})
-- [中国色配色猎场](${paletteUrl})
+- [中国色配色灵感](${paletteUrl})
 - [直接下载完整 ZIP](${zipUrl})
 - [查看 Release](${releaseUrl})
 - [原始 742 色清单](${masterListPath})
