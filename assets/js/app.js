@@ -196,14 +196,14 @@ const STYLE_LAB_SCENES = [
     label: '网页',
     short: '首页 / 产品页',
     scene: '官网首页、产品页、作品集、工具首屏',
-    size: '响应式网页 / 1440 起稿',
-    layout: '导航 / 标题 / 正文 / CTA / 分区',
-    structure: '主色定气质，按钮色只给行动入口。',
+    size: '桌面首屏 / 1440x900',
+    layout: '顶栏 / 左侧主张 / 右侧视觉 / CTA / 功能卡',
+    structure: '先保证首屏层级，行动色只给 CTA 和关键入口。',
     relationKeys: ['neutral', 'lighter', 'darker', 'analogous'],
     overline: 'WEB HERO',
     title: '中国色也能进入现代网页',
-    subtitle: '背景、标题、正文、按钮、点缀分开。',
-    meta: '适合官网、产品页和作品集',
+    subtitle: '把传统色拆成背景、标题、正文、按钮和视觉块。',
+    meta: '导航 / Hero / Feature',
     action: '查看方案',
   },
   {
@@ -212,8 +212,8 @@ const STYLE_LAB_SCENES = [
     short: '标题页 / 课件',
     scene: '汇报封面、课程课件、方案演示、知识卡片',
     size: '16:9 / 1920x1080',
-    layout: '大标题 / 小结论 / 信息条 / 页码',
-    structure: '标题和结论最清楚，点缀只做页码和章节。',
+    layout: '章节号 / 大标题 / 右侧视觉 / 页脚信息',
+    structure: '一页只服务一个结论，辅助色承担图形和页脚。',
     relationKeys: ['same', 'neutral', 'grayTone', 'lighter', 'darker'],
     overline: 'SLIDE 01',
     title: '东方色彩方案',
@@ -224,11 +224,11 @@ const STYLE_LAB_SCENES = [
   {
     key: 'cover',
     label: '封面',
-    short: '书封 / 首图',
-    scene: '公众号首图、书籍封面、作品集封面、课程封面',
-    size: '3:4 / 1080x1440',
-    layout: '大标题 / 短副标题 / 作者或期数',
-    structure: '主色定气质，标题色保识别，点缀做记忆点。',
+    short: '书封 / 课程',
+    scene: '书籍封面、课程封面、作品集封面、系列专栏封面',
+    size: '竖版封面 / 1080x1440',
+    layout: '系列名 / 主标题 / 副标题 / 作者或期数',
+    structure: '标题居中压住识别，点缀色只做系列记忆点。',
     relationKeys: ['analogous', 'grayTone', 'neutral', 'complementary'],
     overline: 'COVER',
     title: '春山如黛',
@@ -241,9 +241,9 @@ const STYLE_LAB_SCENES = [
     label: '海报',
     short: '活动 / 宣传',
     scene: '活动海报、直播预告、展览视觉、公开课宣传',
-    size: '9:16 / 1080x1920',
-    layout: '日期 / 活动名 / 卖点 / 行动信息',
-    structure: '按钮色给行动，点缀服务时间、地点和数字。',
+    size: '移动端海报 / 1080x1920',
+    layout: '日期 / 活动名 / 卖点 / 时间地点 / 报名入口',
+    structure: '日期和标题先抢视线，行动色给报名入口。',
     relationKeys: ['complementary', 'splitComplementary', 'temperatureContrast', 'triadic'],
     overline: 'ONLINE TALK',
     title: '色彩公开课',
@@ -256,9 +256,9 @@ const STYLE_LAB_SCENES = [
     label: '品牌',
     short: '识别 / 系统',
     scene: '品牌色板、视觉规范、名片、包装起稿',
-    size: '品牌卡 / 多触点延展',
-    layout: '品牌名 / 标语 / 色彩角色 / 识别元素',
-    structure: '先定主色、按钮色、点缀色。',
+    size: '品牌板 / 1920x1080',
+    layout: '标志 / 品牌名 / 标语 / 色板 / 应用触点',
+    structure: '主色负责识别，辅助色拆给物料、按钮和系统底色。',
     relationKeys: ['neutral', 'grayTone', 'same', 'analogous', 'darker'],
     overline: 'BRAND SYSTEM',
     title: '小满茶事',
@@ -269,11 +269,11 @@ const STYLE_LAB_SCENES = [
   {
     key: 'social',
     label: '社媒图',
-    short: '小红书 / 摘录',
-    scene: '小红书封面、公众号配图、诗句短卡、社交媒体图',
-    size: '4:5 / 1080x1350',
-    layout: '短句 / 注释 / 署名 / 轻按钮',
-    structure: '背景留情绪，标题保阅读，点缀做系列识别。',
+    short: '小红书 / 封面',
+    scene: '小红书封面、社媒长图首屏、诗句短卡、公众号配图',
+    size: '小红书封面 / 1242x1660',
+    layout: '系列标签 / 封面标题 / 一句解释 / 作者或栏目',
+    structure: '标题必须能在信息流缩略图里读清楚，背景只承载气质。',
     relationKeys: ['analogous', 'complementary', 'neutral', 'lighter', 'grayTone'],
     overline: 'SOCIAL CARD',
     title: '风过庭前，花影不语',
@@ -1045,11 +1045,23 @@ function renderStyleLabModes(scheme = currentStyleLabScheme) {
 function styleLabCanvasMarkup(scene, scheme) {
   if (scene.key === 'web') {
     return `
-      <div class="style-sample-browserbar"><span></span><span></span><span></span></div>
-      <span class="style-sample-overline">${escapeHtml(scene.overline)}</span>
-      <h3>${escapeHtml(scene.title)}</h3>
-      <p>${escapeHtml(scene.subtitle)}</p>
-      <span class="style-sample-action">${escapeHtml(scene.action)}</span>
+      <div class="style-sample-browserbar">
+        <span></span><span></span><span></span>
+        <b>Product</b>
+        <i>Docs</i>
+      </div>
+      <div class="style-sample-web-hero">
+        <div class="style-sample-web-copy">
+          <span class="style-sample-overline">${escapeHtml(scene.overline)}</span>
+          <h3>${escapeHtml(scene.title)}</h3>
+          <p>${escapeHtml(scene.subtitle)}</p>
+          <span class="style-sample-action">${escapeHtml(scene.action)}</span>
+        </div>
+        <div class="style-sample-web-visual" aria-hidden="true">
+          <strong>${escapeHtml(scheme.anchor.name.slice(0, 1))}</strong>
+          <span></span>
+        </div>
+      </div>
       <div class="style-sample-feature">
         <b>背景</b>
         <b>标题</b>
@@ -1061,15 +1073,24 @@ function styleLabCanvasMarkup(scene, scheme) {
 
   if (scene.key === 'ppt') {
     return `
-      <span class="style-sample-overline">${escapeHtml(scene.overline)}</span>
-      <h3>${escapeHtml(scene.title)}</h3>
-      <p>${escapeHtml(scene.subtitle)}</p>
-      <div class="style-sample-module">
-        <span>主结论</span>
-        <span>行动色</span>
-        <span>页码</span>
+      <div class="style-sample-slide-top">
+        <span>${escapeHtml(scene.overline)}</span>
+        <b>16:9</b>
       </div>
-      <em>${escapeHtml(scene.meta)}</em>
+      <div class="style-sample-slide-layout">
+        <div>
+          <h3>${escapeHtml(scene.title)}</h3>
+          <p>${escapeHtml(scene.subtitle)}</p>
+        </div>
+        <div class="style-sample-slide-visual" aria-hidden="true">
+          <strong>01</strong>
+          <span></span>
+        </div>
+      </div>
+      <div class="style-sample-slide-footer">
+        <span>${escapeHtml(scene.meta)}</span>
+        <b>06</b>
+      </div>
     `;
   }
 
@@ -1079,6 +1100,10 @@ function styleLabCanvasMarkup(scene, scheme) {
       <strong class="style-sample-date">06.18</strong>
       <h3>${escapeHtml(scene.title)}</h3>
       <p>${escapeHtml(scene.subtitle)}</p>
+      <div class="style-sample-poster-info">
+        <span>线上直播</span>
+        <span>20:00 开始</span>
+      </div>
       <span class="style-sample-action">${escapeHtml(scene.action)}</span>
       <em>${escapeHtml(scene.meta)}</em>
     `;
@@ -1086,12 +1111,23 @@ function styleLabCanvasMarkup(scene, scheme) {
 
   if (scene.key === 'brand') {
     return `
-      <span class="style-sample-overline">${escapeHtml(scene.overline)}</span>
-      <div class="style-sample-brand-mark">${escapeHtml(scheme.anchor.name.slice(0, 1))}</div>
-      <h3>${escapeHtml(scene.title)}</h3>
-      <p>${escapeHtml(scene.subtitle)}</p>
-      <div class="style-sample-brand-strip">
-        <span></span><span></span><span></span>
+      <div class="style-sample-brand-board">
+        <div class="style-sample-brand-core">
+          <span class="style-sample-overline">${escapeHtml(scene.overline)}</span>
+          <div class="style-sample-brand-mark">${escapeHtml(scheme.anchor.name.slice(0, 1))}</div>
+          <h3>${escapeHtml(scene.title)}</h3>
+          <p>${escapeHtml(scene.subtitle)}</p>
+        </div>
+        <div class="style-sample-brand-system">
+          <div class="style-sample-brand-strip">
+            <span></span><span></span><span></span>
+          </div>
+          <dl>
+            <div><dt>主色</dt><dd>识别</dd></div>
+            <div><dt>辅助</dt><dd>物料</dd></div>
+            <div><dt>点缀</dt><dd>行动</dd></div>
+          </dl>
+        </div>
       </div>
       <em>${escapeHtml(scene.meta)}</em>
     `;
@@ -1099,12 +1135,13 @@ function styleLabCanvasMarkup(scene, scheme) {
 
   if (scene.key === 'social') {
     return `
-      <div class="style-sample-quote-mark">“</div>
       <span class="style-sample-overline">${escapeHtml(scene.overline)}</span>
-      <p class="style-sample-quote">${escapeHtml(scene.title)}</p>
-      <span class="style-sample-line"></span>
-      <small>${escapeHtml(scene.subtitle)}</small>
-      <span class="style-sample-action">${escapeHtml(scene.action)}</span>
+      <h3>${escapeHtml(scene.title)}</h3>
+      <p>${escapeHtml(scene.subtitle)}</p>
+      <div class="style-sample-social-footer">
+        <small>${escapeHtml(scene.meta)}</small>
+        <span>${escapeHtml(scene.action)}</span>
+      </div>
       <em>${escapeHtml(scene.meta)}</em>
     `;
   }
