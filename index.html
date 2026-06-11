@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="中华传统色演示、色卡浏览与颜色知识科普开源项目。">
+    <meta name="description" content="中华传统色演示、色卡浏览、配色灵感与素材下载开源项目。">
     <meta name="theme-color" content="#f7f7f4" data-theme-color>
     <title>中国传统配色 - 中华传统色色卡资料馆</title>
     <link rel="icon" href="favicon.svg?v=20260610-6" type="image/svg+xml">
@@ -22,7 +22,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@400;500;700&family=Noto+Serif+SC:wght@600;700;900&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="assets/css/styles.css?v=20260611-6">
+    <link rel="stylesheet" href="assets/css/styles.css?v=20260611-8">
     <script src="https://code.iconify.design/iconify-icon/3.0.0/iconify-icon.min.js" defer></script>
   </head>
   <body>
@@ -38,8 +38,6 @@
         <a href="style-lab.html">场景试色</a>
         <a href="palettes.html">配色灵感</a>
         <a href="skills.html">Skills</a>
-        <a href="#download">下载 ZIP</a>
-        <a href="#knowledge">怎么用</a>
       </nav>
       <div class="header-tools" aria-label="站点工具">
         <button class="nav-menu-toggle" type="button" data-nav-toggle aria-controls="site-nav" aria-expanded="false">
@@ -233,65 +231,6 @@
         </div>
       </section>
 
-      <section class="knowledge-section" id="knowledge" aria-labelledby="knowledge-title">
-        <div class="section-heading">
-          <span class="section-kicker">拿走就能用</span>
-          <h2 id="knowledge-title">查色、配色、交付，少来回</h2>
-          <p>色卡、色值、配色建议和 ZIP 已整理好。</p>
-        </div>
-
-        <div class="knowledge-layout">
-          <article class="knowledge-principle">
-            <span class="knowledge-label">适合</span>
-            <h3>设计、内容、课件和开发取色</h3>
-            <p>直接找色、复制、下载。需要配色时再点开关系色。</p>
-            <div class="knowledge-proof" aria-label="项目提供的可用素材">
-              <span>
-                <strong>742</strong>
-                <small>张可浏览色卡</small>
-              </span>
-              <span>
-                <strong>4</strong>
-                <small>HEX / RGB / HSL / CMYK</small>
-              </span>
-              <span>
-                <strong>ZIP</strong>
-                <small>一次下载原图</small>
-              </span>
-            </div>
-            <div class="knowledge-actions" aria-label="快速开始">
-              <a class="text-link" href="#gallery">浏览色卡</a>
-              <button class="text-button" type="button" data-open-master-list>打开清单</button>
-              <a class="text-link" href="#download">下载 ZIP</a>
-            </div>
-          </article>
-
-          <div class="knowledge-threads" aria-label="项目适合的使用方式">
-            <article class="knowledge-note">
-              <span>01</span>
-              <div>
-                <h3>先定主色</h3>
-                <p>按色相筛选，复制 HEX 或 RGB。</p>
-              </div>
-            </article>
-            <article class="knowledge-note">
-              <span>02</span>
-              <div>
-                <h3>再看配色</h3>
-                <p>点开色卡，复制背景、辅助、强调色。</p>
-              </div>
-            </article>
-            <article class="knowledge-note">
-              <span>03</span>
-              <div>
-                <h3>最后带走素材</h3>
-                <p>ZIP 拿原图，清单给同事或开发对照。</p>
-              </div>
-            </article>
-          </div>
-        </div>
-      </section>
-
       <section class="author-section" id="author" aria-labelledby="author-title">
         <div class="author-copy">
           <div class="author-heading">
@@ -349,47 +288,74 @@
 
       <section class="open-section" id="open-source" aria-labelledby="open-title">
         <div class="section-heading">
-          <span class="section-kicker">开放资料</span>
-          <h2 id="open-title">让中国色真正被用起来</h2>
-          <p>查色、复制、下载、引用、校对。</p>
+          <span class="section-kicker">颜色工具</span>
+          <h2 id="open-title">围绕中国色的一组工作台</h2>
+          <p>查色、试场景、找配色、跑 Studio，再下载资料。</p>
         </div>
-        <div class="open-workbench">
-          <a class="open-primary" href="#gallery" data-open-number="01">
+        <div class="open-workbench" aria-label="中国传统色工具入口">
+          <a class="open-primary" href="#gallery" data-open-number="00">
             <span class="open-primary-top">
-              <span>最常用</span>
-              <iconify-icon icon="lucide:scan-search" aria-hidden="true"></iconify-icon>
+              <span>工具入口</span>
+              <iconify-icon icon="lucide:layout-dashboard" aria-hidden="true"></iconify-icon>
             </span>
-            <strong>找颜色</strong>
-            <p>按色名、编号、HEX 或色相定位。</p>
+            <strong>先选颜色，再决定用法</strong>
+            <p>从 742 个传统色出发，复制色值、切换使用场景、查看配色关系，最后带走素材或交给工作流继续处理。</p>
+            <dl class="open-primary-stats" aria-label="工具覆盖范围">
+              <div>
+                <dt>742</dt>
+                <dd>传统色</dd>
+              </div>
+              <div>
+                <dt>12</dt>
+                <dd>配色关系</dd>
+              </div>
+              <div>
+                <dt>6</dt>
+                <dd>落地场景</dd>
+              </div>
+              <div>
+                <dt>10</dt>
+                <dd>Studio</dd>
+              </div>
+            </dl>
             <em>进入色卡资料库</em>
           </a>
-          <div class="open-steps" aria-label="中国色资料使用流程">
-            <a class="open-step" href="https://github.com/nevertoday/zhongguo-traditional-colors/releases/latest/download/zhongguo-traditional-colors-images.zip" data-open-number="02">
+          <div class="open-steps" aria-label="中国色工具列表">
+            <a class="open-step" href="style-lab.html" data-open-number="01">
+              <span class="open-step-index">01</span>
+              <iconify-icon icon="lucide:panel-top" aria-hidden="true"></iconify-icon>
+              <span>
+                <strong>场景试色</strong>
+                <small>把主色放进网页、PPT、封面、海报、品牌和社媒图里看落位。</small>
+              </span>
+              <em>打开工作台</em>
+            </a>
+            <a class="open-step" href="palettes.html" data-open-number="02">
               <span class="open-step-index">02</span>
+              <iconify-icon icon="lucide:palette" aria-hidden="true"></iconify-icon>
+              <span>
+                <strong>配色灵感</strong>
+                <small>按同类、邻近、互补、三角等关系筛选和复制整组配色。</small>
+              </span>
+              <em>浏览配色</em>
+            </a>
+            <a class="open-step" href="skills.html" data-open-number="03">
+              <span class="open-step-index">03</span>
+              <iconify-icon icon="lucide:workflow" aria-hidden="true"></iconify-icon>
+              <span>
+                <strong>Studio / Skills</strong>
+                <small>面向品牌、包装、内容系列和可访问性的 10 个实战工具。</small>
+              </span>
+              <em>进入 Studio</em>
+            </a>
+            <a class="open-step" href="https://github.com/nevertoday/zhongguo-traditional-colors/releases/latest/download/zhongguo-traditional-colors-images.zip" data-open-number="04">
+              <span class="open-step-index">04</span>
               <iconify-icon icon="lucide:archive" aria-hidden="true"></iconify-icon>
               <span>
-                <strong>下载整包</strong>
-                <small>下载全部原图。</small>
+                <strong>资料出口</strong>
+                <small>下载完整 ZIP，或在资料库里查看原始色值清单。</small>
               </span>
               <em>下载 ZIP</em>
-            </a>
-            <a class="open-step" href="docs/chinese-color-master-list.md" data-open-number="03">
-              <span class="open-step-index">03</span>
-              <iconify-icon icon="lucide:file-text" aria-hidden="true"></iconify-icon>
-              <span>
-                <strong>引用清单</strong>
-                <small>统一命名和 HEX。</small>
-              </span>
-              <em>查看清单</em>
-            </a>
-            <a class="open-step" href="CONTRIBUTING.md" data-open-number="04">
-              <span class="open-step-index">04</span>
-              <iconify-icon icon="lucide:git-pull-request" aria-hidden="true"></iconify-icon>
-              <span>
-                <strong>校正资料</strong>
-                <small>修正色值、命名或图片。</small>
-              </span>
-              <em>参与校正</em>
             </a>
           </div>
         </div>
@@ -542,6 +508,6 @@
     <script src="assets/data/images.js?v=20260610-6"></script>
     <script src="assets/data/harmonies.js?v=20260610-6"></script>
     <script src="assets/data/harmony-usage.js?v=20260610-6"></script>
-    <script src="assets/js/app.js?v=20260611-5"></script>
+    <script src="assets/js/app.js?v=20260611-6"></script>
   </body>
 </html>

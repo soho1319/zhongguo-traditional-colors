@@ -85,6 +85,7 @@ const heroPreviewHarmonyNote = document.querySelector('[data-hero-preview-harmon
 const heroPreviewRoleMap = document.querySelector('[data-hero-preview-role-map]');
 const harmonyTabs = document.querySelector('[data-harmony-tabs]');
 const harmonyPanel = document.querySelector('[data-harmony-panel]');
+const gradientLogicDisabled = document.body?.hasAttribute('data-no-gradient-logic');
 
 const GALLERY_PAGE_SIZE = 24;
 
@@ -107,7 +108,6 @@ const TITLE_TONE_MAP = [
   { match: ['gallery', '色卡', '图库', '筛选'], hues: ['blue', 'cyan', 'green'] },
   { match: ['style', '样式', '封面', '排版'], hues: ['red', 'orange', 'blue', 'green'] },
   { match: ['audit', '清单', '索引', '覆盖'], hues: ['blue', 'green', 'neutral'] },
-  { match: ['knowledge', '知识', '提示', '秩序'], hues: ['yellow', 'green', 'blue'] },
   { match: ['skills', 'skill', 'xxd', '工作流'], hues: ['purple', 'blue', 'cyan'] },
   { match: ['download', '下载', 'zip', '素材'], hues: ['orange', 'red', 'yellow'] },
   { match: ['author', '作者', '小小东', '支持'], hues: ['red', 'purple', 'orange'] },
@@ -624,7 +624,7 @@ function nearestBackgroundRgb(node) {
 }
 
 function hoverBackgroundRgb(title) {
-  const hoverSurface = title.closest('.knowledge-note, .open-primary, .open-step');
+  const hoverSurface = title.closest('.open-primary, .open-step');
   if (!hoverSurface) return null;
 
   const hoverColor = window.getComputedStyle(hoverSurface).getPropertyValue('--hover-bg');
@@ -1893,6 +1893,8 @@ function clearTitleColor(title) {
 }
 
 function bindTitleColorHover() {
+  if (gradientLogicDisabled) return;
+
   titleHoverElements.forEach((title) => {
     const titleText = title.textContent.trim();
     title.dataset.titleText = titleText;

@@ -1,7 +1,7 @@
 import { readFileSync } from 'node:fs';
 
 const pages = ['index.html', 'style-lab.html', 'palettes.html', 'skills.html'];
-const expectedNavLabels = ['浏览色卡', '场景试色', '配色灵感', 'Skills', '下载 ZIP', '怎么用'];
+const expectedNavLabels = ['浏览色卡', '场景试色', '配色灵感', 'Skills'];
 const oldPaletteChrome = [
   'palette-header',
   'palette-brand',

@@ -25,10 +25,9 @@ const inspector = document.querySelector('[data-inspector]');
 const toast = document.querySelector('[data-toast]');
 
 const FEEDS = [
-  { key: 'new', label: '新鲜', icon: '01' },
-  { key: 'popular', label: '编号', icon: '02' },
-  { key: 'random', label: '随机', icon: '03' },
-  { key: 'collection', label: '收藏', icon: '04' },
+  { key: 'popular', label: '编号', icon: '01' },
+  { key: 'random', label: '随机', icon: '02' },
+  { key: 'collection', label: '收藏', icon: '03' },
 ];
 
 const RELATIONS = [
@@ -90,7 +89,7 @@ const PALETTE_LIMIT_STEP = 36;
 const FAVORITE_STORAGE_KEY = 'zhongguoPaletteFavorites';
 const ZIP_TEXT_ENCODER = new TextEncoder();
 
-let currentFeed = 'new';
+let currentFeed = 'random';
 let currentRelation = 'all';
 let currentTone = 'all';
 let visibleCount = PALETTE_LIMIT_STEP;
@@ -99,6 +98,7 @@ let favorites = readFavorites();
 let randomRanks = new Map();
 let toastTimer;
 let footerCopyTimer;
+let navResizeFrame;
 let paletteAutoObserver;
 let palettePool;
 
@@ -586,6 +586,14 @@ function closeMobileNav() {
   setMobileNavOpen(false);
 }
 
+function queueMobileNavState() {
+  if (navResizeFrame) return;
+  navResizeFrame = window.requestAnimationFrame(() => {
+    navResizeFrame = 0;
+    if (window.matchMedia('(min-width: 721px)').matches) closeMobileNav();
+  });
+}
+
 function buildFooterSpectrum() {
   if (!footerColorButtons.length) return;
 
@@ -828,8 +836,10 @@ function exportFavoritePalettes() {
 
 function updateFavoriteExportButton() {
   if (!exportFavoritesButton) return;
+  const isCollectionFeed = currentFeed === 'collection';
   const hasFavorites = favoritePalettes().length > 0;
-  exportFavoritesButton.disabled = !hasFavorites;
+  exportFavoritesButton.hidden = !isCollectionFeed;
+  exportFavoritesButton.disabled = !isCollectionFeed || !hasFavorites;
   exportFavoritesButton.title = hasFavorites ? '导出收藏色板，每组一个 TXT' : '先收藏色板';
 }
 
@@ -1075,6 +1085,10 @@ navToggle?.addEventListener('click', () => {
 });
 siteNav?.addEventListener('click', (event) => {
   if (event.target.closest('a, button')) closeMobileNav();
+});
+window.addEventListener('resize', queueMobileNavState);
+window.addEventListener('keydown', (event) => {
+  if (event.key === 'Escape') closeMobileNav();
 });
 footerColorButtons.forEach((button) => {
   button.addEventListener('click', async () => {
