@@ -17,6 +17,7 @@ const toneList = document.querySelector('[data-tone-list]');
 const searchInput = document.querySelector('[data-search]');
 const shuffleButton = document.querySelector('[data-shuffle]');
 const copySelectedButton = document.querySelector('[data-copy-selected]');
+const exportFavoritesButton = document.querySelector('[data-export-favorites]');
 const paletteGrid = document.querySelector('[data-palette-grid]');
 const resultCount = document.querySelector('[data-result-count]');
 const loadMoreButton = document.querySelector('[data-load-more]');
@@ -87,6 +88,7 @@ const STACK_PATTERNS = [
 ];
 const PALETTE_LIMIT_STEP = 36;
 const FAVORITE_STORAGE_KEY = 'zhongguoPaletteFavorites';
+const ZIP_TEXT_ENCODER = new TextEncoder();
 
 let currentFeed = 'new';
 let currentRelation = 'all';
@@ -644,6 +646,193 @@ function paletteCss(palette) {
   ].join('\n');
 }
 
+function favoritePalettes() {
+  const paletteMap = new Map(allPalettes().map((palette) => [palette.id, palette]));
+  return [...favorites].map((id) => paletteMap.get(id)).filter(Boolean);
+}
+
+function safeFilePart(value) {
+  return String(value || '')
+    .trim()
+    .replace(/[\\/:*?"<>|]/g, '-')
+    .replace(/\s+/g, '-')
+    .replace(/-+/g, '-')
+    .slice(0, 80) || 'palette';
+}
+
+function favoritePaletteFileName(palette, index) {
+  const order = String(index + 1).padStart(2, '0');
+  const anchor = `${palette.anchor.id}-${palette.anchor.name}`;
+  return `${order}-${safeFilePart(anchor)}-${safeFilePart(palette.relationLabel)}.txt`;
+}
+
+function favoritePaletteText(palette) {
+  return [
+    '中国传统配色收藏',
+    '',
+    `主色：${palette.anchor.id}-${palette.anchor.name} ${palette.anchor.hex}`,
+    `关系：${palette.relationLabel}`,
+    `用途：${palette.use}`,
+    '',
+    '色值',
+    paletteText(palette),
+    '',
+    'CSS 变量',
+    paletteCss(palette),
+    '',
+  ].join('\n');
+}
+
+function uint16(value) {
+  const bytes = new Uint8Array(2);
+  const view = new DataView(bytes.buffer);
+  view.setUint16(0, value, true);
+  return bytes;
+}
+
+function uint32(value) {
+  const bytes = new Uint8Array(4);
+  const view = new DataView(bytes.buffer);
+  view.setUint32(0, value >>> 0, true);
+  return bytes;
+}
+
+function concatBytes(parts) {
+  const totalBytes = parts.reduce((total, part) => total + part.length, 0);
+  const output = new Uint8Array(totalBytes);
+  let offset = 0;
+  parts.forEach((part) => {
+    output.set(part, offset);
+    offset += part.length;
+  });
+  return output;
+}
+
+const CRC_TABLE = Array.from({ length: 256 }, (_, tableIndex) => {
+  let value = tableIndex;
+  for (let bit = 0; bit < 8; bit += 1) {
+    value = (value & 1) ? (0xedb88320 ^ (value >>> 1)) : (value >>> 1);
+  }
+  return value >>> 0;
+});
+
+function crc32(bytes) {
+  let crc = 0xffffffff;
+  bytes.forEach((byte) => {
+    crc = CRC_TABLE[(crc ^ byte) & 0xff] ^ (crc >>> 8);
+  });
+  return (crc ^ 0xffffffff) >>> 0;
+}
+
+function zipTimeParts(date = new Date()) {
+  const year = Math.max(1980, date.getFullYear());
+  return {
+    time: (date.getHours() << 11) | (date.getMinutes() << 5) | Math.floor(date.getSeconds() / 2),
+    date: ((year - 1980) << 9) | ((date.getMonth() + 1) << 5) | date.getDate(),
+  };
+}
+
+function zipFavoritePaletteFiles(files) {
+  const localParts = [];
+  const centralParts = [];
+  let localOffset = 0;
+  const stamp = zipTimeParts();
+
+  files.forEach((file) => {
+    const nameBytes = ZIP_TEXT_ENCODER.encode(file.name);
+    const dataBytes = ZIP_TEXT_ENCODER.encode(file.text);
+    const checksum = crc32(dataBytes);
+    const localHeader = concatBytes([
+      uint32(0x04034b50),
+      uint16(20),
+      uint16(0x0800),
+      uint16(0),
+      uint16(stamp.time),
+      uint16(stamp.date),
+      uint32(checksum),
+      uint32(dataBytes.length),
+      uint32(dataBytes.length),
+      uint16(nameBytes.length),
+      uint16(0),
+    ]);
+
+    localParts.push(localHeader, nameBytes, dataBytes);
+
+    centralParts.push(concatBytes([
+      uint32(0x02014b50),
+      uint16(20),
+      uint16(20),
+      uint16(0x0800),
+      uint16(0),
+      uint16(stamp.time),
+      uint16(stamp.date),
+      uint32(checksum),
+      uint32(dataBytes.length),
+      uint32(dataBytes.length),
+      uint16(nameBytes.length),
+      uint16(0),
+      uint16(0),
+      uint16(0),
+      uint16(0),
+      uint32(0),
+      uint32(localOffset),
+    ]), nameBytes);
+
+    localOffset += localHeader.length + nameBytes.length + dataBytes.length;
+  });
+
+  const centralDirectory = concatBytes(centralParts);
+  const endRecord = concatBytes([
+    uint32(0x06054b50),
+    uint16(0),
+    uint16(0),
+    uint16(files.length),
+    uint16(files.length),
+    uint32(centralDirectory.length),
+    uint32(localOffset),
+    uint16(0),
+  ]);
+
+  return concatBytes([...localParts, centralDirectory, endRecord]);
+}
+
+function downloadBlob(blob, filename) {
+  const link = document.createElement('a');
+  const url = URL.createObjectURL(blob);
+  link.href = url;
+  link.download = filename;
+  link.hidden = true;
+  document.body.append(link);
+  link.click();
+  link.remove();
+  window.setTimeout(() => URL.revokeObjectURL(url), 1000);
+}
+
+function exportFavoritePalettes() {
+  const palettes = favoritePalettes();
+  if (!palettes.length) {
+    showToast('还没有收藏色板');
+    return;
+  }
+
+  const files = palettes.map((palette, index) => ({
+    name: favoritePaletteFileName(palette, index),
+    text: favoritePaletteText(palette),
+  }));
+  const zipBytes = zipFavoritePaletteFiles(files);
+  const blob = new Blob([zipBytes], { type: 'application/zip' });
+  const date = new Date().toISOString().slice(0, 10).replaceAll('-', '');
+  downloadBlob(blob, `zhongguo-color-favorites-${date}.zip`);
+  showToast(`已导出收藏色板：${files.length} 个 TXT`);
+}
+
+function updateFavoriteExportButton() {
+  if (!exportFavoritesButton) return;
+  const hasFavorites = favoritePalettes().length > 0;
+  exportFavoritesButton.disabled = !hasFavorites;
+  exportFavoritesButton.title = hasFavorites ? '导出收藏色板，每组一个 TXT' : '先收藏色板';
+}
+
 async function writeClipboard(text) {
   try {
     await navigator.clipboard.writeText(text);
@@ -740,6 +929,7 @@ function renderGrid() {
     const autoLoadSupported = 'IntersectionObserver' in window;
     loadMoreButton.hidden = autoLoadSupported || visible.length >= palettes.length;
   }
+  updateFavoriteExportButton();
   setupAutoLoad();
   renderInspector(findPalette(selectedPaletteId));
 }
@@ -934,6 +1124,7 @@ shuffleButton?.addEventListener('click', () => {
 copySelectedButton?.addEventListener('click', () => {
   if (selectedPaletteId) copyPaletteById(selectedPaletteId);
 });
+exportFavoritesButton?.addEventListener('click', exportFavoritePalettes);
 
 loadMoreButton?.addEventListener('click', () => {
   appendPalettes(PALETTE_LIMIT_STEP);

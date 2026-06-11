@@ -399,7 +399,7 @@ h3::before {
 
 .palette-toolbar {
   display: grid;
-  grid-template-columns: minmax(260px, 1fr) auto auto;
+  grid-template-columns: minmax(260px, 1fr) auto auto auto;
   gap: 8px;
   align-items: center;
   margin: 24px 0 12px;
@@ -474,6 +474,20 @@ h3::before {
   border-color: var(--hover-bg);
   outline: none;
   transform: translateY(-1px);
+}
+
+.toolbar-button:disabled {
+  cursor: not-allowed;
+  opacity: 0.42;
+  transform: none;
+}
+
+.toolbar-button:disabled:hover,
+.toolbar-button:disabled:focus-visible {
+  color: var(--ink);
+  background: var(--panel);
+  border-color: var(--line);
+  transform: none;
 }
 
 .palette-meta {
