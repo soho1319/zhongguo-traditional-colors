@@ -22,7 +22,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@400;500;700&family=Noto+Serif+SC:wght@600;700;900&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="assets/css/styles.css?v=20260612-10">
+    <link rel="stylesheet" href="assets/css/styles.css?v=20260612-11">
     <script src="https://code.iconify.design/iconify-icon/3.0.0/iconify-icon.min.js" defer></script>
   </head>
   <body data-current-page="style-lab">
@@ -101,7 +101,7 @@
     <dialog class="style-color-dialog" data-style-color-dialog>
       <div class="style-color-dialog-head">
         <div>
-          <span class="section-kicker">切换主色</span>
+          <span class="section-kicker" data-style-color-dialog-kicker>切换主色</span>
           <h2 data-style-color-dialog-title>选择一个中国色</h2>
           <p data-style-color-dialog-note>按色相或关键词切换。</p>
         </div>
@@ -127,17 +127,21 @@
           <button type="button" data-style-color-hue="neutral" aria-pressed="false">灰</button>
         </div>
       </div>
-      <div class="style-color-recommendations" data-style-color-recommendations aria-label="推荐替换色"></div>
+      <section class="style-color-recommendations" data-style-color-recommendations aria-label="推荐替换色"></section>
+      <div class="style-color-grid-label">
+        <strong>全部传统色</strong>
+        <span>点击任意色卡立即替换</span>
+      </div>
       <div class="style-color-grid" data-style-color-grid aria-label="可切换的中国传统色"></div>
       <div class="style-color-dialog-foot">
-        <span data-style-color-dialog-status aria-live="polite">742 个传统色</span>
+        <span data-style-color-dialog-status aria-live="polite">点击色卡即可替换</span>
         <button class="button button-secondary" type="button" data-style-color-copy-current>
           <iconify-icon icon="lucide:copy" aria-hidden="true"></iconify-icon>
-          复制当前色
+          复制当前角色色
         </button>
         <button class="button button-primary" type="button" data-style-color-random>
           <iconify-icon icon="lucide:shuffle" aria-hidden="true"></iconify-icon>
-          随机换色
+          随机替换此角色
         </button>
       </div>
     </dialog>
@@ -146,6 +150,6 @@
     <script src="assets/data/images.js?v=20260610-6"></script>
     <script src="assets/data/harmonies.js?v=20260610-6"></script>
     <script src="assets/data/harmony-usage.js?v=20260610-6"></script>
-    <script src="assets/js/app.js?v=20260612-4"></script>
+    <script src="assets/js/app.js?v=20260612-5"></script>
   </body>
 </html>

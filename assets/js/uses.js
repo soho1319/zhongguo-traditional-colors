@@ -88,6 +88,10 @@ let toastTimer;
 let footerCopyTimer;
 let navResizeFrame;
 let autoObserver;
+let colorPoolCache;
+let cardCacheKey = '';
+let cardCache = [];
+let randomVersion = 0;
 
 function escapeHtml(value) {
   return String(value ?? '').replace(/[&<>"']/g, (character) => ({
@@ -182,6 +186,7 @@ function colorFromImage(image) {
     hsl,
     hue: hueFromHsl(hsl),
     temperature: harmony.temperature || '',
+    luminance: relativeLuminance(image.hex),
     searchText: `${image.id} ${colorName(image)} ${image.hex}`.toLowerCase(),
   };
 }
@@ -192,7 +197,10 @@ function colorFromId(id) {
 }
 
 function colorPool() {
-  return images.filter((image) => image.hex).map(colorFromImage);
+  if (!colorPoolCache) {
+    colorPoolCache = images.filter((image) => image.hex).map(colorFromImage);
+  }
+  return colorPoolCache;
 }
 
 function tokens(value) {
@@ -252,7 +260,7 @@ function pairCandidates(color, secondQuery) {
 
 function biasScore(background, text) {
   const bias = Number.parseInt(biasInput?.value || '50', 10);
-  const contrast = Math.min(contrastRatio(background.hex, text.hex), 12) * 20;
+  const contrast = Math.min(contrastRatioFromColors(background, text), 12) * 20;
   const backgroundBias = 100 - Math.abs(background.hsl.l - (bias > 50 ? 78 : 28));
   const textBias = 100 - Math.abs(text.hsl.l - (bias > 50 ? 24 : 82));
   return contrast + backgroundBias + textBias;
@@ -262,33 +270,51 @@ function cardId(background, text) {
   return `${background.id}-${text.id}`;
 }
 
-function cardPairKey(background, text) {
-  return [background.id, text.id].sort().join('|');
+function contrastRatioFromColors(first, second) {
+  const lighter = Math.max(first.luminance, second.luminance);
+  const darker = Math.min(first.luminance, second.luminance);
+  return (lighter + 0.05) / (darker + 0.05);
+}
+
+function cardsCacheKey(search) {
+  return [
+    search.raw,
+    search.first,
+    search.second,
+    currentHue,
+    biasInput?.value || '50',
+    randomVersion,
+  ].join('::');
 }
 
 function allCards() {
   const search = parsedSearch();
-  const seen = new Set();
-  return colorPool()
+  const cacheKey = cardsCacheKey(search);
+  if (cacheKey === cardCacheKey) return cardCache;
+
+  const backgrounds = colorPool()
     .filter((background) => currentHue === 'all' || background.hue === currentHue)
-    .filter((background) => colorMatches(background, search.first))
-    .flatMap((background) => pairCandidates(background, search.second)
-      .sort((first, second) => biasScore(background, second) - biasScore(background, first))
-      .slice(0, 3)
+    .filter((background) => colorMatches(background, search.first));
+  const texts = colorPool()
+    .filter((text) => colorMatches(text, search.second));
+
+  cardCache = backgrounds
+    .flatMap((background) => texts
+      .filter((text) => text.id !== background.id)
       .map((text) => ({
         id: cardId(background, text),
         background,
         text,
-        ratio: contrastRatio(background.hex, text.hex),
+        ratio: contrastRatioFromColors(background, text),
+        score: biasScore(background, text),
       })))
     .filter((card) => card.ratio >= 2.2)
-    .filter((card) => {
-      const key = cardPairKey(card.background, card.text);
-      if (seen.has(key)) return false;
-      seen.add(key);
-      return true;
-    })
-    .sort((first, second) => (randomRanks.get(first.id) ?? 0) - (randomRanks.get(second.id) ?? 0));
+    .sort((first, second) => (
+      (second.score - ((randomRanks.get(second.id) ?? 0) * 24))
+      - (first.score - ((randomRanks.get(first.id) ?? 0) * 24))
+    ));
+  cardCacheKey = cacheKey;
+  return cardCache;
 }
 
 function shuffleOrder() {
@@ -299,6 +325,8 @@ function shuffleOrder() {
       if (background.id !== text.id) randomRanks.set(cardId(background, text), Math.random());
     });
   });
+  randomVersion += 1;
+  cardCacheKey = '';
 }
 
 function cardMarkup(card, index) {

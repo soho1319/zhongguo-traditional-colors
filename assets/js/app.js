@@ -27,6 +27,7 @@ const styleAnchorSwatch = document.querySelector('[data-style-anchor-swatch]');
 const styleAnchorButton = document.querySelector('[data-style-anchor-button]');
 const styleFormatSelect = document.querySelector('[data-style-format]');
 const styleColorDialog = document.querySelector('[data-style-color-dialog]');
+const styleColorDialogKicker = document.querySelector('[data-style-color-dialog-kicker]');
 const styleColorDialogTitle = document.querySelector('[data-style-color-dialog-title]');
 const styleColorDialogNote = document.querySelector('[data-style-color-dialog-note]');
 const styleColorRecommendations = document.querySelector('[data-style-color-recommendations]');
@@ -1322,15 +1323,19 @@ function styleColorDialogModeText() {
   if (!role) {
     return {
       title: '选择一个中国色',
-      note: '按色相或关键词切换。',
-      kicker: '推荐色',
+      note: '搜索或按色相筛选，点击色卡后会切换整套试色方案。',
+      kicker: '切换主色',
+      recommendationTitle: '推荐起点色',
+      recommendationNote: '先从这些色相稳定的中国色开始。',
     };
   }
 
   return {
     title: `替换${role.label}`,
-    note: `${role.use}，建议保持 ${role.ratio} 左右的面积。下方优先显示适合当前方案的推荐色。`,
-    kicker: `${role.label}推荐`,
+    note: `当前只替换“${role.label}”。点击推荐色或下方任意色卡都会立即应用。`,
+    kicker: `正在替换：${role.label}`,
+    recommendationTitle: `${role.label}推荐`,
+    recommendationNote: `${role.use}，建议保持 ${role.ratio} 左右的面积。`,
   };
 }
 
@@ -1455,7 +1460,13 @@ function renderStyleColorRecommendations() {
   const items = styleRoleReplacementKey ? styleRoleRecommendedColors(styleRoleReplacementKey) : [];
   styleColorRecommendations.hidden = !styleRoleReplacementKey;
   styleColorRecommendations.innerHTML = items.length
-    ? `<span>${escapeHtml(mode.kicker)}</span>${items.map(styleColorRecommendationMarkup).join('')}`
+    ? `
+      <header>
+        <strong>${escapeHtml(mode.recommendationTitle)}</strong>
+        <span>${escapeHtml(mode.recommendationNote)}</span>
+      </header>
+      <div>${items.map(styleColorRecommendationMarkup).join('')}</div>
+    `
     : '';
 }
 
@@ -1464,6 +1475,7 @@ function renderStyleColorPicker() {
 
   const items = styleColorPickerItems();
   const mode = styleColorDialogModeText();
+  if (styleColorDialogKicker) styleColorDialogKicker.textContent = mode.kicker;
   if (styleColorDialogTitle) styleColorDialogTitle.textContent = mode.title;
   if (styleColorDialogNote) styleColorDialogNote.textContent = mode.note;
   renderStyleColorRecommendations();

@@ -4544,7 +4544,7 @@ body[data-no-gradient-logic] .skills-list::before {
 
 .style-color-dialog[open] {
   display: grid;
-  grid-template-rows: auto auto auto minmax(0, 1fr) auto;
+  grid-template-rows: auto auto auto auto minmax(0, 1fr) auto;
 }
 
 .style-color-dialog-head {
@@ -4552,18 +4552,18 @@ body[data-no-gradient-logic] .skills-list::before {
   display: grid;
   grid-template-columns: minmax(0, 1fr) auto;
   gap: 24px;
-  padding: 30px clamp(22px, 4vw, 36px) 24px;
+  padding: 26px clamp(22px, 4vw, 36px) 22px;
   border-bottom: 1px solid var(--line);
 }
 
 .style-color-dialog-head h2 {
-  margin-bottom: 10px;
-  font-size: clamp(1.8rem, 4vw, 3rem);
+  margin-bottom: 8px;
+  font-size: clamp(1.72rem, 3.4vw, 2.72rem);
   line-height: 1.08;
 }
 
 .style-color-dialog-head p {
-  max-width: 45em;
+  max-width: 42em;
   margin: 0;
   color: var(--ink-soft);
   line-height: 1.75;
@@ -4657,13 +4657,13 @@ body[data-no-gradient-logic] .skills-list::before {
 }
 
 .style-color-recommendations {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 1px;
-  align-items: stretch;
-  max-height: 176px;
+  display: grid;
+  grid-template-columns: 136px minmax(0, 1fr);
+  gap: 16px;
+  align-items: start;
+  max-height: 164px;
   overflow: auto;
-  padding: 12px clamp(22px, 4vw, 36px);
+  padding: 14px clamp(22px, 4vw, 36px);
   background: var(--paper);
   border-bottom: 1px solid var(--line);
 }
@@ -4672,14 +4672,31 @@ body[data-no-gradient-logic] .skills-list::before {
   display: none;
 }
 
-.style-color-recommendations > span {
-  display: inline-flex;
-  align-items: center;
-  min-height: 42px;
-  padding-right: 12px;
-  color: var(--muted);
-  font-size: 0.78rem;
+.style-color-recommendations header {
+  display: grid;
+  gap: 5px;
+  padding-top: 4px;
+}
+
+.style-color-recommendations header strong {
+  color: var(--ink);
+  font-size: 0.84rem;
   font-weight: 850;
+}
+
+.style-color-recommendations header span {
+  color: var(--muted);
+  font-size: 0.76rem;
+  font-weight: 650;
+  line-height: 1.45;
+}
+
+.style-color-recommendations > div {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(148px, 1fr));
+  gap: 1px;
+  background: var(--line);
+  border: 1px solid var(--line);
 }
 
 .style-recommendation {
@@ -4687,12 +4704,11 @@ body[data-no-gradient-logic] .skills-list::before {
   grid-template-columns: 24px minmax(72px, 1fr);
   gap: 8px;
   align-items: center;
-  min-width: 156px;
   min-height: 42px;
   padding: 7px 10px;
   color: var(--ink);
   background: var(--panel);
-  border: 1px solid var(--line);
+  border: 0;
   cursor: pointer;
   text-align: left;
 }
@@ -4740,6 +4756,28 @@ body[data-no-gradient-logic] .skills-list::before {
   overflow: auto;
   background: var(--line);
   border-bottom: 1px solid var(--line);
+}
+
+.style-color-grid-label {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 12px;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px clamp(22px, 4vw, 36px);
+  background: color-mix(in srgb, var(--panel) 78%, var(--paper));
+  border-bottom: 1px solid var(--line);
+}
+
+.style-color-grid-label strong {
+  font-size: 0.84rem;
+  font-weight: 850;
+}
+
+.style-color-grid-label span {
+  color: var(--muted);
+  font-size: 0.76rem;
+  font-weight: 650;
 }
 
 .style-color-choice {
