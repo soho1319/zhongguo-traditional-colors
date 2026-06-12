@@ -17,7 +17,7 @@
   grid-template-columns: auto minmax(260px, 1fr) auto;
   gap: 12px;
   align-items: center;
-  padding: 12px max(16px, calc((100vw - 1440px) / 2));
+  padding: 12px clamp(16px, 2.4vw, 36px);
   background: color-mix(in srgb, var(--solid) 94%, transparent);
   border-bottom: 1px solid var(--line);
   backdrop-filter: blur(18px);
@@ -113,7 +113,7 @@
 .generator-hint {
   min-height: 42px;
   margin: 0;
-  padding: 12px max(16px, calc((100vw - 1440px) / 2));
+  padding: 12px clamp(16px, 2.4vw, 36px);
   color: var(--muted);
   background: var(--solid);
   border-bottom: 1px solid var(--line);
