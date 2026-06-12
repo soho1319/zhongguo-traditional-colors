@@ -522,7 +522,8 @@ h3::before {
 }
 
 .palette-stack {
-  --palette-radius: 8px;
+  --palette-radius: 0px;
+  --palette-inner-radius: 0px;
   container-type: inline-size;
   position: relative;
   display: grid;
@@ -534,11 +535,18 @@ h3::before {
   border: 1px solid var(--line);
   border-radius: var(--palette-radius);
   box-shadow: none;
-  transition: border-color 160ms ease, transform 220ms var(--ease-out-quart), box-shadow 200ms ease;
+  transition: border-color 160ms ease, border-radius 260ms var(--ease-out-expo), transform 220ms var(--ease-out-quart), box-shadow 200ms ease;
 }
 
 .palette-card:hover .palette-stack,
-.palette-card:focus-within .palette-stack,
+.palette-card:focus-within .palette-stack {
+  --palette-radius: 8px;
+  --palette-inner-radius: 7px;
+  border-color: var(--line-strong);
+  box-shadow: var(--shadow-soft);
+  transform: translateY(-2px);
+}
+
 .palette-card[aria-selected="true"] .palette-stack {
   border-color: var(--line-strong);
   box-shadow: var(--shadow-soft);
@@ -552,14 +560,15 @@ h3::before {
   border: 0;
   cursor: pointer;
   text-align: left;
+  transition: border-radius 260ms var(--ease-out-expo);
 }
 
 .palette-swatch:first-child {
-  border-radius: calc(var(--palette-radius) - 1px) calc(var(--palette-radius) - 1px) 0 0;
+  border-radius: var(--palette-inner-radius) var(--palette-inner-radius) 0 0;
 }
 
 .palette-swatch:last-of-type {
-  border-radius: 0 0 calc(var(--palette-radius) - 1px) calc(var(--palette-radius) - 1px);
+  border-radius: 0 0 var(--palette-inner-radius) var(--palette-inner-radius);
 }
 
 .palette-color-list {
@@ -568,10 +577,10 @@ h3::before {
   display: grid;
   grid-template-rows: var(--stack-0, 41fr) var(--stack-1, 26fr) var(--stack-2, 18fr) var(--stack-3, 15fr);
   overflow: hidden;
-  border-radius: calc(var(--palette-radius) - 1px);
+  border-radius: var(--palette-inner-radius);
   pointer-events: none;
   opacity: 0;
-  transition: opacity 220ms ease;
+  transition: opacity 220ms ease, border-radius 260ms var(--ease-out-expo);
 }
 
 .palette-color-label {

@@ -3094,11 +3094,57 @@ body[data-no-gradient-logic] .studio-direction:focus-visible {
   border-bottom: 1px solid var(--line);
 }
 
+.skills-strip {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+  margin: 0 auto clamp(28px, 4vw, 46px);
+  padding: 0 0 16px;
+  border-bottom: 1px solid var(--line);
+}
+
+.skills-strip a {
+  display: inline-flex;
+  gap: 8px;
+  align-items: center;
+  min-height: 34px;
+  padding: 7px 11px;
+  color: var(--ink-soft);
+  background: transparent;
+  border: 1px solid var(--line);
+  font-size: 0.82rem;
+  font-weight: 700;
+  line-height: 1.35;
+  text-decoration: none;
+  transition: color 160ms ease, background 160ms ease, border-color 160ms ease, transform 200ms var(--ease-out-expo);
+}
+
+.skills-strip a span {
+  color: var(--muted);
+  font-family: var(--font-rounded);
+  font-size: 0.72rem;
+  font-variant-numeric: tabular-nums;
+  font-weight: 800;
+  transition: color 160ms ease;
+}
+
+.skills-strip a:hover,
+.skills-strip a:focus-visible {
+  color: var(--hover-text);
+  background: var(--hover-bg);
+  border-color: var(--hover-bg);
+  outline: none;
+  transform: translateY(-1px);
+}
+
+.skills-strip a:hover span,
+.skills-strip a:focus-visible span {
+  color: currentColor;
+}
+
 .skills-stage {
-  display: grid;
-  grid-template-columns: minmax(250px, 0.45fr) minmax(560px, 1fr);
-  gap: clamp(34px, 5vw, 78px);
-  align-items: start;
+  display: block;
 }
 
 .skills-brief {
@@ -3232,7 +3278,9 @@ body[data-no-gradient-logic] .studio-direction:focus-visible {
   position: relative;
   display: grid;
   gap: 14px;
-  padding: 8px 0 8px 20px;
+  width: min(100%, 1120px);
+  margin: 0 auto;
+  padding: 6px 0 8px 22px;
 }
 
 .skills-list::before {
@@ -3270,42 +3318,6 @@ body[data-no-gradient-logic] .skills-list::before {
 .skill-item:focus-visible {
   outline: 1px solid var(--line-strong);
   outline-offset: 8px;
-}
-
-.skill-item:nth-child(2) {
-  --skill-offset: 8%;
-}
-
-.skill-item:nth-child(3) {
-  --skill-offset: 3%;
-}
-
-.skill-item:nth-child(4) {
-  --skill-offset: 14%;
-}
-
-.skill-item:nth-child(5) {
-  --skill-offset: 6%;
-}
-
-.skill-item:nth-child(6) {
-  --skill-offset: 18%;
-}
-
-.skill-item:nth-child(7) {
-  --skill-offset: 10%;
-}
-
-.skill-item:nth-child(8) {
-  --skill-offset: 2%;
-}
-
-.skill-item:nth-child(9) {
-  --skill-offset: 13%;
-}
-
-.skill-item:nth-child(10) {
-  --skill-offset: 5%;
 }
 
 .skill-item::before {
@@ -5950,11 +5962,6 @@ body[data-no-gradient-logic] .skills-list::before {
     min-height: 360px;
   }
 
-  .skills-stage {
-    grid-template-columns: 1fr;
-    gap: 32px;
-  }
-
   .skills-brief {
     position: static;
     display: grid;
@@ -6556,6 +6563,21 @@ body[data-no-gradient-logic] .skills-list::before {
     width: 100%;
   }
 
+  .skills-strip {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 8px;
+    margin-bottom: 26px;
+    padding-bottom: 14px;
+  }
+
+  .skills-strip a {
+    justify-content: flex-start;
+    min-width: 0;
+    min-height: 42px;
+    padding: 9px 10px;
+  }
+
   .skills-brief {
     position: static;
     max-height: none;
@@ -6835,6 +6857,10 @@ body[data-no-gradient-logic] .skills-list::before {
 
   .style-lab-section {
     padding-top: 24px;
+  }
+
+  .skills-strip {
+    grid-template-columns: 1fr;
   }
 
   .download-section,
