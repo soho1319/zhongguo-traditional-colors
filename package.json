@@ -2,7 +2,7 @@
   "name": "zhongguo-traditional-colors",
   "version": "0.1.0",
   "private": false,
-  "description": "中华传统色演示、色卡浏览、配色灵感与素材下载项目。",
+  "description": "涓崕浼犵粺鑹叉紨绀恒€佽壊鍗℃祻瑙堛€侀厤鑹茬伒鎰熶笌绱犳潗涓嬭浇椤圭洰銆?,
   "type": "module",
   "scripts": {
     "start": "python3 -m http.server 5173",
@@ -12,14 +12,15 @@
     "harmony:audit": "node scripts/audit-color-harmonies.mjs",
     "harmony:uses": "node scripts/build-harmony-use-cases.mjs",
     "package:images": "node scripts/package-images.mjs",
-    "prepare:release": "npm run manifest && npm run harmonies && npm run harmony:uses && npm run harmony:audit && npm run readme && npm run package:images"
+    "prepare:release": "npm run manifest && npm run harmonies && npm run harmony:uses && npm run harmony:audit && npm run readme && npm run package:images",
+    "build": "node scripts/update-image-urls.mjs"
   },
   "keywords": [
     "traditional-colors",
     "chinese-colors",
     "color-palette",
     "design",
-    "中华传统色"
+    "涓崕浼犵粺鑹?
   ],
   "license": "MIT"
 }
